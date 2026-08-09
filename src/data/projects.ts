@@ -22,7 +22,7 @@ export const projects: Project[] = [
     description:
       "SaaS que reúne, em tempo real, as fotos e vídeos que os convidados de um evento registram — num álbum colaborativo acessado por link ou QR Code, sem app. Pagamentos via Stripe (Payment Element, Apple Pay, Google Pay, webhooks) em 3 planos, crop de imagem no navegador, download do álbum em ZIP e sistema de moderação.",
     tags: ["React 19", "Vite", "Tailwind CSS 4", "Firebase", "Stripe"],
-    status: "Em produção · construído em 6 semanas",
+    status: "SaaS próprio · Em produção",
     demoUrl: "https://eternodia.com",
     note: "Produto proprietário — código-fonte não disponível publicamente.",
   },
