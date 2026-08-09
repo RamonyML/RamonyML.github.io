@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- ============================================================
+         SEO — EDITE os campos abaixo com as informações do negócio
+         ============================================================ -->
+    <title>Studio Nova — Atendimento Premium & Agendamento Online</title>
+    <meta
+      name="description"
+      content="Studio Nova — atendimento premium com agendamento online. Experiência personalizada do primeiro contato ao resultado final."
+    />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="Studio Nova — Atendimento Premium & Agendamento Online" />
+    <meta
+      property="og:description"
+      content="Experiência personalizada, profissionais qualificados e agendamento em poucos cliques."
+    />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Favicon (SVG inline — troque a cor "fill" para casar com o tema) -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='7' fill='%234f46e5'/%3E%3Cpath fill='%23ffffff' d='M12 5l1.9 4.4L18 11l-4.1 1.6L12 17l-1.9-4.4L6 11l4.1-1.6z'/%3E%3C/svg%3E"
+    />
+
+    <!-- Fonts: Plus Jakarta Sans (texto) + Fraunces (títulos) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS via CDN — zero build, funciona abrindo o arquivo direto no navegador -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      // Só mapeia as fontes. As CORES vêm das variáveis CSS lá embaixo
+      // (:root), então você troca o tema inteiro em UM lugar só.
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Plus Jakarta Sans", "sans-serif"],
+              display: ["Fraunces", "serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* ================================================================
+         TEMA — troque estas variáveis para recolorir o site inteiro.
+         Existem 3 paletas prontas comentadas logo abaixo: é só comentar
+         o bloco ":root" ativo e descomentar a paleta que preferir.
+         ================================================================ */
+      :root {
+        --primary: #4f46e5; /* cor principal: botões, links, ícones */
+        --primary-soft: #6366f1; /* tom claro: hover dos botões */
+        --primary-dark: #3730a3; /* tom escuro: texto sobre fundo claro */
+        --accent: #f59e0b; /* cor de apoio: selos, estrelas, detalhes */
+        --ink: #1e2233; /* cor do texto principal */
+        --muted: #6b7280; /* cor do texto secundário */
+        --surface: #f5f5fb; /* fundo suave das seções alternadas */
+      }
+
+      /* --- Paleta alternativa: Esmeralda (spa, saúde, sustentabilidade) ---
+      :root {
+        --primary: #059669;
+        --primary-soft: #10b981;
+        --primary-dark: #065f46;
+        --accent: #f59e0b;
+        --ink: #1c2b27;
+        --muted: #5b6b66;
+        --surface: #f0fdf7;
+      }
+      */
+
+      /* --- Paleta alternativa: Rosé (beleza, estética, nail design) ---
+      :root {
+        --primary: #e11d48;
+        --primary-soft: #fb7185;
+        --primary-dark: #9f1239;
+        --accent: #fbbf24;
+        --ink: #2b2530;
+        --muted: #7a6f75;
+        --surface: #fff1f2;
+      }
+      */
+
+      /* --- Paleta alternativa: Grafite (consultoria, advocacia, corporativo) ---
+      :root {
+        --primary: #1e293b;
+        --primary-soft: #475569;
+        --primary-dark: #0f172a;
+        --accent: #ca8a04;
+        --ink: #16181f;
+        --muted: #64748b;
+        --surface: #f8fafc;
+      }
+      */
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        color: var(--ink);
+        background-color: #ffffff;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .font-display {
+        font-family: "Fraunces", serif;
+      }
+
+      /* ===== Animação de revelar ao rolar a página =====
+         Some com o elemento e sobe 28px; some/reaparece via a
+         classe "is-visible" que o JS adiciona quando o elemento
+         entra na tela (ver <script> no fim do arquivo). */
+      .reveal {
+        opacity: 0;
+        transform: translateY(28px);
+        transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+          transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+        will-change: opacity, transform;
+      }
+      .reveal.is-visible {
+        opacity: 1;
+        transform: none;
+      }
+      .reveal[data-delay="1"] {
+        transition-delay: 0.12s;
+      }
+      .reveal[data-delay="2"] {
+        transition-delay: 0.24s;
+      }
+      .reveal[data-delay="3"] {
+        transition-delay: 0.36s;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .reveal {
+          opacity: 1 !important;
+          transform: none !important;
+          transition: none !important;
+        }
+        html {
+          scroll-behavior: auto;
+        }
+      }
+
+      /* ===== Entrada do hero (roda uma vez, ao carregar a página) ===== */
+      @keyframes heroIn {
+        from {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      .hero-in {
+        animation: heroIn 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+      .hero-in.d1 {
+        animation-delay: 0.15s;
+      }
+      .hero-in.d2 {
+        animation-delay: 0.3s;
+      }
+      .hero-in.d3 {
+        animation-delay: 0.45s;
+      }
+      .hero-in.d4 {
+        animation-delay: 0.6s;
+      }
+
+      @keyframes floaty {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-14px);
+        }
+      }
+      .floaty {
+        animation: floaty 6s ease-in-out infinite;
+      }
+
+      /* ===== Navbar ===== */
+      .nav-blur {
+        backdrop-filter: saturate(180%) blur(12px);
+        -webkit-backdrop-filter: saturate(180%) blur(12px);
+        transition: background-color 0.4s ease, box-shadow 0.4s ease;
+      }
+      .nav-scrolled {
+        background-color: rgba(255, 255, 255, 0.85);
+        box-shadow: 0 10px 30px -18px rgb(79 70 229 / 0.35);
+      }
+      .nav-link-underline {
+        position: relative;
+      }
+      .nav-link-underline::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -4px;
+        width: 0;
+        height: 2px;
+        background: var(--primary);
+        transition: width 0.3s ease;
+      }
+      .nav-link-underline:hover::after {
+        width: 100%;
+      }
+
+      /* ===== Botões ===== */
+      .btn-primary {
+        background: var(--primary);
+        color: #fff;
+        transition: transform 0.25s ease, box-shadow 0.25s ease,
+          background 0.25s ease;
+        box-shadow: 0 14px 30px -12px rgb(79 70 229 / 0.55);
+      }
+      .btn-primary:hover {
+        background: var(--primary-soft);
+        color: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 18px 38px -12px rgb(79 70 229 / 0.6);
+      }
+      .btn-ghost {
+        border: 1.5px solid color-mix(in srgb, var(--primary) 35%, transparent);
+        color: var(--primary);
+        background: transparent;
+        transition: all 0.25s ease;
+      }
+      .btn-ghost:hover {
+        background: var(--primary);
+        color: #fff;
+        border-color: var(--primary);
+      }
+
+      /* ===== Cards ===== */
+      .card-clean {
+        transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+          box-shadow 0.4s ease;
+      }
+      .card-clean:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 30px 60px -30px rgb(79 70 229 / 0.35);
+      }
+
+      .gallery-img {
+        transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .gallery-item:hover .gallery-img {
+        transform: scale(1.08);
+      }
+
+      .glass-card {
+        background: rgba(255, 255, 255, 0.75);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+
+      ::selection {
+        background: color-mix(in srgb, var(--primary) 20%, transparent);
+      }
+
+      /* ===== FAQ (usa <details>/<summary> nativos — sem JS) ===== */
+      .faq-item summary::-webkit-details-marker {
+        display: none;
+      }
+      .faq-item summary {
+        list-style: none;
+        cursor: pointer;
+      }
+      .faq-item .faq-icon {
+        transition: transform 0.3s ease;
+      }
+      .faq-item[open] .faq-icon {
+        transform: rotate(45deg);
+      }
+      .faq-item[open] .faq-answer {
+        animation: faqOpen 0.35s ease both;
+      }
+      @keyframes faqOpen {
+        from {
+          opacity: 0;
+          transform: translateY(-6px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      /* ===== Botão flutuante do WhatsApp ===== */
+      .whatsapp-float {
+        position: fixed;
+        right: 1.25rem;
+        bottom: 1.25rem;
+        z-index: 40;
+        box-shadow: 0 14px 30px -10px rgb(0 0 0 / 0.35);
+        transition: transform 0.25s ease;
+      }
+      .whatsapp-float:hover {
+        transform: scale(1.08);
+      }
+    </style>
+  </head>
+
+  <body class="bg-white">
+    <!-- ===================== NAVBAR ===================== -->
+    <header id="navbar" class="nav-blur fixed top-0 inset-x-0 z-50 py-4">
+      <nav class="container mx-auto px-5 flex items-center justify-between">
+        <a href="#hero" class="flex items-center gap-2 group">
+          <span
+            class="grid place-items-center w-10 h-10 rounded-2xl text-white text-lg shadow-lg transition-transform group-hover:rotate-6"
+            style="background: var(--primary); box-shadow: 0 10px 25px -8px rgb(79 70 229 / 0.55)"
+            >N</span
+          >
+          <!-- EDITAR: nome do negócio -->
+          <span class="font-display text-2xl font-semibold tracking-tight">
+            Studio<span style="color: var(--primary)">Nova</span>
+          </span>
+        </a>
+
+        <div class="hidden lg:flex items-center gap-9 text-[15px] font-medium text-gray-600">
+          <a href="#sobre" class="nav-link-underline hover:text-[var(--primary)] transition">Sobre</a>
+          <a href="#servicos" class="nav-link-underline hover:text-[var(--primary)] transition">Serviços</a>
+          <a href="#galeria" class="nav-link-underline hover:text-[var(--primary)] transition">Galeria</a>
+          <a href="#depoimentos" class="nav-link-underline hover:text-[var(--primary)] transition">Depoimentos</a>
+          <a href="#planos" class="nav-link-underline hover:text-[var(--primary)] transition">Planos</a>
+          <a href="#faq" class="nav-link-underline hover:text-[var(--primary)] transition">FAQ</a>
+        </div>
+
+        <a
+          href="#contato"
+          class="btn-primary hidden sm:inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-semibold"
+        >
+          Agendar agora
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+        </a>
+
+        <!-- Menu mobile -->
+        <button
+          id="menuToggle"
+          class="lg:hidden grid place-items-center w-11 h-11 rounded-xl border text-[var(--primary)]"
+          style="border-color: color-mix(in srgb, var(--primary) 25%, transparent)"
+          aria-label="Abrir menu"
+          aria-expanded="false"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </nav>
+
+      <div
+        id="mobileMenu"
+        class="lg:hidden hidden mx-4 mt-3 rounded-2xl glass-card border border-gray-100 shadow-xl overflow-hidden"
+      >
+        <div class="flex flex-col p-3 text-gray-700 font-medium">
+          <a href="#sobre" class="px-4 py-3 rounded-xl hover:bg-gray-50 hover:text-[var(--primary)] transition">Sobre</a>
+          <a href="#servicos" class="px-4 py-3 rounded-xl hover:bg-gray-50 hover:text-[var(--primary)] transition">Serviços</a>
+          <a href="#galeria" class="px-4 py-3 rounded-xl hover:bg-gray-50 hover:text-[var(--primary)] transition">Galeria</a>
+          <a href="#depoimentos" class="px-4 py-3 rounded-xl hover:bg-gray-50 hover:text-[var(--primary)] transition">Depoimentos</a>
+          <a href="#planos" class="px-4 py-3 rounded-xl hover:bg-gray-50 hover:text-[var(--primary)] transition">Planos</a>
+          <a href="#faq" class="px-4 py-3 rounded-xl hover:bg-gray-50 hover:text-[var(--primary)] transition">FAQ</a>
+          <a href="#contato" class="btn-primary text-center mt-2 rounded-xl px-4 py-3 font-semibold">Agendar agora</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- ===================== HERO ===================== -->
+    <section id="hero" class="relative overflow-hidden pt-32 pb-20 lg:pt-44 lg:pb-28">
+      <div class="pointer-events-none absolute -top-24 -right-24 w-[28rem] h-[28rem] rounded-full blur-3xl opacity-60" style="background: color-mix(in srgb, var(--primary) 12%, transparent)"></div>
+      <div class="pointer-events-none absolute top-1/2 -left-32 w-96 h-96 rounded-full blur-3xl opacity-70" style="background: var(--surface)"></div>
+
+      <div class="container mx-auto px-5">
+        <div class="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+          <!-- Texto -->
+          <div class="text-center lg:text-left">
+            <span class="hero-in d1 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium mb-6" style="background: var(--surface); color: var(--primary-dark)">
+              <span class="w-2 h-2 rounded-full animate-pulse" style="background: var(--primary)"></span>
+              <!-- EDITAR: selo/badge de destaque -->
+              Atendimento premium com hora marcada
+            </span>
+
+            <!-- EDITAR: headline principal -->
+            <h1 class="hero-in d2 font-display text-5xl sm:text-6xl lg:text-7xl font-semibold leading-[1.05] tracking-tight mb-6">
+              Uma experiência <br class="hidden sm:block" />
+              <span style="color: var(--primary)">pensada pra você</span>
+            </h1>
+
+            <!-- EDITAR: subheadline -->
+            <p class="hero-in d3 text-lg text-gray-500 max-w-xl mx-auto lg:mx-0 mb-9 leading-relaxed">
+              Do primeiro contato ao resultado final, cada detalhe é cuidado
+              por uma equipe especializada, num espaço pensado pra você se
+              sentir à vontade.
+            </p>
+
+            <div class="hero-in d4 flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
+              <a href="#contato" class="btn-primary w-full sm:w-auto rounded-full px-8 py-3.5 font-semibold text-base">
+                Agendar meu horário
+              </a>
+              <a href="#servicos" class="btn-ghost w-full sm:w-auto rounded-full px-8 py-3.5 font-semibold text-base">
+                Ver serviços
+              </a>
+            </div>
+
+            <!-- mini estatísticas — EDITAR números -->
+            <div class="hero-in d4 flex items-center gap-8 justify-center lg:justify-start mt-12">
+              <div>
+                <p class="font-display text-3xl font-semibold" style="color: var(--primary)">+2k</p>
+                <p class="text-sm text-gray-400">Clientes atendidos</p>
+              </div>
+              <div class="w-px h-10 bg-gray-200"></div>
+              <div>
+                <p class="font-display text-3xl font-semibold" style="color: var(--primary)">8</p>
+                <p class="text-sm text-gray-400">Anos de mercado</p>
+              </div>
+              <div class="w-px h-10 bg-gray-200"></div>
+              <div>
+                <p class="font-display text-3xl font-semibold inline-flex items-center gap-1" style="color: var(--primary)">4.9<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg></p>
+                <p class="text-sm text-gray-400">Avaliação média</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Imagem -->
+          <div class="hero-in d3 relative">
+            <div class="relative mx-auto max-w-md lg:max-w-none">
+              <div class="absolute inset-0 -rotate-6 rounded-[2.5rem]" style="background: color-mix(in srgb, var(--primary) 10%, transparent)"></div>
+              <img
+                src="https://picsum.photos/seed/nova-hero/900/1080"
+                alt="Espaço de atendimento Studio Nova"
+                loading="eager"
+                class="relative rounded-[2.5rem] object-cover w-full h-[420px] lg:h-[540px] shadow-2xl"
+              />
+              <div class="floaty glass-card absolute -bottom-6 -left-4 sm:left-6 rounded-2xl p-4 shadow-xl border border-white/60 flex items-center gap-3">
+                <span class="grid place-items-center w-11 h-11 rounded-xl text-white" style="background: var(--primary)">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
+                </span>
+                <div>
+                  <p class="text-sm font-semibold text-gray-800">Atendimento premium</p>
+                  <p class="text-xs text-gray-400">Equipe especializada</p>
+                </div>
+              </div>
+              <div class="floaty glass-card absolute -top-5 -right-3 sm:right-4 rounded-2xl px-4 py-3 shadow-xl border border-white/60" style="animation-delay:-3s">
+                <p class="text-xs text-gray-400">Agende em</p>
+                <p class="text-sm font-semibold inline-flex items-center gap-1" style="color: var(--primary)">30 segundos <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SELOS DE CONFIANÇA ===================== -->
+    <section class="border-y" style="border-color: var(--surface); background: color-mix(in srgb, var(--surface) 60%, white)">
+      <div class="container mx-auto px-5 py-7">
+        <div class="flex flex-wrap items-center justify-center gap-x-12 gap-y-4 text-gray-400 text-sm font-medium reveal">
+          <span class="flex items-center gap-2"><svg class="w-4 h-4" style="color: var(--primary)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg> Atendimento personalizado</span>
+          <span class="flex items-center gap-2"><svg class="w-4 h-4" style="color: var(--primary)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m17 11 2 2 4-4"/></svg> Profissionais qualificados</span>
+          <span class="flex items-center gap-2"><svg class="w-4 h-4" style="color: var(--primary)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/></svg> Agendamento online</span>
+          <span class="flex items-center gap-2"><svg class="w-4 h-4" style="color: var(--primary)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Satisfação garantida</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SOBRE ===================== -->
+    <section id="sobre" class="py-24 lg:py-32">
+      <div class="container mx-auto px-5">
+        <div class="grid lg:grid-cols-2 gap-14 items-center">
+          <div class="relative reveal">
+            <div class="grid grid-cols-2 gap-4">
+              <img src="https://picsum.photos/seed/nova-sobre-1/600/700" alt="Ambiente do Studio Nova" class="rounded-3xl object-cover h-64 w-full shadow-lg" loading="lazy" />
+              <img src="https://picsum.photos/seed/nova-sobre-2/600/700" alt="Equipe do Studio Nova" class="rounded-3xl object-cover h-64 w-full shadow-lg mt-8" loading="lazy" />
+            </div>
+            <div class="floaty glass-card absolute -bottom-6 right-6 rounded-2xl px-5 py-4 shadow-xl border border-white/60 text-center">
+              <p class="font-display text-3xl font-semibold" style="color: var(--primary)">+8</p>
+              <p class="text-xs text-gray-400">anos de experiência</p>
+            </div>
+          </div>
+
+          <div class="reveal" data-delay="1">
+            <span class="font-semibold tracking-wide uppercase text-sm" style="color: var(--primary)">Sobre o Studio Nova</span>
+            <!-- EDITAR: título e texto da seção "sobre" -->
+            <h2 class="font-display text-4xl lg:text-5xl font-semibold mt-3 mb-6 leading-tight">
+              Um espaço dedicado ao seu resultado
+            </h2>
+            <p class="text-gray-500 text-lg leading-relaxed mb-5">
+              Nascemos para transformar o atendimento em uma experiência leve
+              e transparente. Cada etapa — do primeiro contato ao pós-venda —
+              foi pensada para você se sentir seguro e bem cuidado.
+            </p>
+            <ul class="space-y-4 mb-9">
+              <li class="flex items-start gap-3">
+                <span class="mt-1 grid place-items-center w-6 h-6 rounded-full text-xs" style="background: var(--surface); color: var(--primary)"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+                <span class="text-gray-600">Equipe especializada e em constante atualização</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="mt-1 grid place-items-center w-6 h-6 rounded-full text-xs" style="background: var(--surface); color: var(--primary)"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+                <span class="text-gray-600">Processos claros, sem letras miúdas</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="mt-1 grid place-items-center w-6 h-6 rounded-full text-xs" style="background: var(--surface); color: var(--primary)"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+                <span class="text-gray-600">Padrão de qualidade em cada detalhe</span>
+              </li>
+            </ul>
+            <a href="#contato" class="btn-primary inline-flex rounded-full px-7 py-3 font-semibold">Conhecer o espaço</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SERVIÇOS =====================
+         EDITAR: troque nome, descrição e preço de cada card.
+         Para adicionar/remover um serviço, copie ou apague um <article> inteiro. -->
+    <section id="servicos" class="py-24 lg:py-32" style="background: color-mix(in srgb, var(--surface) 55%, white)">
+      <div class="container mx-auto px-5">
+        <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+          <span class="font-semibold tracking-wide uppercase text-sm" style="color: var(--primary)">Nossos serviços</span>
+          <h2 class="font-display text-4xl lg:text-5xl font-semibold mt-3 mb-4 leading-tight">
+            Feito sob medida pra você
+          </h2>
+          <p class="text-gray-500 text-lg">
+            Escolha o atendimento ideal pro seu momento. Qualidade e cuidado
+            em cada detalhe.
+          </p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-7">
+          <!-- Card de serviço (repita este bloco para cada serviço) -->
+          <article class="card-clean reveal bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100">
+            <div class="overflow-hidden h-52">
+              <img src="https://picsum.photos/seed/nova-serv-1/700/500" alt="Sessão Individual" class="gallery-img w-full h-full object-cover" loading="lazy" />
+            </div>
+            <div class="p-7">
+              <h3 class="font-display text-2xl font-semibold mb-2">Sessão Individual</h3>
+              <p class="text-gray-500 text-sm leading-relaxed mb-5">Atendimento único, focado 100% nas suas necessidades do momento.</p>
+              <div class="flex items-center justify-between">
+                <span class="font-semibold" style="color: var(--primary)">a partir de R$ 90</span>
+                <a href="#contato" class="text-sm font-semibold text-gray-400 hover:text-[var(--primary)] transition inline-flex items-center gap-1">Agendar <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card-clean reveal" data-delay="1">
+            <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 h-full">
+              <div class="overflow-hidden h-52">
+                <img src="https://picsum.photos/seed/nova-serv-2/700/500" alt="Pacote Essencial" class="gallery-img w-full h-full object-cover" loading="lazy" />
+              </div>
+              <div class="p-7">
+                <h3 class="font-display text-2xl font-semibold mb-2">Pacote Essencial</h3>
+                <p class="text-gray-500 text-sm leading-relaxed mb-5">Um combo pensado pra quem quer resultado contínuo com economia.</p>
+                <div class="flex items-center justify-between">
+                  <span class="font-semibold" style="color: var(--primary)">a partir de R$ 220</span>
+                  <a href="#contato" class="text-sm font-semibold text-gray-400 hover:text-[var(--primary)] transition inline-flex items-center gap-1">Agendar <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card-clean reveal" data-delay="2">
+            <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 h-full">
+              <div class="overflow-hidden h-52">
+                <img src="https://picsum.photos/seed/nova-serv-3/700/500" alt="Atendimento Express" class="gallery-img w-full h-full object-cover" loading="lazy" />
+              </div>
+              <div class="p-7">
+                <h3 class="font-display text-2xl font-semibold mb-2">Atendimento Express</h3>
+                <p class="text-gray-500 text-sm leading-relaxed mb-5">Praticidade sem abrir mão da qualidade, pra rotinas corridas.</p>
+                <div class="flex items-center justify-between">
+                  <span class="font-semibold" style="color: var(--primary)">a partir de R$ 60</span>
+                  <a href="#contato" class="text-sm font-semibold text-gray-400 hover:text-[var(--primary)] transition inline-flex items-center gap-1">Agendar <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card-clean reveal">
+            <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 h-full">
+              <div class="overflow-hidden h-52">
+                <img src="https://picsum.photos/seed/nova-serv-4/700/500" alt="Consultoria Personalizada" class="gallery-img w-full h-full object-cover" loading="lazy" />
+              </div>
+              <div class="p-7">
+                <h3 class="font-display text-2xl font-semibold mb-2">Consultoria Personalizada</h3>
+                <p class="text-gray-500 text-sm leading-relaxed mb-5">Avaliação individual pra montar o plano ideal pro seu caso.</p>
+                <div class="flex items-center justify-between">
+                  <span class="font-semibold" style="color: var(--primary)">a partir de R$ 150</span>
+                  <a href="#contato" class="text-sm font-semibold text-gray-400 hover:text-[var(--primary)] transition inline-flex items-center gap-1">Agendar <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card-clean reveal" data-delay="1">
+            <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 h-full">
+              <div class="overflow-hidden h-52">
+                <img src="https://picsum.photos/seed/nova-serv-5/700/500" alt="Experiência Premium" class="gallery-img w-full h-full object-cover" loading="lazy" />
+              </div>
+              <div class="p-7">
+                <h3 class="font-display text-2xl font-semibold mb-2">Experiência Premium</h3>
+                <p class="text-gray-500 text-sm leading-relaxed mb-5">Nosso atendimento mais completo, do início ao fim, sem pressa.</p>
+                <div class="flex items-center justify-between">
+                  <span class="font-semibold" style="color: var(--primary)">a partir de R$ 320</span>
+                  <a href="#contato" class="text-sm font-semibold text-gray-400 hover:text-[var(--primary)] transition inline-flex items-center gap-1">Agendar <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card-clean reveal" data-delay="2">
+            <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 h-full">
+              <div class="overflow-hidden h-52">
+                <img src="https://picsum.photos/seed/nova-serv-6/700/500" alt="Acompanhamento Contínuo" class="gallery-img w-full h-full object-cover" loading="lazy" />
+              </div>
+              <div class="p-7">
+                <h3 class="font-display text-2xl font-semibold mb-2">Acompanhamento Contínuo</h3>
+                <p class="text-gray-500 text-sm leading-relaxed mb-5">Plano mensal com encontros recorrentes e suporte entre sessões.</p>
+                <div class="flex items-center justify-between">
+                  <span class="font-semibold" style="color: var(--primary)">a partir de R$ 280/mês</span>
+                  <a href="#contato" class="text-sm font-semibold text-gray-400 hover:text-[var(--primary)] transition inline-flex items-center gap-1">Agendar <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== GALERIA =====================
+         EDITAR: troque as imagens pelas fotos reais do negócio. -->
+    <section id="galeria" class="py-24 lg:py-32">
+      <div class="container mx-auto px-5">
+        <div class="text-center max-w-2xl mx-auto mb-14 reveal">
+          <span class="font-semibold tracking-wide uppercase text-sm" style="color: var(--primary)">Galeria</span>
+          <h2 class="font-display text-4xl lg:text-5xl font-semibold mt-3 mb-4 leading-tight">Trabalhos que falam por si</h2>
+          <p class="text-gray-500 text-lg">Um pouco do cuidado e do capricho que colocamos em cada atendimento.</p>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div class="gallery-item reveal overflow-hidden rounded-2xl row-span-2">
+            <img src="https://picsum.photos/seed/nova-gal-1/600/720" alt="Trabalho em destaque" class="gallery-img w-full h-full object-cover min-h-[260px]" loading="lazy" />
+          </div>
+          <div class="gallery-item reveal overflow-hidden rounded-2xl" data-delay="1">
+            <img src="https://picsum.photos/seed/nova-gal-2/500/360" alt="Resultado 2" class="gallery-img w-full h-44 object-cover" loading="lazy" />
+          </div>
+          <div class="gallery-item reveal overflow-hidden rounded-2xl" data-delay="2">
+            <img src="https://picsum.photos/seed/nova-gal-3/500/360" alt="Resultado 3" class="gallery-img w-full h-44 object-cover" loading="lazy" />
+          </div>
+          <div class="gallery-item reveal overflow-hidden rounded-2xl row-span-2" data-delay="1">
+            <img src="https://picsum.photos/seed/nova-gal-4/600/720" alt="Resultado 4" class="gallery-img w-full h-full object-cover min-h-[260px]" loading="lazy" />
+          </div>
+          <div class="gallery-item reveal overflow-hidden rounded-2xl" data-delay="2">
+            <img src="https://picsum.photos/seed/nova-gal-5/500/360" alt="Resultado 5" class="gallery-img w-full h-44 object-cover" loading="lazy" />
+          </div>
+          <div class="gallery-item reveal overflow-hidden rounded-2xl" data-delay="3">
+            <img src="https://picsum.photos/seed/nova-gal-6/500/360" alt="Resultado 6" class="gallery-img w-full h-44 object-cover" loading="lazy" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== DEPOIMENTOS =====================
+         EDITAR: troque pelos depoimentos reais de clientes (com autorização deles). -->
+    <section id="depoimentos" class="py-24 lg:py-32" style="background: color-mix(in srgb, var(--surface) 55%, white)">
+      <div class="container mx-auto px-5">
+        <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+          <span class="font-semibold tracking-wide uppercase text-sm" style="color: var(--primary)">Depoimentos</span>
+          <h2 class="font-display text-4xl lg:text-5xl font-semibold mt-3 mb-4 leading-tight">Quem já passou por aqui</h2>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-7">
+          <div class="card-clean reveal bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
+            <div class="flex gap-1 mb-4" style="color: var(--accent)">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>
+            </div>
+            <p class="text-gray-600 leading-relaxed mb-6">"Atendimento impecável do início ao fim. Me senti segura em cada etapa e o resultado superou o que eu esperava."</p>
+            <div class="flex items-center gap-3">
+              <img src="https://picsum.photos/seed/nova-cliente-1/80/80" alt="Cliente" class="w-11 h-11 rounded-full object-cover" loading="lazy" />
+              <div>
+                <p class="font-semibold text-sm text-gray-800">Marina Costa</p>
+                <p class="text-xs text-gray-400">Cliente desde 2023</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-clean reveal bg-white rounded-3xl p-8 shadow-sm border border-gray-100" data-delay="1">
+            <div class="flex gap-1 mb-4" style="color: var(--accent)">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>
+            </div>
+            <p class="text-gray-600 leading-relaxed mb-6">"Profissionalismo do começo ao fim. Consegui agendar em menos de um minuto e o atendimento foi pontual."</p>
+            <div class="flex items-center gap-3">
+              <img src="https://picsum.photos/seed/nova-cliente-2/80/80" alt="Cliente" class="w-11 h-11 rounded-full object-cover" loading="lazy" />
+              <div>
+                <p class="font-semibold text-sm text-gray-800">Rafael Souza</p>
+                <p class="text-xs text-gray-400">Cliente desde 2022</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-clean reveal bg-white rounded-3xl p-8 shadow-sm border border-gray-100" data-delay="2">
+            <div class="flex gap-1 mb-4" style="color: var(--accent)">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>
+            </div>
+            <p class="text-gray-600 leading-relaxed mb-6">"O que mais me marcou foi a transparência: sabia exatamente o que esperar antes mesmo de fechar."</p>
+            <div class="flex items-center gap-3">
+              <img src="https://picsum.photos/seed/nova-cliente-3/80/80" alt="Cliente" class="w-11 h-11 rounded-full object-cover" loading="lazy" />
+              <div>
+                <p class="font-semibold text-sm text-gray-800">Juliana Alves</p>
+                <p class="text-xs text-gray-400">Cliente desde 2024</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PLANOS =====================
+         EDITAR: nomes, preços e itens de cada plano. Para destacar
+         outro plano como "mais popular", mova a classe de destaque
+         (borda + selo) para o <div> desejado. -->
+    <section id="planos" class="py-24 lg:py-32">
+      <div class="container mx-auto px-5">
+        <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+          <span class="font-semibold tracking-wide uppercase text-sm" style="color: var(--primary)">Planos</span>
+          <h2 class="font-display text-4xl lg:text-5xl font-semibold mt-3 mb-4 leading-tight">Pacotes pensados pra você</h2>
+          <p class="text-gray-500 text-lg">Economize com atendimento recorrente. Cancele quando quiser.</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-7 max-w-5xl mx-auto items-stretch">
+          <!-- Essencial -->
+          <div class="card-clean reveal bg-white rounded-3xl p-8 border border-gray-100 shadow-sm flex flex-col">
+            <h3 class="font-display text-2xl font-semibold">Essencial</h3>
+            <p class="text-gray-400 text-sm mt-1 mb-6">Pra manter a rotina em dia</p>
+            <p class="mb-6"><span class="font-display text-5xl font-semibold">R$ 99</span><span class="text-gray-400">/mês</span></p>
+            <ul class="space-y-3 text-sm text-gray-600 mb-8 flex-1">
+              <li class="flex gap-3"><span style="color: var(--primary)"><svg class="w-4 h-4 inline -mt-0.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span> 2 sessões por mês</li>
+              <li class="flex gap-3"><span style="color: var(--primary)"><svg class="w-4 h-4 inline -mt-0.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span> 1 consultoria rápida</li>
+              <li class="flex gap-3"><span style="color: var(--primary)"><svg class="w-4 h-4 inline -mt-0.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span> Agendamento prioritário</li>
+            </ul>
+            <a href="#contato" class="btn-ghost text-center rounded-full px-6 py-3 font-semibold">Escolher plano</a>
+          </div>
+
+          <!-- Profissional (destaque) -->
+          <div class="card-clean reveal relative bg-white rounded-3xl p-8 shadow-xl flex flex-col scale-100 md:scale-105" style="border: 2px solid var(--primary)" data-delay="1">
+            <span class="absolute -top-4 left-1/2 -translate-x-1/2 text-white text-xs font-semibold px-4 py-1.5 rounded-full" style="background: var(--primary)">Mais popular</span>
+            <h3 class="font-display text-2xl font-semibold">Profissional</h3>
+            <p class="text-gray-400 text-sm mt-1 mb-6">Nosso melhor custo-benefício</p>
+            <p class="mb-6"><span class="font-display text-5xl font-semibold">R$ 189</span><span class="text-gray-400">/mês</span></p>
+            <ul class="space-y-3 text-sm text-gray-600 mb-8 flex-1">
+              <li class="flex gap-3"><span style="color: var(--primary)"><svg class="w-4 h-4 inline -mt-0.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span> 4 sessões por mês</li>
+              <li class="flex gap-3"><span style="color: var(--primary)"><svg class="w-4 h-4 inline -mt-0.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span> Consultoria completa</li>
+              <li class="flex gap-3"><span style="color: var(--primary)"><svg class="w-4 h-4 inline -mt-0.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span> Suporte via WhatsApp</li>
+              <li class="flex gap-3"><span style="color: var(--primary)"><svg class="w-4 h-4 inline -mt-0.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span> Agendamento prioritário</li>
+            </ul>
+            <a href="#contato" class="btn-primary text-center rounded-full px-6 py-3 font-semibold">Escolher plano</a>
+          </div>
+
+          <!-- Premium -->
+          <div class="card-clean reveal bg-white rounded-3xl p-8 border border-gray-100 shadow-sm flex flex-col" data-delay="2">
+            <h3 class="font-display text-2xl font-semibold">Premium</h3>
+            <p class="text-gray-400 text-sm mt-1 mb-6">Pra quem quer o pacote completo</p>
+            <p class="mb-6"><span class="font-display text-5xl font-semibold">R$ 349</span><span class="text-gray-400">/mês</span></p>
+            <ul class="space-y-3 text-sm text-gray-600 mb-8 flex-1">
+              <li class="flex gap-3"><span style="color: var(--primary)"><svg class="w-4 h-4 inline -mt-0.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span> Sessões ilimitadas</li>
+              <li class="flex gap-3"><span style="color: var(--primary)"><svg class="w-4 h-4 inline -mt-0.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span> Consultoria + acompanhamento</li>
+              <li class="flex gap-3"><span style="color: var(--primary)"><svg class="w-4 h-4 inline -mt-0.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span> Atendimento VIP</li>
+              <li class="flex gap-3"><span style="color: var(--primary)"><svg class="w-4 h-4 inline -mt-0.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span> Suporte prioritário 7 dias</li>
+            </ul>
+            <a href="#contato" class="btn-ghost text-center rounded-full px-6 py-3 font-semibold">Escolher plano</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FAQ =====================
+         Feito com <details>/<summary> nativos: acessível e sem JS.
+         EDITAR: perguntas e respostas. Para adicionar uma pergunta,
+         copie um bloco <details class="faq-item"> inteiro. -->
+    <section id="faq" class="py-24 lg:py-32" style="background: color-mix(in srgb, var(--surface) 55%, white)">
+      <div class="container mx-auto px-5 max-w-3xl">
+        <div class="text-center mb-14 reveal">
+          <span class="font-semibold tracking-wide uppercase text-sm" style="color: var(--primary)">Dúvidas frequentes</span>
+          <h2 class="font-display text-4xl lg:text-5xl font-semibold mt-3 leading-tight">Perguntas frequentes</h2>
+        </div>
+
+        <div class="space-y-4 reveal">
+          <details class="faq-item bg-white rounded-2xl border border-gray-100 shadow-sm p-6" open>
+            <summary class="flex items-center justify-between gap-4 font-semibold text-gray-800">
+              Como funciona o agendamento?
+              <span class="faq-icon shrink-0 grid place-items-center w-8 h-8 rounded-full" style="background: var(--surface); color: var(--primary)">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+              </span>
+            </summary>
+            <p class="faq-answer text-gray-500 text-sm leading-relaxed mt-4">Você agenda direto pelo WhatsApp ou pelo formulário desta página. Confirmamos o horário em poucos minutos.</p>
+          </details>
+
+          <details class="faq-item bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+            <summary class="flex items-center justify-between gap-4 font-semibold text-gray-800">
+              Quais formas de pagamento vocês aceitam?
+              <span class="faq-icon shrink-0 grid place-items-center w-8 h-8 rounded-full" style="background: var(--surface); color: var(--primary)">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+              </span>
+            </summary>
+            <p class="faq-answer text-gray-500 text-sm leading-relaxed mt-4">Pix, cartão de crédito/débito e dinheiro. Os planos mensais também podem ser assinados via cartão.</p>
+          </details>
+
+          <details class="faq-item bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+            <summary class="flex items-center justify-between gap-4 font-semibold text-gray-800">
+              Posso cancelar ou remarcar meu horário?
+              <span class="faq-icon shrink-0 grid place-items-center w-8 h-8 rounded-full" style="background: var(--surface); color: var(--primary)">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+              </span>
+            </summary>
+            <p class="faq-answer text-gray-500 text-sm leading-relaxed mt-4">Sim, com até 24h de antecedência sem custo. Cancelamentos de última hora podem ter uma taxa.</p>
+          </details>
+
+          <details class="faq-item bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+            <summary class="flex items-center justify-between gap-4 font-semibold text-gray-800">
+              Os planos mensais têm fidelidade?
+              <span class="faq-icon shrink-0 grid place-items-center w-8 h-8 rounded-full" style="background: var(--surface); color: var(--primary)">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+              </span>
+            </summary>
+            <p class="faq-answer text-gray-500 text-sm leading-relaxed mt-4">Não. Você pode cancelar quando quiser, sem multa ou burocracia.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CONTATO / CTA FINAL =====================
+         EDITAR: número de WhatsApp, e-mail, endereço e horário.
+         Esta seção não tem backend — o "Enviar" abre o WhatsApp
+         com a mensagem pré-preenchida (veja README para outras opções). -->
+    <section id="contato" class="py-24 lg:py-32">
+      <div class="container mx-auto px-5">
+        <div class="rounded-[2.5rem] overflow-hidden relative" style="background: var(--primary-dark)">
+          <div class="pointer-events-none absolute -top-20 -right-20 w-80 h-80 rounded-full blur-3xl opacity-30" style="background: var(--primary-soft)"></div>
+          <div class="relative grid lg:grid-cols-2 gap-10 p-10 sm:p-14 lg:p-16 items-center">
+            <div class="reveal text-white">
+              <span class="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium mb-6 bg-white/10">
+                Fale com a gente
+              </span>
+              <h2 class="font-display text-4xl lg:text-5xl font-semibold mb-5 leading-tight">
+                Pronto pra agendar seu horário?
+              </h2>
+              <p class="text-white/70 text-lg leading-relaxed mb-8 max-w-md">
+                Chama no WhatsApp e a gente confirma seu atendimento em poucos minutos.
+              </p>
+
+              <div class="space-y-3 text-white/80 text-sm mb-8">
+                <p class="flex items-center gap-3"><svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> (11) 99999-9999</p>
+                <p class="flex items-center gap-3"><svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Rua Exemplo, 123 — Centro, Sua Cidade</p>
+                <p class="flex items-center gap-3"><svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Seg a sáb, 9h às 19h</p>
+              </div>
+            </div>
+
+            <form
+              id="contactForm"
+              class="reveal bg-white rounded-3xl p-7 sm:p-8 shadow-2xl"
+              data-delay="1"
+            >
+              <div class="space-y-4 mb-6">
+                <div>
+                  <label class="block text-sm font-medium text-gray-600 mb-1.5" for="nome">Nome</label>
+                  <input id="nome" name="nome" type="text" required class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2" style="--tw-ring-color: var(--primary)" placeholder="Seu nome" />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-600 mb-1.5" for="servico">Serviço de interesse</label>
+                  <select id="servico" name="servico" class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2" style="--tw-ring-color: var(--primary)">
+                    <option>Sessão Individual</option>
+                    <option>Pacote Essencial</option>
+                    <option>Atendimento Express</option>
+                    <option>Consultoria Personalizada</option>
+                    <option>Experiência Premium</option>
+                    <option>Ainda não sei</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-600 mb-1.5" for="mensagem">Mensagem (opcional)</label>
+                  <textarea id="mensagem" name="mensagem" rows="3" class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 resize-none" style="--tw-ring-color: var(--primary)" placeholder="Conte um pouco do que você precisa"></textarea>
+                </div>
+              </div>
+              <button type="submit" class="btn-primary w-full rounded-full px-6 py-3.5 font-semibold">
+                Enviar pelo WhatsApp
+              </button>
+              <p class="text-xs text-gray-400 text-center mt-3">Vamos abrir o WhatsApp com sua mensagem pronta.</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="pt-16 pb-8 border-t border-gray-100">
+      <div class="container mx-auto px-5">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+          <div class="lg:col-span-2">
+            <a href="#hero" class="flex items-center gap-2 mb-4">
+              <span class="grid place-items-center w-9 h-9 rounded-xl text-white text-base" style="background: var(--primary)">N</span>
+              <span class="font-display text-xl font-semibold">Studio<span style="color: var(--primary)">Nova</span></span>
+            </a>
+            <p class="text-gray-500 text-sm leading-relaxed max-w-sm">
+              Atendimento premium com agendamento online. Experiência
+              personalizada do primeiro contato ao resultado final.
+            </p>
+          </div>
+
+          <div>
+            <p class="font-semibold text-sm text-gray-800 mb-4">Navegação</p>
+            <ul class="space-y-2.5 text-sm text-gray-500">
+              <li><a href="#sobre" class="hover:text-[var(--primary)] transition">Sobre</a></li>
+              <li><a href="#servicos" class="hover:text-[var(--primary)] transition">Serviços</a></li>
+              <li><a href="#planos" class="hover:text-[var(--primary)] transition">Planos</a></li>
+              <li><a href="#faq" class="hover:text-[var(--primary)] transition">FAQ</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <p class="font-semibold text-sm text-gray-800 mb-4">Redes sociais</p>
+            <div class="flex items-center gap-3">
+              <!-- EDITAR: troque os links "#" pelos perfis reais -->
+              <a href="#" aria-label="Instagram" class="grid place-items-center w-10 h-10 rounded-full border border-gray-200 hover:border-transparent hover:text-white transition" onmouseover="this.style.background='var(--primary)'" onmouseout="this.style.background=''">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.25.07 1.65.07 4.85s0 3.6-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.25.06-1.65.07-4.85.07s-3.6 0-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.85C2.42 3.93 3.94 2.4 7.16 2.25 8.4 2.2 8.8 2.2 12 2.2zm0 3.05a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5zm0 11.13a4.38 4.38 0 1 1 0-8.75 4.38 4.38 0 0 1 0 8.75zm7.02-11.4a1.58 1.58 0 1 1-3.16 0 1.58 1.58 0 0 1 3.16 0z"/></svg>
+              </a>
+              <a href="#" aria-label="WhatsApp" class="grid place-items-center w-10 h-10 rounded-full border border-gray-200 hover:border-transparent hover:text-white transition" onmouseover="this.style.background='var(--primary)'" onmouseout="this.style.background=''">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.79.47 3.51 1.36 5.03L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.79 14.14c-.24.68-1.4 1.3-1.94 1.38-.5.08-1.13.11-1.82-.12-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.8-4.16-4.94-4.36-.14-.19-1.19-1.58-1.19-3.02 0-1.43.75-2.14 1.02-2.43.27-.29.58-.36.78-.36.19 0 .39 0 .56.01.18.01.42-.07.65.5.24.58.81 2.01.88 2.16.07.15.12.32.02.51-.1.19-.15.31-.3.48-.14.17-.31.37-.44.5-.15.14-.3.3-.13.58.17.29.75 1.24 1.61 2 1.11.99 2.04 1.3 2.33 1.44.29.15.46.13.63-.05.17-.19.72-.84.91-1.13.19-.29.38-.24.63-.14.26.1 1.65.78 1.94.92.28.14.47.21.53.33.07.12.07.68-.17 1.36z"/></svg>
+              </a>
+              <a href="#" aria-label="Facebook" class="grid place-items-center w-10 h-10 rounded-full border border-gray-200 hover:border-transparent hover:text-white transition" onmouseover="this.style.background='var(--primary)'" onmouseout="this.style.background=''">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M13.5 21v-8.02h2.7l.4-3.13h-3.1V7.86c0-.9.25-1.52 1.55-1.52h1.66V3.53c-.29-.04-1.27-.12-2.4-.12-2.38 0-4.01 1.45-4.01 4.11v2.3H7.6v3.13h2.7V21h3.2z"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-8 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-400">
+          <!-- EDITAR: nome do negócio e ano -->
+          <p>© 2026 Studio Nova. Todos os direitos reservados.</p>
+          <p>Feito com este template — <span class="text-gray-300">substitua por seu crédito, se quiser</span></p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ===================== BOTÃO FLUTUANTE WHATSAPP =====================
+         EDITAR: troque o número no href (formato: 55 + DDD + número, só dígitos). -->
+    <a
+      href="https://wa.me/5511999999999?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20um%20hor%C3%A1rio."
+      target="_blank"
+      rel="noopener"
+      class="whatsapp-float grid place-items-center w-14 h-14 rounded-full text-white"
+      style="background: #25d366"
+      aria-label="Chamar no WhatsApp"
+    >
+      <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.79.47 3.51 1.36 5.03L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.79 14.14c-.24.68-1.4 1.3-1.94 1.38-.5.08-1.13.11-1.82-.12-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.8-4.16-4.94-4.36-.14-.19-1.19-1.58-1.19-3.02 0-1.43.75-2.14 1.02-2.43.27-.29.58-.36.78-.36.19 0 .39 0 .56.01.18.01.42-.07.65.5.24.58.81 2.01.88 2.16.07.15.12.32.02.51-.1.19-.15.31-.3.48-.14.17-.31.37-.44.5-.15.14-.3.3-.13.58.17.29.75 1.24 1.61 2 1.11.99 2.04 1.3 2.33 1.44.29.15.46.13.63-.05.17-.19.72-.84.91-1.13.19-.29.38-.24.63-.14.26.1 1.65.78 1.94.92.28.14.47.21.53.33.07.12.07.68-.17 1.36z"/></svg>
+    </a>
+
+    <script>
+      // ===== Menu mobile =====
+      const menuToggle = document.getElementById("menuToggle");
+      const mobileMenu = document.getElementById("mobileMenu");
+      menuToggle.addEventListener("click", () => {
+        const isOpen = !mobileMenu.classList.contains("hidden");
+        mobileMenu.classList.toggle("hidden");
+        menuToggle.setAttribute("aria-expanded", String(!isOpen));
+      });
+      mobileMenu.querySelectorAll("a").forEach((link) =>
+        link.addEventListener("click", () => mobileMenu.classList.add("hidden"))
+      );
+
+      // ===== Navbar com fundo ao rolar =====
+      const navbar = document.getElementById("navbar");
+      window.addEventListener("scroll", () => {
+        navbar.classList.toggle("nav-scrolled", window.scrollY > 20);
+      });
+
+      // ===== Revelar elementos ao entrar na tela =====
+      const revealEls = document.querySelectorAll(".reveal");
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.15, rootMargin: "0px 0px -60px 0px" }
+      );
+      revealEls.forEach((el) => revealObserver.observe(el));
+
+      // ===== Formulário de contato → abre o WhatsApp com a mensagem pronta =====
+      // Não há backend aqui. Isso é o suficiente pra maioria dos pequenos
+      // negócios; se quiser salvar os leads em algum lugar, veja o README
+      // (seção "Conectando o formulário a um backend real").
+      const WHATSAPP_NUMBER = "5511999999999"; // EDITAR: mesmo número do botão flutuante
+
+      document.getElementById("contactForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const nome = document.getElementById("nome").value.trim();
+        const servico = document.getElementById("servico").value;
+        const mensagem = document.getElementById("mensagem").value.trim();
+
+        const texto =
+          `Olá! Meu nome é ${nome}.\n` +
+          `Tenho interesse em: ${servico}.` +
+          (mensagem ? `\n\n${mensagem}` : "");
+
+        window.open(
+          `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(texto)}`,
+          "_blank"
+        );
+      });
+    </script>
+  </body>
+</html>

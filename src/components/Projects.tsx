@@ -1,11 +1,13 @@
 import eternodiaScreenshot from "../assets/project-eternodia.png";
 import landingScreenshot from "../assets/project-landing.png";
+import studioNovaScreenshot from "../assets/project-studio-nova.png";
 import oslineImage from "../assets/OS-Line.png";
 import { projects } from "../data/projects";
 
 const IMAGES: Record<string, string> = {
   "Eterno Dia": eternodiaScreenshot,
-  "Landing Page Premium": landingScreenshot,
+  "Belle Studio": landingScreenshot,
+  "Studio Nova": studioNovaScreenshot,
   OSLine: oslineImage,
 };
 
@@ -37,7 +39,7 @@ export function Projects() {
           Alguns trabalhos recentes
         </h2>
 
-        <div className="grid gap-8 md:grid-cols-2">
+        <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
           {projects.map((project) => {
             const image = IMAGES[project.title];
             return (

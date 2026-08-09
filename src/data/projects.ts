@@ -35,11 +35,19 @@ export const projects: Project[] = [
     note: "Produto ainda não lançado publicamente.",
   },
   {
-    title: "Landing Page Premium",
+    title: "Belle Studio",
     description:
-      "Template de landing page para negócios locais, com sistema de 4 paletas de cor prontas, FAQ acessível sem JS e formulário que integra direto com WhatsApp. Construído para venda como produto.",
+      "Landing page para salão de beleza — hero animado, catálogo de serviços, galeria, planos e depoimentos. Construída como modelo de site institucional para negócios locais.",
+    tags: ["HTML", "Tailwind CSS", "JavaScript"],
+    status: "Projeto de demonstração",
+    demoUrl: "/demos/landing-premium/index.html",
+  },
+  {
+    title: "Studio Nova",
+    description:
+      "Sistema de landing page multi-nicho, construído para venda como produto: 4 paletas de cor prontas (Índigo, Esmeralda, Rosé, Grafite), FAQ acessível sem JS e formulário integrado com WhatsApp — um único código-base cobrindo vários segmentos de negócio.",
     tags: ["HTML", "Tailwind CSS", "JavaScript"],
     status: "Produto à venda · pronto",
-    demoUrl: "/demos/landing-premium/index.html",
+    demoUrl: "/demos/studio-nova/index.html",
   },
 ];
