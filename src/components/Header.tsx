@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const NAV_LINKS = [
   { href: "#sobre", label: "Sobre" },
@@ -8,8 +8,20 @@ const NAV_LINKS = [
   { href: "#contato", label: "Contato" },
 ];
 
+type Indicator = { left: number; width: number };
+
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const navRef = useRef<HTMLUListElement>(null);
+  const [indicator, setIndicator] = useState<Indicator | null>(null);
+
+  function handleLinkHover(e: React.MouseEvent<HTMLAnchorElement>) {
+    const nav = navRef.current;
+    if (!nav) return;
+    const linkRect = e.currentTarget.getBoundingClientRect();
+    const navRect = nav.getBoundingClientRect();
+    setIndicator({ left: linkRect.left - navRect.left, width: linkRect.width });
+  }
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-bg/80 backdrop-blur">
@@ -18,16 +30,31 @@ export function Header() {
           Ramony<span className="text-primary">ML</span>
         </a>
 
-        <ul className="hidden items-center gap-8 text-sm text-muted md:flex">
+        <ul
+          ref={navRef}
+          onMouseLeave={() => setIndicator(null)}
+          className="relative hidden items-center gap-8 text-sm text-muted md:flex"
+        >
           {NAV_LINKS.map((link) => (
             <li key={link.href}>
-              <a href={link.href} className="nav-link">
-                <span className="nav-link-text" data-text={link.label}>
-                  <span className="nav-link-text-inner">{link.label}</span>
-                </span>
+              <a
+                href={link.href}
+                onMouseEnter={handleLinkHover}
+                className="transition-colors hover:text-ink"
+              >
+                {link.label}
               </a>
             </li>
           ))}
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute -bottom-1.5 h-0.5 rounded-full bg-primary transition-[left,width,opacity] duration-300 ease-out"
+            style={{
+              left: indicator?.left ?? 0,
+              width: indicator?.width ?? 0,
+              opacity: indicator ? 1 : 0,
+            }}
+          />
         </ul>
 
         <div className="flex items-center gap-3">
