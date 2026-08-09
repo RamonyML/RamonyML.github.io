@@ -1,10 +1,12 @@
 import eternodiaScreenshot from "../assets/project-eternodia.png";
 import landingScreenshot from "../assets/project-landing.png";
+import oslineImage from "../assets/OS-Line.png";
 import { projects } from "../data/projects";
 
 const IMAGES: Record<string, string> = {
   "Eterno Dia": eternodiaScreenshot,
   "Landing Page Premium": landingScreenshot,
+  OSLine: oslineImage,
 };
 
 const PLACEHOLDER_ICONS: Record<string, React.ReactNode> = {
@@ -20,20 +22,6 @@ const PLACEHOLDER_ICONS: Record<string, React.ReactNode> = {
     >
       <rect width="16" height="20" x="4" y="2" rx="2" />
       <path d="M9 6h6M9 10h6M9 14h4" />
-    </svg>
-  ),
-  OSLine: (
-    <svg
-      className="h-7 w-7"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      viewBox="0 0 24 24"
-    >
-      <path d="M12 2 2 7l10 5 10-5-10-5Z" />
-      <path d="m2 17 10 5 10-5M2 12l10 5 10-5" />
     </svg>
   ),
 };
