@@ -5,7 +5,7 @@ import { useParallax } from "../hooks/useParallax";
 import { useTypewriter } from "../hooks/useTypewriter";
 
 const HERO_DESCRIPTION =
-  "Construo produtos web de ponta a ponta — de SaaS com pagamentos a plataformas operacionais com integrações complexas — usando React, TypeScript, Node.js e Firebase.";
+  "Construo produtos web de ponta a ponta, de SaaS com pagamentos a plataformas operacionais com integrações complexas, usando React, TypeScript, Node.js e Firebase.";
 
 export function Hero() {
   const { ref: bgRef, offset } = useParallax(0.15);
