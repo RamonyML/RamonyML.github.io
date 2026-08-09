@@ -50,4 +50,12 @@ export const projects: Project[] = [
     status: "Produto à venda · pronto",
     demoUrl: "/demos/studio-nova/index.html",
   },
+  {
+    title: "Exata Contábil",
+    description:
+      "Landing page para escritórios de contabilidade, construída do zero com identidade própria: predominância branca com detalhes em azul, ícones Lucide e fundos fotográficos com efeito parallax intercalados entre as seções.",
+    tags: ["HTML", "Tailwind CSS", "JavaScript", "Lucide Icons"],
+    status: "Produto à venda · pronto",
+    demoUrl: "/demos/contabilidade/index.html",
+  },
 ];

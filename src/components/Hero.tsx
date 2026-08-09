@@ -1,9 +1,16 @@
+import { useState } from "react";
 import heroBg from "../assets/fundo01.jpeg";
 import photo from "../assets/ramonyml.png";
 import { useParallax } from "../hooks/useParallax";
+import { useTypewriter } from "../hooks/useTypewriter";
+
+const HERO_DESCRIPTION =
+  "Construo produtos web de ponta a ponta — de SaaS com pagamentos a plataformas operacionais com integrações complexas — usando React, TypeScript, Node.js e Firebase.";
 
 export function Hero() {
   const { ref: bgRef, offset } = useParallax(0.15);
+  const [pinned, setPinned] = useState(false);
+  const { output, done } = useTypewriter(HERO_DESCRIPTION, 34, 500);
 
   return (
     <section
@@ -48,11 +55,24 @@ export function Hero() {
             Ramony <span className="text-primary">Lima</span>
           </h1>
 
-          <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted lg:mx-0">
-            Construo produtos web de ponta a ponta — de SaaS com pagamentos a
-            plataformas operacionais com integrações complexas — usando
-            React, TypeScript, Node.js e Firebase.
-          </p>
+          <div className="relative mx-auto mt-6 max-w-xl lg:mx-0">
+            {/* Reserva a altura final do texto (invisível) pra digitação
+                não empurrar o resto do layout enquanto "escreve". */}
+            <p aria-hidden="true" className="invisible text-lg leading-relaxed">
+              {HERO_DESCRIPTION}
+            </p>
+            <p className="absolute inset-0 text-lg leading-relaxed text-muted">
+              <span className="sr-only">{HERO_DESCRIPTION}</span>
+              <span aria-hidden="true">
+                {output}
+                <span
+                  className={`ml-0.5 inline-block h-[1.1em] w-[2px] -mb-[0.15em] bg-primary ${
+                    done ? "opacity-0 transition-opacity duration-500" : "animate-pulse"
+                  }`}
+                />
+              </span>
+            </p>
+          </div>
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4 lg:justify-start">
             <a
@@ -123,16 +143,35 @@ export function Hero() {
 
         {/* Foto — em tons de cinza por padrão (ecoa o duotone do fundo) e
             revela cor + leve zoom no hover, com um glow verde suave em
-            vez de um contorno grosso fixo. */}
-        <div className="group relative shrink-0">
-          <div className="absolute -inset-4 rounded-full bg-primary opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-25" />
+            vez de um contorno grosso fixo. Um clique fixa esse estado
+            revelado (útil pra quem usa toque, sem hover); clicar de
+            novo solta e volta ao padrão. */}
+        <div
+          className="group relative shrink-0 cursor-pointer"
+          data-pinned={pinned}
+          role="button"
+          tabIndex={0}
+          aria-pressed={pinned}
+          aria-label={
+            pinned ? "Voltar foto ao padrão" : "Fixar foto em destaque"
+          }
+          onClick={() => setPinned((v) => !v)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              setPinned((v) => !v);
+            }
+          }}
+        >
+          <div className="absolute -inset-4 rounded-full bg-primary opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-25 group-data-[pinned=true]:opacity-25" />
           <div className="relative h-56 w-56 overflow-hidden rounded-full border border-border sm:h-72 sm:w-72 lg:h-80 lg:w-80 xl:h-96 xl:w-96">
             <img
               src={photo}
               alt="Foto de Ramony Lima"
-              className="h-full w-full scale-100 object-cover object-[50%_15%] grayscale transition-all duration-500 ease-out group-hover:scale-110 group-hover:grayscale-0"
+              className="h-full w-full scale-100 object-cover object-[50%_15%] grayscale transition-all duration-500 ease-out group-hover:scale-110 group-hover:grayscale-0 group-data-[pinned=true]:scale-110 group-data-[pinned=true]:grayscale-0"
             />
           </div>
+          <div className="hero-photo-mask pointer-events-none absolute inset-0 rounded-full" />
         </div>
       </div>
     </section>

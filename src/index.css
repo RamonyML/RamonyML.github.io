@@ -53,3 +53,49 @@ body {
 ::selection {
   background: color-mix(in srgb, var(--color-primary) 30%, transparent);
 }
+
+/* Foto do Hero — máscara em anel que "abre" no hover: por padrão um
+   outline com offset negativo preenche o círculo inteiro (cobrindo a
+   foto), e no hover encolhe até virar um anel fino com espaço,
+   revelando a foto. A máscara é um elemento irmão sobreposto à foto
+   (não um descendente dela): o <img> ganha seu próprio contexto de
+   empilhamento por causa do filter/transform (pintaria por cima de um
+   outline no contêiner pai), e o contêiner da foto tem overflow
+   hidden (recortaria o anel ao crescer para fora no hover). Como
+   irmã posicionada depois na árvore, a máscara escapa dos dois
+   problemas e pinta livremente por cima. */
+.hero-photo-mask {
+  --s: 224px;
+  outline: calc(var(--s) / 2) solid
+    color-mix(in srgb, var(--color-bg) 12%, transparent);
+  outline-offset: calc(var(--s) / -2);
+  transition:
+    outline-width 0.25s ease-out,
+    outline-offset 0.25s ease-out,
+    outline-color 0.25s ease-out;
+}
+
+@media (min-width: 640px) {
+  .hero-photo-mask {
+    --s: 288px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-photo-mask {
+    --s: 320px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .hero-photo-mask {
+    --s: 384px;
+  }
+}
+
+.group:hover .hero-photo-mask,
+.group[data-pinned="true"] .hero-photo-mask {
+  outline-width: 3px;
+  outline-offset: 8px;
+  outline-color: var(--color-primary);
+}

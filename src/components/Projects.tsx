@@ -1,6 +1,7 @@
 import eternodiaScreenshot from "../assets/project-eternodia.png";
 import landingScreenshot from "../assets/project-landing.png";
 import studioNovaScreenshot from "../assets/project-studio-nova.png";
+import contabilidadeScreenshot from "../assets/project-contabilidade.png";
 import oslineImage from "../assets/OS-Line.png";
 import { projects } from "../data/projects";
 
@@ -8,6 +9,7 @@ const IMAGES: Record<string, string> = {
   "Eterno Dia": eternodiaScreenshot,
   "Belle Studio": landingScreenshot,
   "Studio Nova": studioNovaScreenshot,
+  "Exata Contábil": contabilidadeScreenshot,
   OSLine: oslineImage,
 };
 
