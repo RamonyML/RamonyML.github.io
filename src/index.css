@@ -99,3 +99,60 @@ body {
   outline-offset: 8px;
   outline-color: var(--color-primary);
 }
+
+/* ===== Hover do menu superior =====
+   Cada link tem um "eco" (::before, com o mesmo texto via data-text)
+   exatamente por baixo do texto real. Em repouso o eco fica 100%
+   coberto pelo texto real (mesma posição/tamanho). No hover: o eco
+   cai e some primeiro (sem delay), e só depois (0.15s) o texto real
+   dá um leve "pop" de escala — o eco já saiu do caminho antes do
+   texto crescer. */
+.nav-link {
+  position: relative;
+  text-decoration: none;
+  color: var(--color-muted);
+}
+.nav-link-text {
+  position: relative;
+  display: inline-block;
+  transition: transform 0.3s ease-in-out;
+  transition-delay: 0s;
+}
+/* Texto real: precisa do próprio z-index (não só o do pai) pra ficar
+   comparável ao ::before abaixo — z-index só ordena elementos que são,
+   eles mesmos, posicionados. */
+.nav-link-text-inner {
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+}
+.nav-link-text::before {
+  content: attr(data-text);
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  color: var(--color-primary);
+  opacity: 1;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  transition-delay: 0.15s;
+}
+.nav-link:hover .nav-link-text {
+  transform: scale(1.15);
+  transition-delay: 0.15s;
+}
+.nav-link:hover .nav-link-text::before {
+  transform: translateY(16px);
+  opacity: 0;
+  transition-delay: 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-link-text,
+  .nav-link-text::before {
+    transition: none !important;
+  }
+  .nav-link:hover .nav-link-text {
+    transform: none;
+  }
+}

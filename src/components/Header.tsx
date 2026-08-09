@@ -21,11 +21,10 @@ export function Header() {
         <ul className="hidden items-center gap-8 text-sm text-muted md:flex">
           {NAV_LINKS.map((link) => (
             <li key={link.href}>
-              <a
-                href={link.href}
-                className="transition-colors hover:text-primary"
-              >
-                {link.label}
+              <a href={link.href} className="nav-link">
+                <span className="nav-link-text" data-text={link.label}>
+                  <span className="nav-link-text-inner">{link.label}</span>
+                </span>
               </a>
             </li>
           ))}
