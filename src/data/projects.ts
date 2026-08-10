@@ -35,6 +35,15 @@ export const projects: Project[] = [
     note: "Produto ainda não lançado publicamente.",
   },
   {
+    title: "Belaroids",
+    description:
+      "Landing page para a Belaroids, marca de fotografia instantânea (Instax) da minha esposa, Isabela. Estética de álbum de memórias artesanal: textura de papel, doodles kawaii desenhados à mão, polaroids com rotação aleatória, scroll reveal e parallax de mouse nos elementos decorativos.",
+    tags: ["HTML", "Tailwind CSS", "JavaScript"],
+    status: "Em produção",
+    demoUrl: "https://belaroids.vercel.app/",
+    repoUrl: "https://github.com/RamonyML/belaroids",
+  },
+  {
     title: "Belle Studio",
     description:
       "Landing page para salão de beleza, com hero animado, catálogo de serviços, galeria, planos e depoimentos. Construída como modelo de site institucional para negócios locais.",
