@@ -37,7 +37,7 @@ export const projects: Project[] = [
   {
     title: "Belaroids",
     description:
-      "Landing page para a Belaroids, marca de fotografia instantânea (Instax) da minha esposa, Isabela. Estética de álbum de memórias artesanal: textura de papel, doodles kawaii desenhados à mão, polaroids com rotação aleatória, scroll reveal e parallax de mouse nos elementos decorativos.",
+      "Landing page para a Belaroids, marca de fotografia instantânea com câmera Instax. Estética de álbum de memórias artesanal: textura de papel, doodles kawaii desenhados à mão, polaroids com rotação aleatória, scroll reveal e parallax de mouse nos elementos decorativos.",
     tags: ["HTML", "Tailwind CSS", "JavaScript"],
     status: "Em produção",
     demoUrl: "https://belaroids.vercel.app/",
