@@ -58,4 +58,12 @@ export const projects: Project[] = [
     status: "Produto à venda · pronto",
     demoUrl: "/demos/contabilidade/index.html",
   },
+  {
+    title: "Obscura",
+    description:
+      "Landing page premium para fotógrafos, com identidade editorial (preto + dourado champagne). Cursor customizado, scroll horizontal pinado na galeria de trabalhos, lightbox em tela cheia e fundos com parallax.",
+    tags: ["HTML", "Tailwind CSS", "JavaScript"],
+    status: "Produto à venda · pronto",
+    demoUrl: "/demos/fotografia/index.html",
+  },
 ];

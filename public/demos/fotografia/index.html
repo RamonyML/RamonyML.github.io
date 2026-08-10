@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- ============================================================
+         SEO — EDITE os campos abaixo com as informações do fotógrafo(a)
+         ============================================================ -->
+    <title>Obscura — Fotografia Editorial & Retratos</title>
+    <meta
+      name="description"
+      content="Obscura Fotografia — ensaios editoriais, retratos e casamentos. Cada imagem contada como uma história."
+    />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="Obscura — Fotografia Editorial & Retratos" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Favicon (SVG inline) -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='4' fill='%230a0a0a'/%3E%3Ccircle cx='12' cy='12' r='6.5' fill='none' stroke='%23c9a876' stroke-width='1.4'/%3E%3Ccircle cx='12' cy='12' r='2.2' fill='%23c9a876'/%3E%3C/svg%3E"
+    />
+
+    <!-- Fontes: Bodoni Moda (títulos, editorial) + Jost (texto, geométrica) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS via CDN — zero build -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Jost", "sans-serif"],
+              display: ["Bodoni Moda", "serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* ================================================================
+         TEMA — preto editorial + dourado champagne. Troque aqui pra
+         recolorir o site inteiro.
+         ================================================================ */
+      :root {
+        --ink: #0a0a0a; /* fundo principal */
+        --paper: #f3efe7; /* texto principal (branco quente) */
+        --muted: #a3a09a; /* texto secundário */
+        --accent: #c9a876; /* dourado/champagne: detalhes, links, CTA */
+        --accent-soft: #ddc59a;
+        --surface: #141210; /* cartões/blocos sobre o preto */
+        --border: rgba(243, 239, 231, 0.14);
+      }
+
+      html {
+        scroll-behavior: smooth;
+        cursor: none;
+      }
+      @media (hover: none) {
+        html {
+          cursor: auto;
+        }
+      }
+
+      body {
+        font-family: "Jost", sans-serif;
+        color: var(--paper);
+        background-color: var(--ink);
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+
+      .font-display {
+        font-family: "Bodoni Moda", serif;
+      }
+
+      ::selection {
+        background: color-mix(in srgb, var(--accent) 35%, transparent);
+      }
+
+      a,
+      button {
+        cursor: none;
+      }
+      @media (hover: none) {
+        a,
+        button {
+          cursor: pointer;
+        }
+      }
+
+      /* ===== Cursor customizado =====
+           Um ponto pequeno segue o mouse; sobre elementos com
+           data-cursor="view" ele cresce e mostra um texto (via JS). */
+      #cursor-dot,
+      #cursor-ring {
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        z-index: 100;
+        border-radius: 9999px;
+        transform: translate(-50%, -50%);
+        will-change: transform;
+      }
+      #cursor-dot {
+        width: 6px;
+        height: 6px;
+        background: var(--accent);
+        transition: opacity 0.2s ease;
+      }
+      #cursor-ring {
+        width: 40px;
+        height: 40px;
+        border: 1px solid color-mix(in srgb, var(--accent) 70%, transparent);
+        transition: width 0.25s ease, height 0.25s ease, opacity 0.2s ease,
+          border-color 0.25s ease, background 0.25s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Jost", sans-serif;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--ink);
+      }
+      #cursor-ring.is-view {
+        width: 84px;
+        height: 84px;
+        background: var(--accent);
+        border-color: var(--accent);
+      }
+      #cursor-ring.is-view::after {
+        content: "Ver";
+      }
+      @media (hover: none), (max-width: 768px) {
+        #cursor-dot,
+        #cursor-ring {
+          display: none;
+        }
+      }
+
+      /* ===== Barra de progresso de leitura ===== */
+      #scroll-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 2px;
+        width: 0%;
+        background: var(--accent);
+        z-index: 90;
+        transition: width 0.1s linear;
+      }
+
+      /* ===== Reveal ao rolar ===== */
+      .reveal {
+        opacity: 0;
+        transform: translateY(32px);
+        transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .reveal.is-visible {
+        opacity: 1;
+        transform: none;
+      }
+
+      /* Imagens: entram levemente ampliadas e "assentam" no tamanho normal */
+      .img-reveal {
+        overflow: hidden;
+      }
+      .img-reveal img {
+        transform: scale(1.15);
+        transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .img-reveal.is-visible img {
+        transform: scale(1);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .reveal,
+        .img-reveal img {
+          opacity: 1 !important;
+          transform: none !important;
+          transition: none !important;
+        }
+        html {
+          scroll-behavior: auto;
+        }
+      }
+
+      /* ===== Navbar ===== */
+      .nav-shell {
+        transition: background-color 0.4s ease, border-color 0.4s ease,
+          padding 0.4s ease;
+      }
+      .nav-scrolled {
+        background-color: rgba(10, 10, 10, 0.85);
+        backdrop-filter: blur(10px);
+        border-color: var(--border);
+      }
+
+      /* ===== Botões ===== */
+      .btn-accent {
+        background: var(--accent);
+        color: var(--ink);
+        transition: transform 0.3s ease, background 0.3s ease;
+      }
+      .btn-accent:hover {
+        background: var(--accent-soft);
+        transform: translateY(-2px);
+      }
+      .btn-outline {
+        border: 1px solid var(--border);
+        color: var(--paper);
+        transition: all 0.3s ease;
+      }
+      .btn-outline:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      /* ===== Fundos com foto + parallax ===== */
+      .photo-parallax {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+      }
+      .photo-parallax img {
+        width: 100%;
+        height: 130%;
+        object-fit: cover;
+        position: absolute;
+        top: -15%;
+        left: 0;
+        will-change: transform;
+      }
+    </style>
+  </head>
+
+  <body class="bg-ink">
+    <div id="scroll-progress"></div>
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
+
+    <!-- ===================== NAVBAR ===================== -->
+    <header id="navbar" class="nav-shell fixed top-0 inset-x-0 z-50 border-b border-transparent py-6">
+      <nav class="container mx-auto px-6 lg:px-10 flex items-center justify-between">
+        <a href="#topo" class="font-display text-2xl tracking-wide" data-cursor="view">
+          Obscura
+        </a>
+
+        <div class="hidden lg:flex items-center gap-10 text-[13px] tracking-widest uppercase text-muted">
+          <a href="#sobre" class="hover:text-paper transition-colors">Sobre</a>
+          <a href="#trabalhos" class="hover:text-paper transition-colors">Trabalhos</a>
+          <a href="#galeria" class="hover:text-paper transition-colors">Galeria</a>
+          <a href="#planos" class="hover:text-paper transition-colors">Planos</a>
+          <a href="#contato" class="hover:text-paper transition-colors">Contato</a>
+        </div>
+
+        <a
+          href="#contato"
+          class="btn-outline hidden sm:inline-flex items-center rounded-full px-6 py-2.5 text-[13px] tracking-widest uppercase"
+        >
+          Agendar sessão
+        </a>
+
+        <button
+          id="menuToggle"
+          class="lg:hidden grid place-items-center w-11 h-11 rounded-full border border-border"
+          aria-label="Abrir menu"
+          aria-expanded="false"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" viewBox="0 0 24 24">
+            <path d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </nav>
+
+      <div id="mobileMenu" class="lg:hidden hidden mx-6 mt-4 rounded-2xl border border-border bg-ink/95 backdrop-blur">
+        <div class="flex flex-col p-3 text-sm uppercase tracking-widest text-muted">
+          <a href="#sobre" class="px-4 py-3 rounded-xl hover:text-paper">Sobre</a>
+          <a href="#trabalhos" class="px-4 py-3 rounded-xl hover:text-paper">Trabalhos</a>
+          <a href="#galeria" class="px-4 py-3 rounded-xl hover:text-paper">Galeria</a>
+          <a href="#planos" class="px-4 py-3 rounded-xl hover:text-paper">Planos</a>
+          <a href="#contato" class="px-4 py-3 rounded-xl hover:text-paper">Contato</a>
+          <a href="#contato" class="btn-accent text-center mt-2 rounded-full px-4 py-3 font-medium">Agendar sessão</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- ===================== HERO ===================== -->
+    <section id="topo" class="relative h-screen min-h-[640px] overflow-hidden">
+      <div class="photo-parallax" data-parallax data-speed="0.35">
+        <img
+          src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1800&q=75"
+          alt=""
+        />
+      </div>
+      <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/30 to-ink/60"></div>
+
+      <div class="relative h-full flex flex-col items-center justify-center text-center px-6">
+        <p class="reveal text-[13px] tracking-[0.3em] uppercase text-accent mb-6">
+          Fotografia editorial & retratos
+        </p>
+        <h1 class="reveal font-display text-6xl sm:text-7xl lg:text-8xl leading-[1.05] max-w-4xl">
+          Cada imagem <em class="italic text-accent">conta</em> uma história
+        </h1>
+        <p class="reveal mt-8 max-w-lg text-muted text-lg" data-delay="1">
+          Ensaios, casamentos e editoriais fotografados com luz natural e um
+          olhar autoral.
+        </p>
+        <div class="reveal mt-10 flex flex-wrap items-center justify-center gap-4" data-delay="2">
+          <a href="#galeria" class="btn-accent rounded-full px-8 py-3.5 text-sm tracking-widest uppercase">
+            Ver portfólio
+          </a>
+          <a href="#contato" class="btn-outline rounded-full px-8 py-3.5 text-sm tracking-widest uppercase">
+            Agendar sessão
+          </a>
+        </div>
+      </div>
+
+      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted text-[11px] tracking-widest uppercase">
+        <span>Role</span>
+        <span class="block w-px h-10 bg-gradient-to-b from-accent to-transparent"></span>
+      </div>
+    </section>
+
+    <!-- ===================== SOBRE ===================== -->
+    <section id="sobre" class="py-28 lg:py-40">
+      <div class="container mx-auto px-6 lg:px-10">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+          <div class="img-reveal reveal relative rounded-sm">
+            <img
+              src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1000&q=75"
+              alt="Retrato da fotógrafa"
+              class="w-full h-[560px] object-cover"
+              loading="lazy"
+            />
+            <div class="absolute -bottom-6 -right-6 hidden sm:block bg-ink border border-border px-7 py-6">
+              <p class="font-display text-4xl text-accent">9+</p>
+              <p class="text-xs tracking-widest uppercase text-muted mt-1">Anos registrando<br />histórias</p>
+            </div>
+          </div>
+
+          <div>
+            <p class="reveal text-[13px] tracking-[0.3em] uppercase text-accent mb-5">Sobre mim</p>
+            <h2 class="reveal font-display text-4xl lg:text-5xl leading-tight mb-7" data-delay="1">
+              Fotografia é sobre o que fica, não o que se vê
+            </h2>
+            <p class="reveal text-muted text-lg leading-relaxed mb-5" data-delay="2">
+              Sou fotógrafa especializada em retratos, editoriais e
+              casamentos. Trabalho com luz natural e composições simples —
+              acredito que a melhor fotografia é a que desaparece pra deixar
+              a história em primeiro plano.
+            </p>
+            <p class="reveal text-muted text-lg leading-relaxed mb-9" data-delay="2">
+              Já fotografei mais de 200 ensaios e casamentos, com trabalhos
+              publicados em revistas e portfólios de marcas independentes.
+            </p>
+            <a href="#trabalhos" class="reveal inline-flex items-center gap-3 text-sm tracking-widest uppercase text-paper group" data-delay="3" data-cursor="view">
+              Ver trabalhos
+              <span class="w-8 h-px bg-accent transition-all duration-300 group-hover:w-12"></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== ESPECIALIDADES ===================== -->
+    <section class="py-20 border-y border-border">
+      <div class="container mx-auto px-6 lg:px-10">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-border">
+          <div class="reveal px-0 sm:px-8 py-8 sm:py-0 first:pl-0">
+            <p class="font-display text-3xl text-accent mb-3">01</p>
+            <h3 class="font-display text-xl mb-2">Retratos</h3>
+            <p class="text-muted text-sm leading-relaxed">Ensaios individuais com direção de pose leve e natural.</p>
+          </div>
+          <div class="reveal px-0 sm:px-8 py-8 sm:py-0" data-delay="1">
+            <p class="font-display text-3xl text-accent mb-3">02</p>
+            <h3 class="font-display text-xl mb-2">Casamentos</h3>
+            <p class="text-muted text-sm leading-relaxed">Cobertura completa do dia, do preparo à festa.</p>
+          </div>
+          <div class="reveal px-0 sm:px-8 py-8 sm:py-0" data-delay="2">
+            <p class="font-display text-3xl text-accent mb-3">03</p>
+            <h3 class="font-display text-xl mb-2">Editorial</h3>
+            <p class="text-muted text-sm leading-relaxed">Produções para marcas, revistas e portfólios.</p>
+          </div>
+          <div class="reveal px-0 sm:px-8 py-8 sm:py-0" data-delay="3">
+            <p class="font-display text-3xl text-accent mb-3">04</p>
+            <h3 class="font-display text-xl mb-2">Corporativo</h3>
+            <p class="text-muted text-sm leading-relaxed">Retratos profissionais e cobertura de eventos.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TRABALHOS (scroll horizontal pinado) =====================
+         Seção alta (320vh) com um bloco "sticky" por dentro: enquanto você
+         rola verticalmente por essa altura extra, o JS (ver <script> no
+         fim do arquivo) traduz a trilha de imagens horizontalmente,
+         proporcional ao quanto já rolou. -->
+    <section id="trabalhos" class="relative" style="height: 320vh">
+      <div class="sticky top-0 h-screen overflow-hidden flex flex-col justify-center">
+        <div class="px-6 lg:px-10 mb-10 shrink-0">
+          <p class="reveal text-[13px] tracking-[0.3em] uppercase text-accent mb-4">
+            Trabalhos selecionados
+          </p>
+          <h2 class="reveal font-display text-4xl lg:text-5xl" data-delay="1">
+            Uma seleção de histórias
+          </h2>
+        </div>
+
+        <div id="horizontalTrack" class="flex gap-6 px-6 lg:px-10 will-change-transform">
+          <figure class="shrink-0 w-[78vw] sm:w-[46vw] lg:w-[30vw] h-[56vh] relative overflow-hidden group" data-cursor="view">
+            <img src="https://images.unsplash.com/photo-1506863530036-1efeddceb993?auto=format&fit=crop&w=1200&q=75" alt="Retrato editorial" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" loading="lazy" />
+            <figcaption class="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-ink/90 to-transparent">
+              <p class="font-display text-xl">Luz da Tarde</p>
+              <p class="text-xs uppercase tracking-widest text-muted mt-1">Retrato · Editorial</p>
+            </figcaption>
+          </figure>
+
+          <figure class="shrink-0 w-[78vw] sm:w-[46vw] lg:w-[30vw] h-[56vh] relative overflow-hidden group mt-16" data-cursor="view">
+            <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=1200&q=75" alt="Retrato editorial" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" loading="lazy" />
+            <figcaption class="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-ink/90 to-transparent">
+              <p class="font-display text-xl">Silêncio</p>
+              <p class="text-xs uppercase tracking-widest text-muted mt-1">Retrato · Estúdio</p>
+            </figcaption>
+          </figure>
+
+          <figure class="shrink-0 w-[78vw] sm:w-[46vw] lg:w-[30vw] h-[56vh] relative overflow-hidden group" data-cursor="view">
+            <img src="https://images.unsplash.com/photo-1554080353-a576cf803bda?auto=format&fit=crop&w=1200&q=75" alt="Casamento" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" loading="lazy" />
+            <figcaption class="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-ink/90 to-transparent">
+              <p class="font-display text-xl">Ana & Tiago</p>
+              <p class="text-xs uppercase tracking-widest text-muted mt-1">Casamento</p>
+            </figcaption>
+          </figure>
+
+          <figure class="shrink-0 w-[78vw] sm:w-[46vw] lg:w-[30vw] h-[56vh] relative overflow-hidden group mt-16" data-cursor="view">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=1200&q=75" alt="Editorial de moda" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" loading="lazy" />
+            <figcaption class="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-ink/90 to-transparent">
+              <p class="font-display text-xl">Vera</p>
+              <p class="text-xs uppercase tracking-widest text-muted mt-1">Editorial · Moda</p>
+            </figcaption>
+          </figure>
+
+          <figure class="shrink-0 w-[78vw] sm:w-[46vw] lg:w-[30vw] h-[56vh] relative overflow-hidden group" data-cursor="view">
+            <img src="https://images.unsplash.com/photo-1512316609839-ce289d3eba0a?auto=format&fit=crop&w=1200&q=75" alt="Retrato" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" loading="lazy" />
+            <figcaption class="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-ink/90 to-transparent">
+              <p class="font-display text-xl">Instante</p>
+              <p class="text-xs uppercase tracking-widest text-muted mt-1">Retrato</p>
+            </figcaption>
+          </figure>
+
+          <figure class="shrink-0 w-[78vw] sm:w-[46vw] lg:w-[30vw] h-[56vh] relative overflow-hidden group mt-16" data-cursor="view">
+            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=75" alt="Casamento" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" loading="lazy" />
+            <figcaption class="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-ink/90 to-transparent">
+              <p class="font-display text-xl">Primeiro Olhar</p>
+              <p class="text-xs uppercase tracking-widest text-muted mt-1">Casamento</p>
+            </figcaption>
+          </figure>
+        </div>
+
+        <div class="px-6 lg:px-10 mt-8 shrink-0 flex items-center gap-3 text-muted text-xs tracking-widest uppercase">
+          <span class="w-8 h-px bg-accent"></span>
+          Continue rolando
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== GALERIA (masonry + lightbox) ===================== -->
+    <section id="galeria" class="py-28 lg:py-40">
+      <div class="container mx-auto px-6 lg:px-10">
+        <div class="flex flex-wrap items-end justify-between gap-6 mb-14">
+          <div>
+            <p class="reveal text-[13px] tracking-[0.3em] uppercase text-accent mb-4">Galeria</p>
+            <h2 class="reveal font-display text-4xl lg:text-5xl" data-delay="1">Momentos, em detalhe</h2>
+          </div>
+          <p class="reveal text-muted max-w-sm" data-delay="2">
+            Clique em qualquer imagem pra ver em tela cheia.
+          </p>
+        </div>
+
+        <div class="columns-1 sm:columns-2 lg:columns-3 gap-5 [column-fill:balance]">
+          <button class="img-reveal reveal block w-full mb-5 break-inside-avoid overflow-hidden" data-lightbox data-caption="Retrato · Luz natural" data-cursor="view">
+            <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=900&q=75" alt="Retrato" class="w-full h-auto" loading="lazy" />
+          </button>
+          <button class="img-reveal reveal block w-full mb-5 break-inside-avoid overflow-hidden" data-delay="1" data-lightbox data-caption="Editorial · Estúdio" data-cursor="view">
+            <img src="https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?auto=format&fit=crop&w=900&q=75" alt="Editorial" class="w-full h-auto" loading="lazy" />
+          </button>
+          <button class="img-reveal reveal block w-full mb-5 break-inside-avoid overflow-hidden" data-delay="2" data-lightbox data-caption="Casamento · Cerimônia" data-cursor="view">
+            <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=900&q=75" alt="Casamento" class="w-full h-auto" loading="lazy" />
+          </button>
+          <button class="img-reveal reveal block w-full mb-5 break-inside-avoid overflow-hidden" data-lightbox data-caption="Retrato · Preto e branco" data-cursor="view">
+            <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=900&q=75" alt="Retrato" class="w-full h-auto" loading="lazy" />
+          </button>
+          <button class="img-reveal reveal block w-full mb-5 break-inside-avoid overflow-hidden" data-delay="1" data-lightbox data-caption="Editorial · Externa" data-cursor="view">
+            <img src="https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?auto=format&fit=crop&w=900&q=75" alt="Editorial" class="w-full h-auto" loading="lazy" />
+          </button>
+          <button class="img-reveal reveal block w-full mb-5 break-inside-avoid overflow-hidden" data-delay="2" data-lightbox data-caption="Retrato · Estúdio" data-cursor="view">
+            <img src="https://images.unsplash.com/photo-1552058544-f2b08422138a?auto=format&fit=crop&w=900&q=75" alt="Retrato" class="w-full h-auto" loading="lazy" />
+          </button>
+          <button class="img-reveal reveal block w-full mb-5 break-inside-avoid overflow-hidden" data-lightbox data-caption="Casamento · Detalhes" data-cursor="view">
+            <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=900&q=75" alt="Casamento" class="w-full h-auto" loading="lazy" />
+          </button>
+          <button class="img-reveal reveal block w-full mb-5 break-inside-avoid overflow-hidden" data-delay="1" data-lightbox data-caption="Retrato · Luz natural" data-cursor="view">
+            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=75" alt="Retrato" class="w-full h-auto" loading="lazy" />
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== DEPOIMENTOS ===================== -->
+    <section class="py-28 border-y border-border">
+      <div class="container mx-auto px-6 lg:px-10">
+        <div class="grid lg:grid-cols-3 gap-14">
+          <div class="reveal">
+            <p class="font-display text-6xl text-accent mb-4 leading-none">"</p>
+            <p class="font-display text-xl leading-relaxed mb-6">
+              Nunca me senti tão à vontade na frente de uma câmera. As fotos
+              parecem verdadeiras — sem pose forçada.
+            </p>
+            <p class="text-sm uppercase tracking-widest text-muted">Camila R. — Ensaio individual</p>
+          </div>
+          <div class="reveal" data-delay="1">
+            <p class="font-display text-6xl text-accent mb-4 leading-none">"</p>
+            <p class="font-display text-xl leading-relaxed mb-6">
+              As fotos do nosso casamento contam a história do dia inteiro,
+              não só os momentos "perfeitos". Chorei revendo.
+            </p>
+            <p class="text-sm uppercase tracking-widest text-muted">Ana & Tiago — Casamento</p>
+          </div>
+          <div class="reveal" data-delay="2">
+            <p class="font-display text-6xl text-accent mb-4 leading-none">"</p>
+            <p class="font-display text-xl leading-relaxed mb-6">
+              Profissionalismo do início ao fim. O material editorial
+              elevou completamente a identidade visual da marca.
+            </p>
+            <p class="text-sm uppercase tracking-widest text-muted">Estúdio Vera — Editorial de marca</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PLANOS ===================== -->
+    <section id="planos" class="py-28 lg:py-40">
+      <div class="container mx-auto px-6 lg:px-10">
+        <div class="text-center max-w-xl mx-auto mb-16">
+          <p class="reveal text-[13px] tracking-[0.3em] uppercase text-accent mb-4">Investimento</p>
+          <h2 class="reveal font-display text-4xl lg:text-5xl" data-delay="1">Planos e pacotes</h2>
+        </div>
+
+        <div class="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-border border-y border-border">
+          <div class="reveal p-10 flex flex-col">
+            <h3 class="font-display text-2xl mb-2">Essencial</h3>
+            <p class="text-muted text-sm mb-8">Ensaio individual, 1h de sessão</p>
+            <p class="font-display text-5xl mb-8">R$ 690</p>
+            <ul class="space-y-3 text-sm text-muted mb-10 flex-1">
+              <li>1 hora de sessão</li>
+              <li>1 locação</li>
+              <li>20 fotos editadas</li>
+              <li>Galeria digital privada</li>
+            </ul>
+            <a href="#contato" class="btn-outline text-center rounded-full px-6 py-3 text-sm tracking-widest uppercase">Escolher</a>
+          </div>
+
+          <div class="reveal p-10 flex flex-col relative" data-delay="1">
+            <span class="absolute top-6 right-10 text-[11px] tracking-widest uppercase text-accent">Popular</span>
+            <h3 class="font-display text-2xl mb-2">Editorial</h3>
+            <p class="text-muted text-sm mb-8">Produção completa com equipe</p>
+            <p class="font-display text-5xl mb-8">R$ 1.890</p>
+            <ul class="space-y-3 text-sm text-muted mb-10 flex-1">
+              <li>3 horas de sessão</li>
+              <li>Até 3 locações</li>
+              <li>50 fotos editadas</li>
+              <li>Direção de arte e figurino</li>
+              <li>Galeria digital privada</li>
+            </ul>
+            <a href="#contato" class="btn-accent text-center rounded-full px-6 py-3 text-sm tracking-widest uppercase">Escolher</a>
+          </div>
+
+          <div class="reveal p-10 flex flex-col" data-delay="2">
+            <h3 class="font-display text-2xl mb-2">Casamento</h3>
+            <p class="text-muted text-sm mb-8">Cobertura do dia inteiro</p>
+            <p class="font-display text-5xl mb-8">R$ 3.490</p>
+            <ul class="space-y-3 text-sm text-muted mb-10 flex-1">
+              <li>Cobertura de até 10h</li>
+              <li>Segundo fotógrafo incluso</li>
+              <li>Álbum impresso premium</li>
+              <li>Todas as fotos em alta resolução</li>
+            </ul>
+            <a href="#contato" class="btn-outline text-center rounded-full px-6 py-3 text-sm tracking-widest uppercase">Escolher</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CONTATO (full-bleed com foto) ===================== -->
+    <section id="contato" class="relative py-28 lg:py-40 overflow-hidden">
+      <div class="photo-parallax" data-parallax data-speed="0.25">
+        <img
+          src="https://images.unsplash.com/photo-1490114538077-0a7f8cb49891?auto=format&fit=crop&w=1800&q=70"
+          alt=""
+        />
+      </div>
+      <div class="absolute inset-0 bg-ink/80"></div>
+
+      <div class="relative container mx-auto px-6 lg:px-10">
+        <div class="grid lg:grid-cols-2 gap-14 items-center">
+          <div class="reveal">
+            <p class="text-[13px] tracking-[0.3em] uppercase text-accent mb-5">Vamos criar juntos</p>
+            <h2 class="font-display text-4xl lg:text-5xl leading-tight mb-7">
+              Sua história merece ser fotografada
+            </h2>
+            <p class="text-muted text-lg leading-relaxed mb-8 max-w-md">
+              Conte um pouco sobre sua ideia e eu retorno com disponibilidade
+              e detalhes do pacote ideal.
+            </p>
+            <div class="space-y-3 text-sm text-muted">
+              <p>contato@obscura.studio</p>
+              <p>(11) 99999-9999</p>
+              <p>São Paulo, SP — atendo em todo o Brasil</p>
+            </div>
+          </div>
+
+          <form id="contactForm" class="reveal bg-ink/80 border border-border p-8 sm:p-10" data-delay="1">
+            <div class="space-y-6 mb-8">
+              <div>
+                <label class="block text-xs uppercase tracking-widest text-muted mb-2" for="nome">Nome</label>
+                <input id="nome" name="nome" type="text" required class="w-full bg-transparent border-b border-border py-2 text-paper focus:outline-none focus:border-accent" placeholder="Seu nome" />
+              </div>
+              <div>
+                <label class="block text-xs uppercase tracking-widest text-muted mb-2" for="tipo">Tipo de sessão</label>
+                <select id="tipo" name="tipo" class="w-full bg-transparent border-b border-border py-2 text-paper focus:outline-none focus:border-accent">
+                  <option class="bg-ink">Retrato individual</option>
+                  <option class="bg-ink">Casamento</option>
+                  <option class="bg-ink">Editorial de marca</option>
+                  <option class="bg-ink">Ainda não sei</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs uppercase tracking-widest text-muted mb-2" for="mensagem">Mensagem</label>
+                <textarea id="mensagem" name="mensagem" rows="3" class="w-full bg-transparent border-b border-border py-2 text-paper focus:outline-none focus:border-accent resize-none" placeholder="Conte sua ideia"></textarea>
+              </div>
+            </div>
+            <button type="submit" class="btn-accent w-full rounded-full px-6 py-3.5 text-sm tracking-widest uppercase">
+              Enviar pelo WhatsApp
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="py-14 border-t border-border">
+      <div class="container mx-auto px-6 lg:px-10">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
+          <a href="#topo" class="font-display text-2xl">Obscura</a>
+
+          <div class="flex items-center gap-6 text-xs uppercase tracking-widest text-muted">
+            <a href="#sobre" class="hover:text-paper transition-colors">Sobre</a>
+            <a href="#trabalhos" class="hover:text-paper transition-colors">Trabalhos</a>
+            <a href="#planos" class="hover:text-paper transition-colors">Planos</a>
+          </div>
+
+          <div class="flex items-center gap-4">
+            <!-- EDITAR: links reais -->
+            <a href="#" aria-label="Instagram" class="text-muted hover:text-accent transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.25.07 1.65.07 4.85s0 3.6-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.25.06-1.65.07-4.85.07s-3.6 0-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.85C2.42 3.93 3.94 2.4 7.16 2.25 8.4 2.2 8.8 2.2 12 2.2zm0 3.05a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5zm0 11.13a4.38 4.38 0 1 1 0-8.75 4.38 4.38 0 0 1 0 8.75zm7.02-11.4a1.58 1.58 0 1 1-3.16 0 1.58 1.58 0 0 1 3.16 0z"/></svg>
+            </a>
+            <a href="#" aria-label="WhatsApp" class="text-muted hover:text-accent transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.79.47 3.51 1.36 5.03L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.79 14.14c-.24.68-1.4 1.3-1.94 1.38-.5.08-1.13.11-1.82-.12-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.8-4.16-4.94-4.36-.14-.19-1.19-1.58-1.19-3.02 0-1.43.75-2.14 1.02-2.43.27-.29.58-.36.78-.36.19 0 .39 0 .56.01.18.01.42-.07.65.5.24.58.81 2.01.88 2.16.07.15.12.32.02.51-.1.19-.15.31-.3.48-.14.17-.31.37-.44.5-.15.14-.3.3-.13.58.17.29.75 1.24 1.61 2 1.11.99 2.04 1.3 2.33 1.44.29.15.46.13.63-.05.17-.19.72-.84.91-1.13.19-.29.38-.24.63-.14.26.1 1.65.78 1.94.92.28.14.47.21.53.33.07.12.07.68-.17 1.36z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="mt-10 pt-8 border-t border-border text-center text-xs text-muted">
+          <p>© 2026 Obscura Fotografia. Todos os direitos reservados.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ===================== LIGHTBOX ===================== -->
+    <div id="lightbox" class="fixed inset-0 z-[95] hidden items-center justify-center bg-ink/97 backdrop-blur-md p-6">
+      <button id="lightboxClose" aria-label="Fechar" class="absolute top-6 right-6 sm:top-8 sm:right-10 text-paper/70 hover:text-accent transition-colors">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+      <button id="lightboxPrev" aria-label="Anterior" class="absolute left-3 sm:left-8 top-1/2 -translate-y-1/2 text-paper/70 hover:text-accent transition-colors">
+        <svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m15 6-6 6 6 6"/></svg>
+      </button>
+      <button id="lightboxNext" aria-label="Próxima" class="absolute right-3 sm:right-8 top-1/2 -translate-y-1/2 text-paper/70 hover:text-accent transition-colors">
+        <svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m9 6 6 6-6 6"/></svg>
+      </button>
+      <figure class="max-w-4xl w-full">
+        <img id="lightboxImg" src="" alt="" class="w-full max-h-[78vh] object-contain" />
+        <figcaption id="lightboxCaption" class="mt-4 text-center text-sm uppercase tracking-widest text-muted"></figcaption>
+      </figure>
+    </div>
+
+    <script>
+      // ===== Cursor customizado =====
+      const cursorDot = document.getElementById("cursor-dot");
+      const cursorRing = document.getElementById("cursor-ring");
+      let mouseX = 0,
+        mouseY = 0,
+        ringX = 0,
+        ringY = 0;
+
+      window.addEventListener("mousemove", (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursorDot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
+      });
+
+      function animateRing() {
+        ringX += (mouseX - ringX) * 0.18;
+        ringY += (mouseY - ringY) * 0.18;
+        cursorRing.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
+        requestAnimationFrame(animateRing);
+      }
+      animateRing();
+
+      document.querySelectorAll('[data-cursor="view"]').forEach((el) => {
+        el.addEventListener("mouseenter", () => cursorRing.classList.add("is-view"));
+        el.addEventListener("mouseleave", () => cursorRing.classList.remove("is-view"));
+      });
+
+      // ===== Menu mobile =====
+      const menuToggle = document.getElementById("menuToggle");
+      const mobileMenu = document.getElementById("mobileMenu");
+      menuToggle.addEventListener("click", () => {
+        const isOpen = !mobileMenu.classList.contains("hidden");
+        mobileMenu.classList.toggle("hidden");
+        menuToggle.setAttribute("aria-expanded", String(!isOpen));
+      });
+      mobileMenu.querySelectorAll("a").forEach((link) =>
+        link.addEventListener("click", () => mobileMenu.classList.add("hidden"))
+      );
+
+      // ===== Navbar com fundo ao rolar =====
+      const navbar = document.getElementById("navbar");
+      function updateNavbar() {
+        navbar.classList.toggle("nav-scrolled", window.scrollY > 20);
+      }
+
+      // ===== Barra de progresso de leitura =====
+      const progressBar = document.getElementById("scroll-progress");
+      function updateProgress() {
+        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+        const pct = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+        progressBar.style.width = pct + "%";
+      }
+
+      // ===== Revelar ao rolar =====
+      const revealEls = document.querySelectorAll(".reveal, .img-reveal");
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -60px 0px" }
+      );
+      revealEls.forEach((el) => revealObserver.observe(el));
+
+      // ===== Parallax nos fundos com foto =====
+      const parallaxEls = document.querySelectorAll("[data-parallax]");
+      function updateParallax() {
+        parallaxEls.forEach((el) => {
+          const speed = parseFloat(el.dataset.speed || "0.3");
+          const rect = el.getBoundingClientRect();
+          const offset = rect.top * speed;
+          const img = el.querySelector("img");
+          if (img) img.style.transform = `translateY(${offset}px)`;
+        });
+      }
+
+      // ===== Scroll horizontal pinado (seção "Trabalhos") =====
+      const horizontalSection = document.getElementById("trabalhos");
+      const horizontalTrack = document.getElementById("horizontalTrack");
+      function updateHorizontalScroll() {
+        const rect = horizontalSection.getBoundingClientRect();
+        const scrollableDistance = horizontalSection.offsetHeight - window.innerHeight;
+        let progress = -rect.top / scrollableDistance;
+        progress = Math.max(0, Math.min(1, progress));
+        const maxTranslate = horizontalTrack.scrollWidth - window.innerWidth;
+        horizontalTrack.style.transform = `translateX(-${progress * Math.max(0, maxTranslate)}px)`;
+      }
+
+      // ===== Loop único de scroll (rAF-throttled) =====
+      let ticking = false;
+      function onScrollOrResize() {
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            updateNavbar();
+            updateProgress();
+            updateParallax();
+            updateHorizontalScroll();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }
+      window.addEventListener("scroll", onScrollOrResize, { passive: true });
+      window.addEventListener("resize", onScrollOrResize);
+      onScrollOrResize();
+
+      // ===== Lightbox =====
+      const lightboxTriggers = Array.from(document.querySelectorAll("[data-lightbox]"));
+      const lightbox = document.getElementById("lightbox");
+      const lightboxImg = document.getElementById("lightboxImg");
+      const lightboxCaption = document.getElementById("lightboxCaption");
+      let currentLightboxIndex = 0;
+
+      function openLightbox(index) {
+        currentLightboxIndex = index;
+        const trigger = lightboxTriggers[index];
+        const img = trigger.querySelector("img");
+        lightboxImg.src = img.src.replace(/w=\d+/, "w=1600").replace(/q=\d+/, "q=85");
+        lightboxImg.alt = img.alt;
+        lightboxCaption.textContent = trigger.dataset.caption || img.alt || "";
+        lightbox.classList.remove("hidden");
+        lightbox.classList.add("flex");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeLightbox() {
+        lightbox.classList.add("hidden");
+        lightbox.classList.remove("flex");
+        document.body.style.overflow = "";
+      }
+
+      function showLightbox(delta) {
+        currentLightboxIndex =
+          (currentLightboxIndex + delta + lightboxTriggers.length) % lightboxTriggers.length;
+        openLightbox(currentLightboxIndex);
+      }
+
+      lightboxTriggers.forEach((trigger, index) => {
+        trigger.addEventListener("click", () => openLightbox(index));
+      });
+      document.getElementById("lightboxClose").addEventListener("click", closeLightbox);
+      document.getElementById("lightboxPrev").addEventListener("click", () => showLightbox(-1));
+      document.getElementById("lightboxNext").addEventListener("click", () => showLightbox(1));
+      lightbox.addEventListener("click", (e) => {
+        if (e.target === lightbox) closeLightbox();
+      });
+      window.addEventListener("keydown", (e) => {
+        if (lightbox.classList.contains("hidden")) return;
+        if (e.key === "Escape") closeLightbox();
+        if (e.key === "ArrowLeft") showLightbox(-1);
+        if (e.key === "ArrowRight") showLightbox(1);
+      });
+
+      // ===== Formulário → abre WhatsApp com a mensagem pronta =====
+      const WHATSAPP_NUMBER = "5511999999999"; // EDITAR
+      document.getElementById("contactForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const nome = document.getElementById("nome").value.trim();
+        const tipo = document.getElementById("tipo").value;
+        const mensagem = document.getElementById("mensagem").value.trim();
+        const texto =
+          `Olá! Meu nome é ${nome}.\n` +
+          `Tenho interesse em: ${tipo}.` +
+          (mensagem ? `\n\n${mensagem}` : "");
+        window.open(
+          `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(texto)}`,
+          "_blank"
+        );
+      });
+    </script>
+  </body>
+</html>
