@@ -12,19 +12,19 @@ export const projects: Project[] = [
   {
     title: "Gerador de O.S.",
     description:
-      "Plataforma operacional com 37 formulários e 170 variantes de Ordem de Serviço, usada diariamente pela equipe de suporte técnico da MZ NET. Integração completa com o ERP MK Solutions via 8 endpoints REST — autenticação, busca de cliente por CPF/CNPJ, criação de protocolo e de O.S. Reduziu o tempo de atendimento de 10–15 minutos para menos de 2 minutos.",
+      "Plataforma operacional com 37 formulários e 170 variantes de Ordem de Serviço, usada diariamente pela equipe de suporte técnico da MZ NET. Integração completa com o ERP MK Solutions via 8 endpoints REST, incluindo autenticação, busca de cliente por CPF/CNPJ, criação de protocolo e de O.S. Reduziu o tempo de atendimento de 10–15 minutos para menos de 2 minutos.",
     tags: ["React 19", "TypeScript", "Firebase", "Cloud Functions", "REST API"],
     status: "Em produção desde dez. 2023 · v4.0.1",
-    note: "Sistema interno da empresa — repositório privado, código-fonte não disponível publicamente.",
+    note: "Sistema interno da empresa, repositório privado, código-fonte não disponível publicamente.",
   },
   {
     title: "Eterno Dia",
     description:
-      "SaaS que reúne, em tempo real, as fotos e vídeos que os convidados de um evento registram — num álbum colaborativo acessado por link ou QR Code, sem app. Pagamentos via Stripe (Payment Element, Apple Pay, Google Pay, webhooks) em 3 planos, crop de imagem no navegador, download do álbum em ZIP e sistema de moderação.",
+      "SaaS que reúne, em tempo real, as fotos e vídeos que os convidados de um evento registram, num álbum colaborativo acessado por link ou QR Code, sem app. Pagamentos via Stripe (Payment Element, Apple Pay, Google Pay, webhooks) em 3 planos, crop de imagem no navegador, download do álbum em ZIP e sistema de moderação.",
     tags: ["React 19", "Vite", "Tailwind CSS 4", "Firebase", "Stripe"],
     status: "SaaS próprio · Em produção",
     demoUrl: "https://eternodia.com",
-    note: "Produto proprietário — código-fonte não disponível publicamente.",
+    note: "Produto proprietário, código-fonte não disponível publicamente.",
   },
   {
     title: "OSLine",
@@ -37,7 +37,7 @@ export const projects: Project[] = [
   {
     title: "Belle Studio",
     description:
-      "Landing page para salão de beleza — hero animado, catálogo de serviços, galeria, planos e depoimentos. Construída como modelo de site institucional para negócios locais.",
+      "Landing page para salão de beleza, com hero animado, catálogo de serviços, galeria, planos e depoimentos. Construída como modelo de site institucional para negócios locais.",
     tags: ["HTML", "Tailwind CSS", "JavaScript"],
     status: "Projeto de demonstração",
     demoUrl: "/demos/landing-premium/index.html",
@@ -45,7 +45,7 @@ export const projects: Project[] = [
   {
     title: "Studio Nova",
     description:
-      "Sistema de landing page multi-nicho, construído para venda como produto: 4 paletas de cor prontas (Índigo, Esmeralda, Rosé, Grafite), FAQ acessível sem JS e formulário integrado com WhatsApp — um único código-base cobrindo vários segmentos de negócio.",
+      "Sistema de landing page multi-nicho, construído para venda como produto: 4 paletas de cor prontas (Índigo, Esmeralda, Rosé, Grafite), FAQ acessível sem JS e formulário integrado com WhatsApp, um único código-base cobrindo vários segmentos de negócio.",
     tags: ["HTML", "Tailwind CSS", "JavaScript"],
     status: "Produto à venda · pronto",
     demoUrl: "/demos/studio-nova/index.html",

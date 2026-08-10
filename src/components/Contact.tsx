@@ -10,7 +10,7 @@ export function Contact() {
             Tem um projeto em mente ou uma vaga em aberto?
           </h2>
           <p className="mx-auto mt-5 max-w-md text-muted">
-            Me manda uma mensagem — respondo rápido.
+            Me manda uma mensagem, respondo rápido.
           </p>
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">

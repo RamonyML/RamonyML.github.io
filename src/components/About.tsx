@@ -17,8 +17,8 @@ export function About() {
               Sou desenvolvedor full-stack com projetos em produção real,
               especializado em React, TypeScript e Firebase. Construí
               sozinho, do zero, uma plataforma operacional usada diariamente
-              pelo suporte técnico de um provedor de fibra óptica —
-              integrada via API ao ERP MK Solutions — e um SaaS com
+              pelo suporte técnico de um provedor de fibra óptica,
+              integrada via API ao ERP MK Solutions, e um SaaS com
               pagamentos via Stripe, também em produção.
             </p>
             <p className="mt-5 text-lg leading-relaxed text-muted">
@@ -27,7 +27,7 @@ export function About() {
               o que me dá um domínio técnico pouco comum em projetos que
               envolvem telecom e provedores de internet. Minha formação em
               Análise e Desenvolvimento de Sistemas tem ênfase em engenharia
-              de software e elaboração de documentação técnica — gosto de
+              de software e elaboração de documentação técnica. Gosto de
               deixar cada decisão registrada o suficiente pra outra pessoa
               conseguir dar manutenção sem sofrer.
             </p>

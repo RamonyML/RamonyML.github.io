@@ -7,7 +7,7 @@ export const services: Service[] = [
   {
     title: "Aplicações Web",
     description:
-      "Sites institucionais, landing pages e sistemas web completos — do design à publicação.",
+      "Sites institucionais, landing pages e sistemas web completos, do design à publicação.",
   },
   {
     title: "SaaS & Pagamentos",
