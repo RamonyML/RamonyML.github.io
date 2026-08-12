@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- ============================================================
+         SEO — EDITE os campos abaixo com as informações reais do produto
+         ============================================================ -->
+    <title>Jogaê — Ache seu time, suba de rank, joga com quem tem o mesmo fogo</title>
+    <meta
+      name="description"
+      content="Jogaê é a comunidade que conecta você a jogadores do seu nível, monta sua squad em segundos e te bota pra dentro de torneios comunitários toda semana."
+    />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="Jogaê — Bora jogar" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Favicon (SVG inline) — mira/crosshair verde sobre fundo escuro -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%2305070a'/%3E%3Ccircle cx='12' cy='12' r='6' fill='none' stroke='%2339ff88' stroke-width='1.6'/%3E%3Cpath d='M12 2v4M12 18v4M2 12h4M18 12h4' stroke='%2339ff88' stroke-width='1.6' stroke-linecap='round'/%3E%3Ccircle cx='12' cy='12' r='1.6' fill='%23a855f7'/%3E%3C/svg%3E"
+    />
+
+    <!-- Fontes: Orbitron (títulos, geométrica/futurista) + Rajdhani (texto, condensada gamer) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS via CDN — zero build -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Rajdhani", "sans-serif"],
+              display: ["Orbitron", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* ================================================================
+         TEMA — fundo quase preto + verde neon e roxo. Troque aqui pra
+         recolorir o site inteiro.
+         ================================================================ */
+      :root {
+        --ink: #05070a; /* fundo principal */
+        --surface: #0c1310; /* cartões/blocos sobre o preto */
+        --surface-2: #111a16;
+        --paper: #eafbf2; /* texto principal (branco esverdeado) */
+        --muted: #90a49a; /* texto secundário */
+        --green: #39ff88; /* verde neon: destaques, CTA, HUD */
+        --green-soft: #8dffbb;
+        --purple: #a855f7; /* roxo: segundo destaque */
+        --purple-soft: #cfa2fb;
+        --border: rgba(234, 251, 242, 0.12);
+      }
+
+      html {
+        scroll-behavior: smooth;
+        cursor: none;
+      }
+      @media (hover: none) {
+        html {
+          cursor: auto;
+        }
+      }
+
+      body {
+        font-family: "Rajdhani", sans-serif;
+        font-weight: 500;
+        color: var(--paper);
+        background-color: var(--ink);
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+
+      .font-display {
+        font-family: "Orbitron", sans-serif;
+      }
+
+      ::selection {
+        background: color-mix(in srgb, var(--green) 35%, transparent);
+      }
+
+      a,
+      button,
+      [role="button"] {
+        cursor: none;
+      }
+      @media (hover: none) {
+        a,
+        button,
+        [role="button"] {
+          cursor: pointer;
+        }
+      }
+
+      .text-gradient {
+        background: linear-gradient(90deg, var(--green) 0%, var(--purple) 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      /* ===== Cursor customizado: reticle HUD com cantos ===== */
+      #cursor-dot,
+      #cursor-reticle {
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        z-index: 100;
+        transform: translate(-50%, -50%);
+        will-change: transform;
+      }
+      #cursor-dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 9999px;
+        background: var(--green);
+        transition: background 0.2s ease;
+      }
+      #cursor-reticle {
+        width: 42px;
+        height: 42px;
+        transition: width 0.25s ease, height 0.25s ease;
+        animation: reticle-spin 9s linear infinite;
+      }
+      #cursor-reticle .corner {
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        border: 2px solid var(--green);
+        transition: border-color 0.25s ease, width 0.25s ease, height 0.25s ease;
+      }
+      #cursor-reticle .corner-tl {
+        top: 0;
+        left: 0;
+        border-right: none;
+        border-bottom: none;
+      }
+      #cursor-reticle .corner-tr {
+        top: 0;
+        right: 0;
+        border-left: none;
+        border-bottom: none;
+      }
+      #cursor-reticle .corner-bl {
+        bottom: 0;
+        left: 0;
+        border-right: none;
+        border-top: none;
+      }
+      #cursor-reticle .corner-br {
+        bottom: 0;
+        right: 0;
+        border-left: none;
+        border-top: none;
+      }
+      #cursor-reticle.is-target {
+        width: 64px;
+        height: 64px;
+      }
+      #cursor-reticle.is-target .corner {
+        border-color: var(--purple);
+        width: 16px;
+        height: 16px;
+      }
+      @keyframes reticle-spin {
+        from {
+          rotate: 0deg;
+        }
+        to {
+          rotate: 360deg;
+        }
+      }
+      @media (hover: none), (max-width: 768px) {
+        #cursor-dot,
+        #cursor-reticle {
+          display: none;
+        }
+      }
+
+      /* ===== Scanlines CRT (sutil, decorativo) ===== */
+      #crt-overlay {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 80;
+        background: repeating-linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0.035) 0px,
+          rgba(255, 255, 255, 0.035) 1px,
+          transparent 1px,
+          transparent 3px
+        );
+        mix-blend-mode: overlay;
+        opacity: 0.45;
+      }
+
+      /* ===== Barra de progresso de leitura ===== */
+      #scroll-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 2px;
+        width: 0%;
+        background: linear-gradient(90deg, var(--green), var(--purple));
+        z-index: 90;
+        transition: width 0.1s linear;
+      }
+
+      /* ===== Reveal ao rolar ===== */
+      .reveal {
+        opacity: 0;
+        transform: translateY(32px);
+        transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .reveal.is-visible {
+        opacity: 1;
+        transform: none;
+      }
+
+      .img-reveal {
+        overflow: hidden;
+      }
+      .img-reveal img {
+        transform: scale(1.15);
+        transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .img-reveal.is-visible img {
+        transform: scale(1);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .reveal,
+        .img-reveal img {
+          opacity: 1 !important;
+          transform: none !important;
+          transition: none !important;
+        }
+        #cursor-reticle {
+          animation: none;
+        }
+        html {
+          scroll-behavior: auto;
+        }
+      }
+
+      /* ===== Glitch no título do hero (roda uma vez, ao carregar) ===== */
+      .glitch-hero {
+        position: relative;
+        display: inline-block;
+      }
+      .glitch-hero .glitch-layer {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        pointer-events: none;
+        user-select: none;
+      }
+      .glitch-hero .glitch-layer--g {
+        color: var(--green);
+        animation: glitch-g 1s steps(1, end) 0.15s both;
+      }
+      .glitch-hero .glitch-layer--p {
+        color: var(--purple);
+        animation: glitch-p 1s steps(1, end) 0.15s both;
+      }
+      @keyframes glitch-g {
+        0% {
+          opacity: 0.9;
+          clip-path: inset(10% 0 70% 0);
+          transform: translate(-6px, 0);
+        }
+        15% {
+          opacity: 0.85;
+          clip-path: inset(60% 0 8% 0);
+          transform: translate(6px, 0);
+        }
+        30% {
+          opacity: 0.75;
+          clip-path: inset(20% 0 55% 0);
+          transform: translate(-5px, 0);
+        }
+        45% {
+          opacity: 0.55;
+          clip-path: inset(68% 0 5% 0);
+          transform: translate(4px, 0);
+        }
+        65% {
+          opacity: 0.3;
+          clip-path: inset(30% 0 40% 0);
+          transform: translate(-2px, 0);
+        }
+        100% {
+          opacity: 0;
+          clip-path: inset(0 0 100% 0);
+          transform: translate(0, 0);
+        }
+      }
+      @keyframes glitch-p {
+        0% {
+          opacity: 0.85;
+          clip-path: inset(65% 0 12% 0);
+          transform: translate(6px, 0);
+        }
+        18% {
+          opacity: 0.8;
+          clip-path: inset(12% 0 62% 0);
+          transform: translate(-6px, 0);
+        }
+        34% {
+          opacity: 0.7;
+          clip-path: inset(48% 0 30% 0);
+          transform: translate(5px, 0);
+        }
+        50% {
+          opacity: 0.5;
+          clip-path: inset(8% 0 74% 0);
+          transform: translate(-4px, 0);
+        }
+        70% {
+          opacity: 0.25;
+          clip-path: inset(40% 0 34% 0);
+          transform: translate(2px, 0);
+        }
+        100% {
+          opacity: 0;
+          clip-path: inset(100% 0 0 0);
+          transform: translate(0, 0);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .glitch-hero .glitch-layer {
+          display: none;
+        }
+      }
+
+      /* ===== Navbar ===== */
+      .nav-shell {
+        transition: background-color 0.4s ease, border-color 0.4s ease;
+      }
+      .nav-scrolled {
+        background-color: rgba(5, 7, 10, 0.85);
+        backdrop-filter: blur(10px);
+        border-color: var(--border);
+      }
+
+      /* ===== Botões ===== */
+      .btn-accent {
+        background: var(--green);
+        color: var(--ink);
+        box-shadow: 0 0 0 rgba(57, 255, 136, 0);
+        transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+      }
+      .btn-accent:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 26px rgba(57, 255, 136, 0.45);
+      }
+      .btn-outline {
+        border: 1px solid var(--border);
+        color: var(--paper);
+        transition: all 0.3s ease;
+      }
+      .btn-outline:hover {
+        border-color: var(--purple);
+        color: var(--purple-soft);
+        box-shadow: 0 0 20px rgba(168, 85, 247, 0.25);
+      }
+
+      /* ===== Glow em cartões ===== */
+      .glow-card {
+        transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+      }
+      .glow-card:hover {
+        transform: translateY(-4px);
+        border-color: color-mix(in srgb, var(--green) 55%, var(--border));
+        box-shadow: 0 0 30px rgba(57, 255, 136, 0.12);
+      }
+
+      /* ===== Fundos com foto + parallax ===== */
+      .photo-parallax {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+      }
+      .photo-parallax img {
+        width: 100%;
+        height: 130%;
+        object-fit: cover;
+        position: absolute;
+        top: -15%;
+        left: 0;
+        will-change: transform;
+      }
+
+      /* ===== Piso holográfico (hero) ===== */
+      .grid-floor {
+        position: absolute;
+        bottom: 0;
+        left: -10%;
+        right: -10%;
+        height: 42%;
+        background-image: linear-gradient(rgba(57, 255, 136, 0.35) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(57, 255, 136, 0.35) 1px, transparent 1px);
+        background-size: 56px 56px;
+        transform: perspective(480px) rotateX(62deg);
+        transform-origin: bottom;
+        -webkit-mask-image: linear-gradient(to top, black, transparent);
+        mask-image: linear-gradient(to top, black, transparent);
+        animation: grid-move 2.6s linear infinite;
+        opacity: 0.8;
+      }
+      @keyframes grid-move {
+        from {
+          background-position: 0 0, 0 0;
+        }
+        to {
+          background-position: 0 56px, 0 0;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .grid-floor {
+          animation: none;
+        }
+      }
+
+      /* ===== Contador (stat) ===== */
+      .stat-value {
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* ===== Toast de conquista (easter egg Konami) ===== */
+      #achievement-toast {
+        position: fixed;
+        left: 50%;
+        bottom: 28px;
+        transform: translate(-50%, 140%);
+        z-index: 110;
+        transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      #achievement-toast.is-shown {
+        transform: translate(-50%, 0);
+      }
+
+      /* ===== Toggle de som ===== */
+      #sfxToggle[data-on="true"] .sfx-off {
+        display: none;
+      }
+      #sfxToggle[data-on="false"] .sfx-on {
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body class="bg-ink">
+    <div id="scroll-progress"></div>
+    <div id="crt-overlay"></div>
+    <div id="cursor-dot"></div>
+    <div id="cursor-reticle">
+      <span class="corner corner-tl"></span>
+      <span class="corner corner-tr"></span>
+      <span class="corner corner-bl"></span>
+      <span class="corner corner-br"></span>
+    </div>
+
+    <!-- ===================== NAVBAR ===================== -->
+    <header id="navbar" class="nav-shell fixed top-0 inset-x-0 z-50 border-b border-transparent py-5">
+      <nav class="container mx-auto px-6 lg:px-10 flex items-center justify-between">
+        <a href="#topo" class="font-display text-2xl font-800 tracking-wide" data-cursor="target">
+          JOG<span class="text-gradient">AÊ</span>
+        </a>
+
+        <div class="hidden lg:flex items-center gap-9 text-[13px] font-semibold tracking-widest uppercase text-muted">
+          <a href="#sobre" class="hover:text-paper transition-colors">Sobre</a>
+          <a href="#como-funciona" class="hover:text-paper transition-colors">Como funciona</a>
+          <a href="#recursos" class="hover:text-paper transition-colors">Recursos</a>
+          <a href="#torneios" class="hover:text-paper transition-colors">Torneios</a>
+          <a href="#planos" class="hover:text-paper transition-colors">Planos</a>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button
+            id="sfxToggle"
+            data-on="false"
+            data-cursor="target"
+            aria-label="Ativar sons de interface"
+            aria-pressed="false"
+            class="hidden sm:grid place-items-center w-10 h-10 rounded-full border border-border text-muted hover:text-green transition-colors"
+          >
+            <svg class="w-4 h-4 sfx-off" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 9v6h4l5 5V4L9 9H5z"/><path d="M17 8a5 5 0 0 1 0 8" opacity=".35"/><line x1="19" y1="5" x2="19" y2="19" opacity="0"/><line x1="21.5" y1="4" x2="15" y2="20" stroke-width="1.6"/></svg>
+            <svg class="w-4 h-4 sfx-on" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 9v6h4l5 5V4L9 9H5z"/><path d="M16.5 8a5 5 0 0 1 0 8"/><path d="M19 5a9 9 0 0 1 0 14"/></svg>
+          </button>
+
+          <a
+            href="#contato"
+            data-cursor="target"
+            class="btn-accent hidden sm:inline-flex items-center rounded-full px-6 py-2.5 text-[13px] font-bold tracking-widest uppercase"
+          >
+            Entrar na fila
+          </a>
+
+          <button
+            id="menuToggle"
+            class="lg:hidden grid place-items-center w-11 h-11 rounded-full border border-border"
+            aria-label="Abrir menu"
+            aria-expanded="false"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" viewBox="0 0 24 24">
+              <path d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </nav>
+
+      <div id="mobileMenu" class="lg:hidden hidden mx-6 mt-4 rounded-2xl border border-border bg-ink/95 backdrop-blur">
+        <div class="flex flex-col p-3 text-sm font-semibold uppercase tracking-widest text-muted">
+          <a href="#sobre" class="px-4 py-3 rounded-xl hover:text-paper">Sobre</a>
+          <a href="#como-funciona" class="px-4 py-3 rounded-xl hover:text-paper">Como funciona</a>
+          <a href="#recursos" class="px-4 py-3 rounded-xl hover:text-paper">Recursos</a>
+          <a href="#torneios" class="px-4 py-3 rounded-xl hover:text-paper">Torneios</a>
+          <a href="#planos" class="px-4 py-3 rounded-xl hover:text-paper">Planos</a>
+          <a href="#contato" class="btn-accent text-center mt-2 rounded-full px-4 py-3 font-bold">Entrar na fila</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- ===================== HERO ===================== -->
+    <section id="topo" class="relative h-screen min-h-[720px] overflow-hidden">
+      <div class="photo-parallax" data-parallax data-speed="0.3">
+        <img
+          src="https://images.unsplash.com/photo-1598550476439-6847785fcea6?auto=format&fit=crop&w=1800&q=75"
+          alt=""
+        />
+      </div>
+      <div class="absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/75 to-ink"></div>
+      <div class="grid-floor"></div>
+
+      <div class="relative h-full flex flex-col items-center justify-center text-center px-6">
+        <p class="reveal text-[13px] font-bold tracking-[0.35em] uppercase text-green mb-6">
+          Comunidade de matchmaking
+        </p>
+        <h1 class="reveal font-display text-6xl sm:text-8xl lg:text-9xl font-800 leading-[0.95] max-w-5xl">
+          <span class="glitch-hero" id="glitchTitle">
+            JOG<span class="text-gradient">AÊ</span>
+            <span aria-hidden="true" class="glitch-layer glitch-layer--g">JOGAÊ</span>
+            <span aria-hidden="true" class="glitch-layer glitch-layer--p">JOGAÊ</span>
+          </span>
+        </h1>
+        <p class="reveal mt-8 max-w-xl text-muted text-lg sm:text-xl font-medium" data-delay="1">
+          Ache seu time. Suba de rank. Joga com quem tem o mesmo fogo que você.
+        </p>
+        <p class="reveal mt-3 max-w-lg text-muted/80 text-sm sm:text-base" data-delay="2">
+          Sem grupo motim de WhatsApp, sem bot carregando o time.
+        </p>
+        <div class="reveal mt-10 flex flex-wrap items-center justify-center gap-4" data-delay="2">
+          <a href="#contato" data-cursor="target" class="btn-accent rounded-full px-8 py-3.5 text-sm font-bold tracking-widest uppercase">
+            Entrar na fila
+          </a>
+          <a href="#como-funciona" data-cursor="target" class="btn-outline rounded-full px-8 py-3.5 text-sm font-bold tracking-widest uppercase">
+            Ver como funciona
+          </a>
+        </div>
+
+        <div class="reveal mt-16 grid grid-cols-3 gap-6 sm:gap-14" data-delay="3">
+          <div>
+            <p class="font-display text-3xl sm:text-4xl text-green stat-value" data-count-to="12480">0</p>
+            <p class="text-[11px] sm:text-xs uppercase tracking-widest text-muted mt-1">Jogadores ativos</p>
+          </div>
+          <div>
+            <p class="font-display text-3xl sm:text-4xl text-purple-soft stat-value" data-count-to="340">0</p>
+            <p class="text-[11px] sm:text-xs uppercase tracking-widest text-muted mt-1">Squads hoje</p>
+          </div>
+          <div>
+            <p class="font-display text-3xl sm:text-4xl text-green stat-value" data-count-to="58">0</p>
+            <p class="text-[11px] sm:text-xs uppercase tracking-widest text-muted mt-1">Torneios na semana</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted text-[11px] tracking-widest uppercase">
+        <span>Role</span>
+        <span class="block w-px h-10 bg-gradient-to-b from-green to-transparent"></span>
+      </div>
+    </section>
+
+    <!-- ===================== SOBRE ===================== -->
+    <section id="sobre" class="py-28 lg:py-40">
+      <div class="container mx-auto px-6 lg:px-10">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+          <div>
+            <p class="reveal text-[13px] font-bold tracking-[0.3em] uppercase text-purple-soft mb-5">O problema</p>
+            <h2 class="reveal font-display text-4xl lg:text-5xl font-700 leading-tight mb-7" data-delay="1">
+              Cansado de cair com bot no time?
+            </h2>
+            <p class="reveal text-muted text-lg leading-relaxed mb-5" data-delay="2">
+              A gente conecta você com jogadores reais do seu nível e do seu
+              estilo, monta sua squad em segundos e cuida do resto: chat de
+              voz, sala pronta, ranking de confiança pra manter troll e
+              afk longe da sua partida.
+            </p>
+            <p class="reveal text-muted text-lg leading-relaxed mb-9" data-delay="2">
+              Hoje já são mais de 12 mil jogadores ativos, formando squads
+              e disputando torneios comunitários toda semana.
+            </p>
+            <a href="#recursos" class="reveal inline-flex items-center gap-3 text-sm font-bold tracking-widest uppercase text-paper group" data-delay="3" data-cursor="target">
+              Ver recursos
+              <span class="w-8 h-px bg-green transition-all duration-300 group-hover:w-12"></span>
+            </a>
+          </div>
+
+          <div class="img-reveal reveal relative rounded-sm border border-border">
+            <img
+              src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1000&q=75"
+              alt="Jogador competitivo em partida, iluminação neon roxa"
+              class="w-full h-[520px] object-cover"
+              loading="lazy"
+            />
+            <div class="absolute -bottom-6 -left-6 hidden sm:block bg-ink border border-border px-7 py-6">
+              <p class="font-display text-4xl text-gradient">98%</p>
+              <p class="text-xs tracking-widest uppercase text-muted mt-1">Partidas sem<br />afk ou troll</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== COMO FUNCIONA ===================== -->
+    <section id="como-funciona" class="py-24 border-y border-border">
+      <div class="container mx-auto px-6 lg:px-10">
+        <div class="text-center max-w-xl mx-auto mb-16">
+          <p class="reveal text-[13px] font-bold tracking-[0.3em] uppercase text-green mb-4">Como funciona</p>
+          <h2 class="reveal font-display text-4xl lg:text-5xl font-700" data-delay="1">Três passos até a sala</h2>
+        </div>
+
+        <div class="grid sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-border">
+          <div class="reveal px-0 sm:px-8 py-8 sm:py-0 first:pl-0">
+            <p class="font-display text-3xl text-green mb-3">01</p>
+            <h3 class="font-display text-xl mb-2">Escolha o jogo</h3>
+            <p class="text-muted text-sm leading-relaxed">Diga o que joga e seu estilo: agressivo, tático ou casual.</p>
+          </div>
+          <div class="reveal px-0 sm:px-8 py-8 sm:py-0" data-delay="1">
+            <p class="font-display text-3xl text-green mb-3">02</p>
+            <h3 class="font-display text-xl mb-2">A gente monta sua squad</h3>
+            <p class="text-muted text-sm leading-relaxed">Matchmaking por nível e vibe, sem grupo aleatório.</p>
+          </div>
+          <div class="reveal px-0 sm:px-8 py-8 sm:py-0" data-delay="2">
+            <p class="font-display text-3xl text-green mb-3">03</p>
+            <h3 class="font-display text-xl mb-2">Entra na sala</h3>
+            <p class="text-muted text-sm leading-relaxed">Chat de voz já ativo, squad pronta, é só jogar.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== RECURSOS (scroll horizontal pinado) ===================== -->
+    <section id="recursos" class="relative" style="height: 320vh">
+      <div class="sticky top-0 h-screen overflow-hidden flex flex-col justify-center">
+        <div class="px-6 lg:px-10 mb-10 shrink-0">
+          <p class="reveal text-[13px] font-bold tracking-[0.3em] uppercase text-purple-soft mb-4">
+            Recursos
+          </p>
+          <h2 class="reveal font-display text-4xl lg:text-5xl font-700" data-delay="1">
+            Tudo pra sua squad render
+          </h2>
+        </div>
+
+        <div id="horizontalTrack" class="flex gap-6 px-6 lg:px-10 will-change-transform">
+          <figure class="shrink-0 w-[78vw] sm:w-[46vw] lg:w-[30vw] h-[56vh] relative overflow-hidden group glow-card border border-border" data-cursor="target">
+            <img src="https://images.unsplash.com/photo-1591370874773-6702e8f12fd8?auto=format&fit=crop&w=1200&q=75" alt="PC gamer com iluminação RGB" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" loading="lazy" />
+            <figcaption class="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-ink/95 to-transparent">
+              <p class="font-display text-xl">Matchmaking por habilidade</p>
+              <p class="text-xs uppercase tracking-widest text-muted mt-1">Chega de cair com iniciante no ranked</p>
+            </figcaption>
+          </figure>
+
+          <figure class="shrink-0 w-[78vw] sm:w-[46vw] lg:w-[30vw] h-[56vh] relative overflow-hidden group glow-card border border-border mt-16" data-cursor="target">
+            <img src="https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&w=1200&q=75" alt="Teclado mecânico com iluminação colorida" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" loading="lazy" />
+            <figcaption class="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-ink/95 to-transparent">
+              <p class="font-display text-xl">Chat de voz integrado</p>
+              <p class="text-xs uppercase tracking-widest text-muted mt-1">Voz e squad no mesmo lugar</p>
+            </figcaption>
+          </figure>
+
+          <figure class="shrink-0 w-[78vw] sm:w-[46vw] lg:w-[30vw] h-[56vh] relative overflow-hidden group glow-card border border-border" data-cursor="target">
+            <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=1200&q=75" alt="Setup gamer com iluminação neon roxa" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" loading="lazy" />
+            <figcaption class="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-ink/95 to-transparent">
+              <p class="font-display text-xl">Sistema de squads</p>
+              <p class="text-xs uppercase tracking-widest text-muted mt-1">Time fixo, convites e histórico de partidas</p>
+            </figcaption>
+          </figure>
+
+          <figure class="shrink-0 w-[78vw] sm:w-[46vw] lg:w-[30vw] h-[56vh] relative overflow-hidden group glow-card border border-border mt-16" data-cursor="target">
+            <img src="https://images.unsplash.com/photo-1607853202273-797f1c22a38e?auto=format&fit=crop&w=1200&q=75" alt="Console e controle com iluminação roxa" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" loading="lazy" />
+            <figcaption class="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-ink/95 to-transparent">
+              <p class="font-display text-xl">Torneios semanais</p>
+              <p class="text-xs uppercase tracking-widest text-muted mt-1">Campeonatos comunitários com premiação</p>
+            </figcaption>
+          </figure>
+
+          <figure class="shrink-0 w-[78vw] sm:w-[46vw] lg:w-[30vw] h-[56vh] relative overflow-hidden group glow-card border border-border" data-cursor="target">
+            <img src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=1200&q=75" alt="Tela iniciando partida, iluminação roxa" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" loading="lazy" />
+            <figcaption class="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-ink/95 to-transparent">
+              <p class="font-display text-xl">Ranking & conquistas</p>
+              <p class="text-xs uppercase tracking-widest text-muted mt-1">Patentes e emblemas pra mostrar sua trajetória</p>
+            </figcaption>
+          </figure>
+
+          <figure class="shrink-0 w-[78vw] sm:w-[46vw] lg:w-[30vw] h-[56vh] relative overflow-hidden group glow-card border border-border mt-16" data-cursor="target">
+            <img src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?auto=format&fit=crop&w=1200&q=75" alt="Duas pessoas jogando com controles" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" loading="lazy" />
+            <figcaption class="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-ink/95 to-transparent">
+              <p class="font-display text-xl">Perfil gamer compartilhável</p>
+              <p class="text-xs uppercase tracking-widest text-muted mt-1">Um link só com jogos, squads e conquistas</p>
+            </figcaption>
+          </figure>
+        </div>
+
+        <div class="px-6 lg:px-10 mt-8 shrink-0 flex items-center gap-3 text-muted text-xs tracking-widest uppercase">
+          <span class="w-8 h-px bg-green"></span>
+          Continue rolando
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TORNEIOS ===================== -->
+    <section id="torneios" class="relative py-28 lg:py-36 overflow-hidden">
+      <div class="photo-parallax opacity-40" data-parallax data-speed="0.2">
+        <img
+          src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1600&q=70"
+          alt=""
+        />
+      </div>
+      <div class="absolute inset-0 bg-ink/85"></div>
+
+      <div class="relative container mx-auto px-6 lg:px-10">
+        <div class="grid lg:grid-cols-2 gap-14 items-center">
+          <div>
+            <p class="reveal text-[13px] font-bold tracking-[0.3em] uppercase text-green mb-5">Torneio da semana</p>
+            <h2 class="reveal font-display text-3xl sm:text-4xl lg:text-5xl font-700 leading-tight mb-6" data-delay="1">
+              Copa Jogaê — Rodada #14
+            </h2>
+            <p class="reveal text-muted text-lg leading-relaxed mb-8 max-w-md" data-delay="2">
+              R$ 500 em créditos e destaque no perfil pra squad campeã.
+              Inscrição gratuita, formato eliminatório, chat de voz liberado
+              pra todo mundo acompanhar.
+            </p>
+
+            <div class="reveal grid grid-cols-4 gap-3 max-w-md mb-9" data-delay="2" id="countdown">
+              <div class="rounded-xl border border-border bg-surface px-3 py-4 text-center">
+                <p class="font-display text-3xl text-green" data-cd="days">00</p>
+                <p class="text-[10px] uppercase tracking-widest text-muted mt-1">Dias</p>
+              </div>
+              <div class="rounded-xl border border-border bg-surface px-3 py-4 text-center">
+                <p class="font-display text-3xl text-green" data-cd="hours">00</p>
+                <p class="text-[10px] uppercase tracking-widest text-muted mt-1">Horas</p>
+              </div>
+              <div class="rounded-xl border border-border bg-surface px-3 py-4 text-center">
+                <p class="font-display text-3xl text-green" data-cd="minutes">00</p>
+                <p class="text-[10px] uppercase tracking-widest text-muted mt-1">Min</p>
+              </div>
+              <div class="rounded-xl border border-border bg-surface px-3 py-4 text-center">
+                <p class="font-display text-3xl text-green" data-cd="seconds">00</p>
+                <p class="text-[10px] uppercase tracking-widest text-muted mt-1">Seg</p>
+              </div>
+            </div>
+
+            <a href="#contato" data-cursor="target" class="reveal btn-accent inline-flex items-center rounded-full px-8 py-3.5 text-sm font-bold tracking-widest uppercase" data-delay="3">
+              Inscrever squad
+            </a>
+          </div>
+
+          <div class="reveal" data-delay="1">
+            <p class="text-[13px] font-bold tracking-[0.3em] uppercase text-purple-soft mb-5">Categorias</p>
+            <div class="flex flex-wrap gap-3">
+              <span class="rounded-full border border-border bg-surface px-5 py-2.5 text-sm font-semibold">FPS Tático</span>
+              <span class="rounded-full border border-border bg-surface px-5 py-2.5 text-sm font-semibold">Battle Royale</span>
+              <span class="rounded-full border border-border bg-surface px-5 py-2.5 text-sm font-semibold">MOBA</span>
+              <span class="rounded-full border border-border bg-surface px-5 py-2.5 text-sm font-semibold">Party Game</span>
+              <span class="rounded-full border border-border bg-surface px-5 py-2.5 text-sm font-semibold">Simulação</span>
+              <span class="rounded-full border border-border bg-surface px-5 py-2.5 text-sm font-semibold">Mobile Competitivo</span>
+            </div>
+            <p class="text-muted text-sm leading-relaxed mt-8 max-w-sm">
+              Não achou sua categoria? A comunidade vota toda semana quais
+              entram no próximo ciclo de torneios.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== DEPOIMENTOS ===================== -->
+    <section class="py-28 border-y border-border">
+      <div class="container mx-auto px-6 lg:px-10">
+        <div class="grid lg:grid-cols-3 gap-14">
+          <div class="reveal">
+            <p class="font-display text-6xl text-green mb-4 leading-none">"</p>
+            <p class="font-display text-xl leading-relaxed mb-6">
+              Primeira vez que jogo ranked sem quicar de raiva. A squad que
+              caiu comigo sabia jogar de verdade.
+            </p>
+            <p class="text-sm uppercase tracking-widest text-muted">ShadowFenix — FPS Tático</p>
+          </div>
+          <div class="reveal" data-delay="1">
+            <p class="font-display text-6xl text-green mb-4 leading-none">"</p>
+            <p class="font-display text-xl leading-relaxed mb-6">
+              Montei squad fixa em uma tarde. Hoje a gente disputa torneio
+              toda semana e o chat de voz nunca falha.
+            </p>
+            <p class="text-sm uppercase tracking-widest text-muted">raízXP — Battle Royale</p>
+          </div>
+          <div class="reveal" data-delay="2">
+            <p class="font-display text-6xl text-green mb-4 leading-none">"</p>
+            <p class="font-display text-xl leading-relaxed mb-6">
+              O ranking de confiança realmente funciona. Difícil cair com
+              troll depois que comecei a usar.
+            </p>
+            <p class="text-sm uppercase tracking-widest text-muted">NoturnoBR — MOBA</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PLANOS ===================== -->
+    <section id="planos" class="py-28 lg:py-40">
+      <div class="container mx-auto px-6 lg:px-10">
+        <div class="text-center max-w-xl mx-auto mb-16">
+          <p class="reveal text-[13px] font-bold tracking-[0.3em] uppercase text-green mb-4">Planos</p>
+          <h2 class="reveal font-display text-4xl lg:text-5xl font-700" data-delay="1">Entra pro esquadrão</h2>
+        </div>
+
+        <div class="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-border border-y border-border">
+          <div class="reveal p-10 flex flex-col">
+            <h3 class="font-display text-2xl mb-2">Free</h3>
+            <p class="text-muted text-sm mb-8">Pra testar a fila e conhecer a comunidade</p>
+            <p class="font-display text-5xl mb-8">R$ 0</p>
+            <ul class="space-y-3 text-sm text-muted mb-10 flex-1">
+              <li>Matchmaking básico</li>
+              <li>1 squad ativa</li>
+              <li>Chat de texto</li>
+              <li>Perfil gamer público</li>
+            </ul>
+            <a href="#contato" data-cursor="target" class="btn-outline text-center rounded-full px-6 py-3 text-sm font-bold tracking-widest uppercase">Escolher</a>
+          </div>
+
+          <div class="reveal p-10 flex flex-col relative" data-delay="1">
+            <span class="absolute top-6 right-10 text-[11px] font-bold tracking-widest uppercase text-green">Popular</span>
+            <h3 class="font-display text-2xl mb-2">Pro</h3>
+            <p class="text-muted text-sm mb-8">Pra quem joga sério e quer prioridade</p>
+            <p class="font-display text-5xl mb-8">R$ 19<span class="text-lg text-muted">,90/mês</span></p>
+            <ul class="space-y-3 text-sm text-muted mb-10 flex-1">
+              <li>Matchmaking prioritário</li>
+              <li>Chat de voz ilimitado</li>
+              <li>Entrada em torneios</li>
+              <li>Emblemas e conquistas</li>
+              <li>Perfil gamer com estatísticas</li>
+            </ul>
+            <a href="#contato" data-cursor="target" class="btn-accent text-center rounded-full px-6 py-3 text-sm font-bold tracking-widest uppercase">Escolher</a>
+          </div>
+
+          <div class="reveal p-10 flex flex-col" data-delay="2">
+            <h3 class="font-display text-2xl mb-2">Squad</h3>
+            <p class="text-muted text-sm mb-8">Pra time fixo que treina junto</p>
+            <p class="font-display text-5xl mb-8">R$ 49<span class="text-lg text-muted">,90/mês</span></p>
+            <ul class="space-y-3 text-sm text-muted mb-10 flex-1">
+              <li>Até 10 membros</li>
+              <li>Sala privada dedicada</li>
+              <li>Estatísticas de time</li>
+              <li>Inscrição automática em torneios</li>
+            </ul>
+            <a href="#contato" data-cursor="target" class="btn-outline text-center rounded-full px-6 py-3 text-sm font-bold tracking-widest uppercase">Escolher</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CONTATO (full-bleed com foto) ===================== -->
+    <section id="contato" class="relative py-28 lg:py-40 overflow-hidden">
+      <div class="photo-parallax" data-parallax data-speed="0.25">
+        <img
+          src="https://images.unsplash.com/photo-1560253023-3ec5d502959f?auto=format&fit=crop&w=1800&q=70"
+          alt=""
+        />
+      </div>
+      <div class="absolute inset-0 bg-ink/85"></div>
+
+      <div class="relative container mx-auto px-6 lg:px-10">
+        <div class="grid lg:grid-cols-2 gap-14 items-center">
+          <div class="reveal">
+            <p class="text-[13px] font-bold tracking-[0.3em] uppercase text-green mb-5">Bora jogar</p>
+            <h2 class="font-display text-4xl lg:text-5xl font-700 leading-tight mb-7">
+              Sua squad tá esperando
+            </h2>
+            <p class="text-muted text-lg leading-relaxed mb-8 max-w-md">
+              Conta seu jogo favorito e a gente já te chama pra fila.
+            </p>
+            <div class="space-y-3 text-sm text-muted">
+              <p>contato@jogae.gg</p>
+              <p>(11) 99999-9999</p>
+              <p>Comunidade 100% online</p>
+            </div>
+          </div>
+
+          <form id="contactForm" class="reveal bg-ink/80 border border-border p-8 sm:p-10" data-delay="1">
+            <div class="space-y-6 mb-8">
+              <div>
+                <label class="block text-xs font-semibold uppercase tracking-widest text-muted mb-2" for="nome">Gamertag</label>
+                <input id="nome" name="nome" type="text" required class="w-full bg-transparent border-b border-border py-2 text-paper focus:outline-none focus:border-green" placeholder="Seu nick" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold uppercase tracking-widest text-muted mb-2" for="jogo">Jogo favorito</label>
+                <select id="jogo" name="jogo" class="w-full bg-transparent border-b border-border py-2 text-paper focus:outline-none focus:border-green">
+                  <option class="bg-ink">FPS Tático</option>
+                  <option class="bg-ink">Battle Royale</option>
+                  <option class="bg-ink">MOBA</option>
+                  <option class="bg-ink">Party Game</option>
+                  <option class="bg-ink">Ainda não sei</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-semibold uppercase tracking-widest text-muted mb-2" for="mensagem">Mensagem</label>
+                <textarea id="mensagem" name="mensagem" rows="3" class="w-full bg-transparent border-b border-border py-2 text-paper focus:outline-none focus:border-green resize-none" placeholder="Conte seu estilo de jogo"></textarea>
+              </div>
+            </div>
+            <button type="submit" data-cursor="target" class="btn-accent w-full rounded-full px-6 py-3.5 text-sm font-bold tracking-widest uppercase">
+              Enviar pelo WhatsApp
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="py-14 border-t border-border">
+      <div class="container mx-auto px-6 lg:px-10">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
+          <a href="#topo" class="font-display text-2xl font-700">JOG<span class="text-gradient">AÊ</span></a>
+
+          <div class="flex items-center gap-6 text-xs font-semibold uppercase tracking-widest text-muted">
+            <a href="#sobre" class="hover:text-paper transition-colors">Sobre</a>
+            <a href="#recursos" class="hover:text-paper transition-colors">Recursos</a>
+            <a href="#planos" class="hover:text-paper transition-colors">Planos</a>
+          </div>
+
+          <div class="flex items-center gap-4">
+            <!-- EDITAR: links reais -->
+            <a href="#" aria-label="Discord" class="text-muted hover:text-green transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.3 5.34A17.5 17.5 0 0 0 15.9 4c-.2.36-.44.85-.6 1.24a16.2 16.2 0 0 0-4.62 0A8.3 8.3 0 0 0 10.08 4a17.5 17.5 0 0 0-4.4 1.35C2.9 8.9 2.15 12.36 2.42 15.77a17.6 17.6 0 0 0 5.36 2.73c.43-.6.82-1.24 1.15-1.92a11.4 11.4 0 0 1-1.8-.87c.15-.11.3-.23.44-.35a12.5 12.5 0 0 0 10.86 0c.14.13.29.24.44.35-.57.34-1.17.63-1.8.87.33.68.72 1.32 1.15 1.92a17.6 17.6 0 0 0 5.36-2.73c.32-3.94-.68-7.37-2.28-10.43zM9.68 13.72c-.82 0-1.5-.77-1.5-1.72s.66-1.72 1.5-1.72 1.51.78 1.5 1.72c0 .95-.66 1.72-1.5 1.72zm4.65 0c-.82 0-1.5-.77-1.5-1.72s.66-1.72 1.5-1.72 1.51.78 1.5 1.72c0 .95-.66 1.72-1.5 1.72z"/></svg>
+            </a>
+            <a href="#" aria-label="Twitch" class="text-muted hover:text-purple-soft transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M4.3 2 3 5.5v14h5v2.5h3l2.5-2.5H17L21 15V2H4.3zm14.7 12-3 3h-3.5L10 19.5V17H6V4h13v10zM15 7v5h2V7h-2zm-4.5 0v5h2V7h-2z"/></svg>
+            </a>
+            <a href="#" aria-label="Instagram" class="text-muted hover:text-green transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.25.07 1.65.07 4.85s0 3.6-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.25.06-1.65.07-4.85.07s-3.6 0-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.85C2.42 3.93 3.94 2.4 7.16 2.25 8.4 2.2 8.8 2.2 12 2.2zm0 3.05a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5zm0 11.13a4.38 4.38 0 1 1 0-8.75 4.38 4.38 0 0 1 0 8.75zm7.02-11.4a1.58 1.58 0 1 1-3.16 0 1.58 1.58 0 0 1 3.16 0z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="mt-10 pt-8 border-t border-border text-center text-xs text-muted">
+          <p>© 2026 Jogaê. Todos os direitos reservados.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ===================== TOAST DE CONQUISTA (easter egg) ===================== -->
+    <div id="achievement-toast" class="flex items-center gap-3 rounded-2xl border border-green/40 bg-ink/95 backdrop-blur px-5 py-4 shadow-2xl">
+      <span class="grid place-items-center w-10 h-10 rounded-full bg-green/15 text-green">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 2 4 6v6c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V6l-8-4z"/><path d="m9 12 2 2 4-4"/></svg>
+      </span>
+      <div>
+        <p class="font-display text-xs tracking-widest uppercase text-green">Conquista desbloqueada</p>
+        <p class="text-sm text-paper font-semibold">Você sabe o código secreto</p>
+      </div>
+    </div>
+
+    <script>
+      // ===== Bloqueio de clique direito =====
+      document.addEventListener("contextmenu", (e) => e.preventDefault());
+
+      // ===== Cursor customizado (reticle HUD) =====
+      const cursorDot = document.getElementById("cursor-dot");
+      const cursorReticle = document.getElementById("cursor-reticle");
+      let mouseX = 0,
+        mouseY = 0,
+        reticleX = 0,
+        reticleY = 0;
+
+      window.addEventListener("mousemove", (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursorDot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
+      });
+
+      function animateReticle() {
+        reticleX += (mouseX - reticleX) * 0.2;
+        reticleY += (mouseY - reticleY) * 0.2;
+        cursorReticle.style.transform = `translate(${reticleX}px, ${reticleY}px) translate(-50%, -50%)`;
+        requestAnimationFrame(animateReticle);
+      }
+      animateReticle();
+
+      document.querySelectorAll('[data-cursor="target"]').forEach((el) => {
+        el.addEventListener("mouseenter", () => cursorReticle.classList.add("is-target"));
+        el.addEventListener("mouseleave", () => cursorReticle.classList.remove("is-target"));
+      });
+
+      // ===== Menu mobile =====
+      const menuToggle = document.getElementById("menuToggle");
+      const mobileMenu = document.getElementById("mobileMenu");
+      menuToggle.addEventListener("click", () => {
+        const isOpen = !mobileMenu.classList.contains("hidden");
+        mobileMenu.classList.toggle("hidden");
+        menuToggle.setAttribute("aria-expanded", String(!isOpen));
+      });
+      mobileMenu.querySelectorAll("a").forEach((link) =>
+        link.addEventListener("click", () => mobileMenu.classList.add("hidden"))
+      );
+
+      // ===== Navbar com fundo ao rolar =====
+      const navbar = document.getElementById("navbar");
+      function updateNavbar() {
+        navbar.classList.toggle("nav-scrolled", window.scrollY > 20);
+      }
+
+      // ===== Barra de progresso de leitura =====
+      const progressBar = document.getElementById("scroll-progress");
+      function updateProgress() {
+        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+        const pct = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+        progressBar.style.width = pct + "%";
+      }
+
+      // ===== Revelar ao rolar =====
+      const revealEls = document.querySelectorAll(".reveal, .img-reveal");
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -60px 0px" }
+      );
+      revealEls.forEach((el) => revealObserver.observe(el));
+
+      // ===== Parallax nos fundos com foto =====
+      const parallaxEls = document.querySelectorAll("[data-parallax]");
+      function updateParallax() {
+        parallaxEls.forEach((el) => {
+          const speed = parseFloat(el.dataset.speed || "0.3");
+          const rect = el.getBoundingClientRect();
+          const offset = rect.top * speed;
+          const img = el.querySelector("img");
+          if (img) img.style.transform = `translateY(${offset}px)`;
+        });
+      }
+
+      // ===== Scroll horizontal pinado (seção "Recursos") =====
+      const horizontalSection = document.getElementById("recursos");
+      const horizontalTrack = document.getElementById("horizontalTrack");
+      function updateHorizontalScroll() {
+        const rect = horizontalSection.getBoundingClientRect();
+        const scrollableDistance = horizontalSection.offsetHeight - window.innerHeight;
+        let progress = -rect.top / scrollableDistance;
+        progress = Math.max(0, Math.min(1, progress));
+        const maxTranslate = horizontalTrack.scrollWidth - window.innerWidth;
+        horizontalTrack.style.transform = `translateX(-${progress * Math.max(0, maxTranslate)}px)`;
+      }
+
+      // ===== Loop único de scroll (rAF-throttled) =====
+      let ticking = false;
+      function onScrollOrResize() {
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            updateNavbar();
+            updateProgress();
+            updateParallax();
+            updateHorizontalScroll();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }
+      window.addEventListener("scroll", onScrollOrResize, { passive: true });
+      window.addEventListener("resize", onScrollOrResize);
+      onScrollOrResize();
+
+      // ===== Contadores animados (stats do hero) =====
+      const counters = document.querySelectorAll("[data-count-to]");
+      const counterObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            counterObserver.unobserve(entry.target);
+            const el = entry.target;
+            const target = parseInt(el.dataset.countTo, 10);
+            const duration = 1600;
+            const start = performance.now();
+            function tick(now) {
+              const progress = Math.min(1, (now - start) / duration);
+              const eased = 1 - Math.pow(1 - progress, 3);
+              el.textContent = Math.round(eased * target).toLocaleString("pt-BR");
+              if (progress < 1) requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+          });
+        },
+        { threshold: 0.4 }
+      );
+      counters.forEach((el) => counterObserver.observe(el));
+
+      // ===== Contagem regressiva do torneio =====
+      const TOURNAMENT_TARGET = Date.now() + (4 * 24 + 6) * 60 * 60 * 1000; // demo: ~4 dias e 6h a partir de agora
+      const cdEls = {
+        days: document.querySelector('[data-cd="days"]'),
+        hours: document.querySelector('[data-cd="hours"]'),
+        minutes: document.querySelector('[data-cd="minutes"]'),
+        seconds: document.querySelector('[data-cd="seconds"]'),
+      };
+      function updateCountdown() {
+        const diff = Math.max(0, TOURNAMENT_TARGET - Date.now());
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+        cdEls.days.textContent = String(days).padStart(2, "0");
+        cdEls.hours.textContent = String(hours).padStart(2, "0");
+        cdEls.minutes.textContent = String(minutes).padStart(2, "0");
+        cdEls.seconds.textContent = String(seconds).padStart(2, "0");
+      }
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+
+      // ===== SFX: bip 8-bit via Web Audio (sem arquivo externo) =====
+      let audioCtx = null;
+      let sfxOn = false;
+      const sfxToggle = document.getElementById("sfxToggle");
+      function playBlip(freq) {
+        if (!sfxOn) return;
+        audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = "square";
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.12);
+        osc.connect(gain).connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.12);
+      }
+      sfxToggle.addEventListener("click", () => {
+        sfxOn = !sfxOn;
+        sfxToggle.dataset.on = String(sfxOn);
+        sfxToggle.setAttribute("aria-pressed", String(sfxOn));
+        playBlip(660);
+      });
+      document.querySelectorAll('.btn-accent, .btn-outline').forEach((btn) => {
+        btn.addEventListener("click", () => playBlip(520));
+      });
+
+      // ===== Easter egg: código Konami desbloqueia conquista =====
+      const KONAMI = ["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","b","a"];
+      let konamiProgress = 0;
+      const achievementToast = document.getElementById("achievement-toast");
+      window.addEventListener("keydown", (e) => {
+        const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+        if (key === KONAMI[konamiProgress]) {
+          konamiProgress++;
+          if (konamiProgress === KONAMI.length) {
+            konamiProgress = 0;
+            achievementToast.classList.add("is-shown");
+            playBlip(880);
+            setTimeout(() => playBlip(1180), 130);
+            setTimeout(() => achievementToast.classList.remove("is-shown"), 4200);
+          }
+        } else {
+          konamiProgress = key === KONAMI[0] ? 1 : 0;
+        }
+      });
+
+      // ===== Formulário → abre WhatsApp com a mensagem pronta =====
+      const WHATSAPP_NUMBER = "5511999999999"; // EDITAR
+      document.getElementById("contactForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const nome = document.getElementById("nome").value.trim();
+        const jogo = document.getElementById("jogo").value;
+        const mensagem = document.getElementById("mensagem").value.trim();
+        const texto =
+          `E aí! Minha gamertag é ${nome}.\n` +
+          `Jogo principal: ${jogo}.` +
+          (mensagem ? `\n\n${mensagem}` : "");
+        window.open(
+          `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(texto)}`,
+          "_blank"
+        );
+      });
+    </script>
+  </body>
+</html>

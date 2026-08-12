@@ -817,6 +817,9 @@
     </a>
 
     <script>
+      // ===== Bloqueio de clique direito =====
+      document.addEventListener("contextmenu", (e) => e.preventDefault());
+
       // Ano dinâmico no rodapé
       document.getElementById("year").textContent = new Date().getFullYear();
 

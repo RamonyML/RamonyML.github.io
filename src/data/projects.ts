@@ -99,4 +99,12 @@ export const projects: Project[] = [
     status: "Produto à venda · pronto",
     demoUrl: "/demos/fotografia/index.html",
   },
+  {
+    title: "Jogaê",
+    description:
+      "Landing page para comunidade gamer de matchmaking, com identidade neon (verde + roxo sobre preto). Cursor em formato de mira, glitch RGB no título, piso holográfico animado, contadores e countdown de torneio, easter egg com código Konami e efeitos sonoros 8-bit opcionais.",
+    tags: ["HTML", "Tailwind CSS", "JavaScript"],
+    status: "Produto à venda · pronto",
+    demoUrl: "/demos/jogae/index.html",
+  },
 ];

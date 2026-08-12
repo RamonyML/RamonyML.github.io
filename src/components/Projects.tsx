@@ -4,6 +4,7 @@ import contabilidadeScreenshot from "../assets/project-contabilidade.png";
 import fotografiaScreenshot from "../assets/project-fotografia.png";
 import belaroidsScreenshot from "../assets/project-belaroids.png";
 import oslineImage from "../assets/OS-Line.png";
+import jogaeScreenshot from "../assets/project-jogae.png";
 import { TypewriterHeading } from "./TypewriterHeading";
 import { FeaturedProject } from "./FeaturedProject";
 import { projects } from "../data/projects";
@@ -15,6 +16,7 @@ const IMAGES: Record<string, string> = {
   "Exata Contábil": contabilidadeScreenshot,
   Obscura: fotografiaScreenshot,
   OSLine: oslineImage,
+  Jogaê: jogaeScreenshot,
 };
 
 const PLACEHOLDER_ICONS: Record<string, React.ReactNode> = {

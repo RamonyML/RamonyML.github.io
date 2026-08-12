@@ -978,6 +978,9 @@
     </a>
 
     <script>
+      // ===== Bloqueio de clique direito =====
+      document.addEventListener("contextmenu", (e) => e.preventDefault());
+
       // ===== Menu mobile =====
       const menuToggle = document.getElementById("menuToggle");
       const mobileMenu = document.getElementById("mobileMenu");

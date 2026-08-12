@@ -707,6 +707,9 @@
     </div>
 
     <script>
+      // ===== Bloqueio de clique direito =====
+      document.addEventListener("contextmenu", (e) => e.preventDefault());
+
       // ===== Cursor customizado =====
       const cursorDot = document.getElementById("cursor-dot");
       const cursorRing = document.getElementById("cursor-ring");

@@ -854,6 +854,9 @@
     </footer>
 
     <script>
+      // ===== Bloqueio de clique direito =====
+      document.addEventListener("contextmenu", (e) => e.preventDefault());
+
       // ===== Ícones Lucide =====
       window.addEventListener("DOMContentLoaded", () => {
         if (window.lucide) lucide.createIcons();
