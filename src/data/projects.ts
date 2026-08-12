@@ -8,6 +8,39 @@ export type Project = {
   note?: string;
 };
 
+export type FeaturedProjectStat = {
+  label: string;
+  value: string;
+};
+
+export type FeaturedProjectData = {
+  title: string;
+  description: string;
+  quote: string;
+  stats: FeaturedProjectStat[];
+  tags: string[];
+  status: string;
+  demoUrl?: string;
+  note?: string;
+};
+
+export const featuredProject: FeaturedProjectData = {
+  title: "Eterno Dia",
+  description:
+    "SaaS que reúne, em tempo real, as fotos e vídeos que os convidados de um evento registram, num álbum colaborativo acessado por link ou QR Code, sem precisar instalar nada. Checkout com Stripe e Asaas, crop de imagem direto no navegador, download do álbum completo em ZIP e um painel de moderação para o organizador.",
+  quote:
+    "Foi o primeiro produto que tirei do zero sozinho, cobrando de verdade: modelei o banco, integrei os pagamentos, resolvi bug de madrugada antes de casamento de cliente. É o projeto que mais me orgulha.",
+  stats: [
+    { label: "Planos", value: "3" },
+    { label: "Pagamentos", value: "Stripe + Asaas" },
+    { label: "Álbum", value: "Tempo real" },
+  ],
+  tags: ["React 19", "Vite", "Tailwind CSS 4", "Firebase", "Stripe", "Asaas"],
+  status: "SaaS próprio · Em produção",
+  demoUrl: "https://eternodia.com",
+  note: "Produto proprietário, código-fonte não disponível publicamente.",
+};
+
 export const projects: Project[] = [
   {
     title: "Gerador de O.S.",
@@ -16,15 +49,6 @@ export const projects: Project[] = [
     tags: ["React 19", "TypeScript", "Firebase", "Cloud Functions", "REST API"],
     status: "Em produção desde dez. 2023 · v4.0.1",
     note: "Sistema interno da empresa, repositório privado, código-fonte não disponível publicamente.",
-  },
-  {
-    title: "Eterno Dia",
-    description:
-      "SaaS que reúne, em tempo real, as fotos e vídeos que os convidados de um evento registram, num álbum colaborativo acessado por link ou QR Code, sem app. Pagamentos via Stripe (Payment Element, Apple Pay, Google Pay, webhooks) em 3 planos, crop de imagem no navegador, download do álbum em ZIP e sistema de moderação.",
-    tags: ["React 19", "Vite", "Tailwind CSS 4", "Firebase", "Stripe"],
-    status: "SaaS próprio · Em produção",
-    demoUrl: "https://eternodia.com",
-    note: "Produto proprietário, código-fonte não disponível publicamente.",
   },
   {
     title: "OSLine",

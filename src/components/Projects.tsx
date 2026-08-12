@@ -1,4 +1,3 @@
-import eternodiaScreenshot from "../assets/project-eternodia.png";
 import landingScreenshot from "../assets/project-landing.png";
 import studioNovaScreenshot from "../assets/project-studio-nova.png";
 import contabilidadeScreenshot from "../assets/project-contabilidade.png";
@@ -6,10 +5,10 @@ import fotografiaScreenshot from "../assets/project-fotografia.png";
 import belaroidsScreenshot from "../assets/project-belaroids.png";
 import oslineImage from "../assets/OS-Line.png";
 import { TypewriterHeading } from "./TypewriterHeading";
+import { FeaturedProject } from "./FeaturedProject";
 import { projects } from "../data/projects";
 
 const IMAGES: Record<string, string> = {
-  "Eterno Dia": eternodiaScreenshot,
   Belaroids: belaroidsScreenshot,
   "Belle Studio": landingScreenshot,
   "Studio Nova": studioNovaScreenshot,
@@ -46,6 +45,8 @@ export function Projects() {
           text="Alguns trabalhos recentes"
           className="mb-14 max-w-2xl text-3xl font-medium tracking-tight text-ink sm:text-4xl"
         />
+
+        <FeaturedProject />
 
         <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
           {projects.map((project) => {
