@@ -1,3 +1,4 @@
+import { GlitchReveal } from "./GlitchReveal";
 import { TypewriterHeading } from "./TypewriterHeading";
 
 export function Contact() {
@@ -12,9 +13,12 @@ export function Contact() {
             text="Tem um projeto em mente ou uma vaga em aberto?"
             className="mx-auto max-w-xl text-3xl font-medium tracking-tight text-ink sm:text-4xl"
           />
-          <p className="mx-auto mt-5 max-w-md text-muted">
-            Me manda uma mensagem, respondo rápido.
-          </p>
+          <div className="mt-5">
+            <GlitchReveal
+              text="Me manda uma mensagem, respondo rápido."
+              className="mx-auto max-w-md text-muted"
+            />
+          </div>
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
             <a
