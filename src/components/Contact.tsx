@@ -10,7 +10,7 @@ export function Contact() {
             Contato
           </p>
           <TypewriterHeading
-            text="Tem um projeto em mente ou uma vaga em aberto?"
+            text="Quer tirar aquele projeto do papel?"
             className="mx-auto max-w-xl text-3xl font-medium tracking-tight text-ink sm:text-4xl"
           />
           <div className="mt-5">
