@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import eternodiaSlide1 from "../assets/project-eternodia.png";
+import eternodiaSlide1 from "../assets/eternodia-slide-1.png";
+import eternodiaSlide2 from "../assets/eternodia-slide-2.png";
 import { featuredProject } from "../data/projects";
 
 // Novas telas: solte os arquivos em src/assets/ e adicione o import + a
 // entrada aqui. O crossfade já roda sozinho com quantas imagens houver.
-const SLIDES = [eternodiaSlide1];
+const SLIDES = [eternodiaSlide1, eternodiaSlide2];
 
 const SLIDE_INTERVAL_MS = 4500;
 
