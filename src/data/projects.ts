@@ -29,7 +29,7 @@ export const featuredProject: FeaturedProjectData = {
   description:
     "SaaS que reúne, em tempo real, as fotos e vídeos que os convidados de um evento registram, num álbum colaborativo acessado por link ou QR Code, sem precisar instalar nada. Checkout com Stripe e Asaas, crop de imagem direto no navegador, download do álbum completo em ZIP e um painel de moderação para o organizador.",
   quote:
-    "Foi o primeiro produto que tirei do zero sozinho, cobrando de verdade: modelei o banco, integrei os pagamentos, resolvi bug de madrugada antes de casamento de cliente. É o projeto que mais me orgulha.",
+    "Foi o primeiro produto que tirei do zero sozinho, cobrando de verdade: modelei o banco, integrei os pagamentos, pensei em cada detalhe sabendo que ia rodar no dia mais importante da vida de alguém. É o projeto que mais me orgulho.",
   stats: [
     { label: "Planos", value: "3" },
     { label: "Pagamentos", value: "Stripe + Asaas" },
