@@ -1,3 +1,5 @@
+import { TypewriterHeading } from "./TypewriterHeading";
+
 export function Contact() {
   return (
     <section id="contato" className="border-t border-border py-24">
@@ -6,9 +8,10 @@ export function Contact() {
           <p className="mb-3 text-sm font-medium tracking-widest text-primary uppercase">
             Contato
           </p>
-          <h2 className="mx-auto max-w-xl text-3xl font-medium tracking-tight text-ink sm:text-4xl">
-            Tem um projeto em mente ou uma vaga em aberto?
-          </h2>
+          <TypewriterHeading
+            text="Tem um projeto em mente ou uma vaga em aberto?"
+            className="mx-auto max-w-xl text-3xl font-medium tracking-tight text-ink sm:text-4xl"
+          />
           <p className="mx-auto mt-5 max-w-md text-muted">
             Me manda uma mensagem, respondo rápido.
           </p>

@@ -1,4 +1,5 @@
 import experienceBg from "../assets/fundo003.jpeg";
+import { TypewriterHeading } from "./TypewriterHeading";
 import { education, experience } from "../data/experience";
 import { useParallax } from "../hooks/useParallax";
 
@@ -64,9 +65,10 @@ export function Experience() {
         <p className="mb-3 text-sm font-medium tracking-widest text-primary uppercase">
           Trajetória
         </p>
-        <h2 className="mb-14 max-w-2xl text-3xl font-medium tracking-tight text-ink sm:text-4xl">
-          Experiência e formação
-        </h2>
+        <TypewriterHeading
+          text="Experiência e formação"
+          className="mb-14 max-w-2xl text-3xl font-medium tracking-tight text-ink sm:text-4xl"
+        />
 
         <div className="grid gap-16 lg:grid-cols-2">
           <div>

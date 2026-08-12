@@ -1,4 +1,5 @@
 import servicesBg from "../assets/fundo002.jpeg";
+import { TypewriterHeading } from "./TypewriterHeading";
 import { services } from "../data/services";
 import { useParallax } from "../hooks/useParallax";
 
@@ -41,9 +42,10 @@ export function Services() {
         <p className="mb-3 text-sm font-medium tracking-widest text-primary uppercase">
           Serviços
         </p>
-        <h2 className="mb-14 max-w-2xl text-3xl font-medium tracking-tight text-ink sm:text-4xl">
-          Como posso ajudar no seu projeto
-        </h2>
+        <TypewriterHeading
+          text="Como posso ajudar no seu projeto"
+          className="mb-14 max-w-2xl text-3xl font-medium tracking-tight text-ink sm:text-4xl"
+        />
 
         <div className="grid gap-5 sm:grid-cols-2">
           {services.map((service) => (

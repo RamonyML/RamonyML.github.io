@@ -5,6 +5,7 @@ import contabilidadeScreenshot from "../assets/project-contabilidade.png";
 import fotografiaScreenshot from "../assets/project-fotografia.png";
 import belaroidsScreenshot from "../assets/project-belaroids.png";
 import oslineImage from "../assets/OS-Line.png";
+import { TypewriterHeading } from "./TypewriterHeading";
 import { projects } from "../data/projects";
 
 const IMAGES: Record<string, string> = {
@@ -41,9 +42,10 @@ export function Projects() {
         <p className="mb-3 text-sm font-medium tracking-widest text-primary uppercase">
           Projetos
         </p>
-        <h2 className="mb-14 max-w-2xl text-3xl font-medium tracking-tight text-ink sm:text-4xl">
-          Alguns trabalhos recentes
-        </h2>
+        <TypewriterHeading
+          text="Alguns trabalhos recentes"
+          className="mb-14 max-w-2xl text-3xl font-medium tracking-tight text-ink sm:text-4xl"
+        />
 
         <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
           {projects.map((project) => {

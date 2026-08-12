@@ -1,3 +1,4 @@
+import { TypewriterHeading } from "./TypewriterHeading";
 import { stack } from "../data/stack";
 
 export function About() {
@@ -7,9 +8,10 @@ export function About() {
         <p className="mb-3 text-sm font-medium tracking-widest text-primary uppercase">
           Sobre
         </p>
-        <h2 className="mb-14 max-w-2xl text-3xl font-medium tracking-tight text-ink sm:text-4xl">
-          Um pouco sobre como eu trabalho
-        </h2>
+        <TypewriterHeading
+          text="Um pouco sobre como eu trabalho"
+          className="mb-14 max-w-2xl text-3xl font-medium tracking-tight text-ink sm:text-4xl"
+        />
 
         <div className="grid gap-14 lg:grid-cols-2">
           <div>
