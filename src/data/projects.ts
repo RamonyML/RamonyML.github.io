@@ -163,11 +163,10 @@ export const projects: Project[] = [
   {
     title: "HT Glow Fit",
     description:
-      "Landing page proposta para uma marca real de moda fitness feminina, 100% online. Identidade em marfim quente com glow em rosé e dourado, peças reais do catálogo com preço e tamanho, e pedido por WhatsApp já com mensagem pronta por produto — sem checkout, como a cliente está começando agora.",
+      "Landing page para uma marca real de moda fitness feminina, 100% online. Identidade em marfim quente com glow em rosé e dourado, peças reais do catálogo com preço e tamanho, e pedido por WhatsApp já com mensagem pronta por produto. Projeto fechado e no ar.",
     tags: ["HTML", "Tailwind CSS", "JavaScript"],
-    status: "Proposta comercial · Cliente real",
-    demoUrl: "/demos/glowfit/index.html",
-    note: "Protótipo de prospecção para negociação com a cliente — não é um template genérico à venda.",
-    stage: "desenvolvimento",
+    status: "Em produção · Cliente real",
+    demoUrl: "https://glowfit-ht.vercel.app",
+    stage: "producao",
   },
 ];
