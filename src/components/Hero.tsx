@@ -1,6 +1,6 @@
 import { useState } from "react";
 import heroBg from "../assets/fundo01.jpeg";
-import photo from "../assets/ramonyml.png";
+import photo from "../assets/ramonyml.jpg";
 import { useParallax } from "../hooks/useParallax";
 import { useTypewriter } from "../hooks/useTypewriter";
 
@@ -168,6 +168,7 @@ export function Hero() {
             <img
               src={photo}
               alt="Foto de Ramony Lima"
+              fetchPriority="high"
               className="h-full w-full scale-100 object-cover object-[50%_15%] grayscale transition-all duration-500 ease-out group-hover:scale-110 group-hover:grayscale-0 group-data-[pinned=true]:scale-110 group-data-[pinned=true]:grayscale-0"
             />
           </div>

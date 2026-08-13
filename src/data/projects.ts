@@ -6,6 +6,8 @@ export type Project = {
   demoUrl?: string;
   repoUrl?: string;
   note?: string;
+  stage: "producao" | "desenvolvimento" | "venda";
+  tier?: "generico" | "premium";
 };
 
 export type FeaturedProjectStat = {
@@ -49,6 +51,7 @@ export const projects: Project[] = [
     tags: ["React 19", "TypeScript", "Firebase", "Cloud Functions", "REST API"],
     status: "Em produção desde dez. 2023 · v4.0.1",
     note: "Sistema interno da empresa, repositório privado, código-fonte não disponível publicamente.",
+    stage: "producao",
   },
   {
     title: "OSLine",
@@ -57,6 +60,7 @@ export const projects: Project[] = [
     tags: ["React 19", "TypeScript", "Firestore Multi-Tenant", "Firebase"],
     status: "Em desenvolvimento ativo",
     note: "Produto ainda não lançado publicamente.",
+    stage: "desenvolvimento",
   },
   {
     title: "Belaroids",
@@ -66,6 +70,7 @@ export const projects: Project[] = [
     status: "Em produção",
     demoUrl: "https://belaroids.vercel.app/",
     repoUrl: "https://github.com/RamonyML/belaroids",
+    stage: "producao",
   },
   {
     title: "Belle Studio",
@@ -74,6 +79,8 @@ export const projects: Project[] = [
     tags: ["HTML", "Tailwind CSS", "JavaScript"],
     status: "Projeto de demonstração",
     demoUrl: "/demos/landing-premium/index.html",
+    stage: "venda",
+    tier: "generico",
   },
   {
     title: "Studio Nova",
@@ -82,6 +89,8 @@ export const projects: Project[] = [
     tags: ["HTML", "Tailwind CSS", "JavaScript"],
     status: "Produto à venda · pronto",
     demoUrl: "/demos/studio-nova/index.html",
+    stage: "venda",
+    tier: "generico",
   },
   {
     title: "Exata Contábil",
@@ -90,6 +99,8 @@ export const projects: Project[] = [
     tags: ["HTML", "Tailwind CSS", "JavaScript", "Lucide Icons"],
     status: "Produto à venda · pronto",
     demoUrl: "/demos/contabilidade/index.html",
+    stage: "venda",
+    tier: "generico",
   },
   {
     title: "Obscura",
@@ -98,6 +109,8 @@ export const projects: Project[] = [
     tags: ["HTML", "Tailwind CSS", "JavaScript"],
     status: "Produto à venda · pronto",
     demoUrl: "/demos/fotografia/index.html",
+    stage: "venda",
+    tier: "premium",
   },
   {
     title: "Jogaê",
@@ -106,6 +119,8 @@ export const projects: Project[] = [
     tags: ["HTML", "Tailwind CSS", "JavaScript"],
     status: "Produto à venda · pronto",
     demoUrl: "/demos/jogae/index.html",
+    stage: "venda",
+    tier: "premium",
   },
   {
     title: "Apetite",
@@ -114,6 +129,8 @@ export const projects: Project[] = [
     tags: ["HTML", "Tailwind CSS", "JavaScript"],
     status: "Produto à venda · pronto",
     demoUrl: "/demos/apetite/index.html",
+    stage: "venda",
+    tier: "premium",
   },
   {
     title: "Vigor",
@@ -122,6 +139,8 @@ export const projects: Project[] = [
     tags: ["HTML", "Tailwind CSS", "JavaScript"],
     status: "Produto à venda · pronto",
     demoUrl: "/demos/vigor/index.html",
+    stage: "venda",
+    tier: "premium",
   },
   {
     title: "HT Glow Fit",
@@ -131,5 +150,6 @@ export const projects: Project[] = [
     status: "Proposta comercial · Cliente real",
     demoUrl: "/demos/glowfit/index.html",
     note: "Protótipo de prospecção para negociação com a cliente — não é um template genérico à venda.",
+    stage: "desenvolvimento",
   },
 ];

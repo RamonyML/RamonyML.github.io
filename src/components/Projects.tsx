@@ -1,16 +1,16 @@
-import landingScreenshot from "../assets/project-landing.png";
-import studioNovaScreenshot from "../assets/project-studio-nova.png";
-import contabilidadeScreenshot from "../assets/project-contabilidade.png";
-import fotografiaScreenshot from "../assets/project-fotografia.png";
-import belaroidsScreenshot from "../assets/project-belaroids.png";
-import oslineImage from "../assets/OS-Line.png";
-import jogaeScreenshot from "../assets/project-jogae.png";
-import apetiteScreenshot from "../assets/project-apetite.png";
-import vigorScreenshot from "../assets/project-vigor.png";
-import glowfitScreenshot from "../assets/project-glowfit.png";
+import landingScreenshot from "../assets/project-landing.jpg";
+import studioNovaScreenshot from "../assets/project-studio-nova.jpg";
+import contabilidadeScreenshot from "../assets/project-contabilidade.jpg";
+import fotografiaScreenshot from "../assets/project-fotografia.jpg";
+import belaroidsScreenshot from "../assets/project-belaroids.jpg";
+import oslineImage from "../assets/OS-Line.jpg";
+import jogaeScreenshot from "../assets/project-jogae.jpg";
+import apetiteScreenshot from "../assets/project-apetite.jpg";
+import vigorScreenshot from "../assets/project-vigor.jpg";
+import glowfitScreenshot from "../assets/project-glowfit.jpg";
 import { TypewriterHeading } from "./TypewriterHeading";
 import { FeaturedProject } from "./FeaturedProject";
-import { projects } from "../data/projects";
+import { projects, type Project } from "../data/projects";
 
 const IMAGES: Record<string, string> = {
   Belaroids: belaroidsScreenshot,
@@ -42,7 +42,146 @@ const PLACEHOLDER_ICONS: Record<string, React.ReactNode> = {
   ),
 };
 
+function ProjectCard({ project }: { project: Project }) {
+  const image = IMAGES[project.title];
+  const premium = project.tier === "premium";
+
+  return (
+    <article
+      className={
+        premium
+          ? "flex flex-col overflow-hidden rounded-2xl border border-amber-500/30 bg-gradient-to-b from-surface to-amber-500/[0.06]"
+          : "flex flex-col overflow-hidden rounded-2xl border border-border bg-surface"
+      }
+    >
+      <div className="aspect-video w-full overflow-hidden border-b border-border bg-surface-2">
+        {image ? (
+          <img
+            src={image}
+            alt={`Captura de tela do projeto ${project.title}`}
+            loading="lazy"
+            decoding="async"
+            className="h-full w-full object-cover object-top"
+          />
+        ) : (
+          <div className="flex h-full w-full flex-col items-center justify-center gap-2 text-muted">
+            {PLACEHOLDER_ICONS[project.title]}
+            <span className="text-xs">Case de produto</span>
+          </div>
+        )}
+      </div>
+
+      <div className="flex flex-1 flex-col p-7">
+        <div className="mb-2.5 flex items-center justify-between gap-3">
+          <h3 className="text-lg font-medium text-ink">{project.title}</h3>
+          {premium && (
+            <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-amber-500/30 bg-amber-500/10 px-2.5 py-1 text-[11px] font-medium text-amber-400">
+              Premium
+            </span>
+          )}
+        </div>
+        <span className="mb-3 inline-block w-fit rounded-full border border-border px-2.5 py-1 text-[11px] font-medium text-primary">
+          {project.status}
+        </span>
+        <p className="text-sm leading-relaxed text-muted">
+          {project.description}
+        </p>
+
+        <div className="mt-5 flex flex-wrap gap-2">
+          {project.tags.map((tag) => (
+            <span
+              key={tag}
+              className="rounded-full border border-border px-3 py-1 text-xs text-muted"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <div className="mt-6 flex-1 space-y-2">
+          {project.demoUrl && (
+            <a
+              href={project.demoUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:text-primary-soft"
+            >
+              Ver site ao vivo
+              <svg
+                className="h-3.5 w-3.5"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                viewBox="0 0 24 24"
+              >
+                <path d="M7 17 17 7M7 7h10v10" />
+              </svg>
+            </a>
+          )}
+          {project.repoUrl && (
+            <a
+              href={project.repoUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-1.5 text-sm font-medium text-primary hover:text-primary-soft"
+            >
+              Ver código
+              <svg
+                className="h-3.5 w-3.5"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                viewBox="0 0 24 24"
+              >
+                <path d="M7 17 17 7M7 7h10v10" />
+              </svg>
+            </a>
+          )}
+          {project.note && (
+            <p className="text-xs text-muted italic">{project.note}</p>
+          )}
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function ProjectGroup({
+  title,
+  items,
+}: {
+  title: string;
+  items: Project[];
+}) {
+  if (items.length === 0) return null;
+  return (
+    <div className="mt-16 first:mt-0">
+      <h3 className="mb-6 text-lg font-medium text-ink">{title}</h3>
+      <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+        {items.map((project) => (
+          <ProjectCard key={project.title} project={project} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function Projects() {
+  const producao = projects.filter((p) => p.stage === "producao");
+  const desenvolvimento = projects.filter(
+    (p) => p.stage === "desenvolvimento"
+  );
+  const vendaGenerico = projects.filter(
+    (p) => p.stage === "venda" && p.tier === "generico"
+  );
+  const vendaPremium = projects.filter(
+    (p) => p.stage === "venda" && p.tier === "premium"
+  );
+
   return (
     <section id="projetos" className="border-t border-border py-24">
       <div className="mx-auto max-w-6xl px-5">
@@ -56,106 +195,29 @@ export function Projects() {
 
         <FeaturedProject />
 
-        <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-          {projects.map((project) => {
-            const image = IMAGES[project.title];
-            return (
-              <article
-                key={project.title}
-                className="flex flex-col overflow-hidden rounded-2xl border border-border bg-surface"
-              >
-                <div className="aspect-video w-full overflow-hidden border-b border-border bg-surface-2">
-                  {image ? (
-                    <img
-                      src={image}
-                      alt={`Captura de tela do projeto ${project.title}`}
-                      className="h-full w-full object-cover object-top"
-                    />
-                  ) : (
-                    <div className="flex h-full w-full flex-col items-center justify-center gap-2 text-muted">
-                      {PLACEHOLDER_ICONS[project.title]}
-                      <span className="text-xs">Case de produto</span>
-                    </div>
-                  )}
-                </div>
+        <ProjectGroup title="Em produção" items={producao} />
+        <ProjectGroup title="Em desenvolvimento" items={desenvolvimento} />
 
-                <div className="flex flex-1 flex-col p-7">
-                  <div className="mb-2.5 flex items-center justify-between gap-3">
-                    <h3 className="text-lg font-medium text-ink">
-                      {project.title}
-                    </h3>
-                  </div>
-                  <span className="mb-3 inline-block w-fit rounded-full border border-border px-2.5 py-1 text-[11px] font-medium text-primary">
-                    {project.status}
-                  </span>
-                  <p className="text-sm leading-relaxed text-muted">
-                    {project.description}
-                  </p>
+        <div className="mt-16">
+          <h3 className="mb-6 text-lg font-medium text-ink">À venda</h3>
 
-                  <div className="mt-5 flex flex-wrap gap-2">
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-full border border-border px-3 py-1 text-xs text-muted"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
+          <p className="mb-4 text-xs font-medium tracking-widest text-muted uppercase">
+            Genéricos
+          </p>
+          <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+            {vendaGenerico.map((project) => (
+              <ProjectCard key={project.title} project={project} />
+            ))}
+          </div>
 
-                  <div className="mt-6 flex-1 space-y-2">
-                    {project.demoUrl && (
-                      <a
-                        href={project.demoUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:text-primary-soft"
-                      >
-                        Ver site ao vivo
-                        <svg
-                          className="h-3.5 w-3.5"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          viewBox="0 0 24 24"
-                        >
-                          <path d="M7 17 17 7M7 7h10v10" />
-                        </svg>
-                      </a>
-                    )}
-                    {project.repoUrl && (
-                      <a
-                        href={project.repoUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex items-center gap-1.5 text-sm font-medium text-primary hover:text-primary-soft"
-                      >
-                        Ver código
-                        <svg
-                          className="h-3.5 w-3.5"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          viewBox="0 0 24 24"
-                        >
-                          <path d="M7 17 17 7M7 7h10v10" />
-                        </svg>
-                      </a>
-                    )}
-                    {project.note && (
-                      <p className="text-xs text-muted italic">
-                        {project.note}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              </article>
-            );
-          })}
+          <p className="mt-10 mb-4 text-xs font-medium tracking-widest text-amber-400/80 uppercase">
+            Premium
+          </p>
+          <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+            {vendaPremium.map((project) => (
+              <ProjectCard key={project.title} project={project} />
+            ))}
+          </div>
         </div>
       </div>
     </section>

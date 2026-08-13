@@ -19,6 +19,8 @@ export function Services() {
           src={servicesBg}
           alt=""
           aria-hidden="true"
+          loading="lazy"
+          decoding="async"
           className="h-full w-full object-cover [filter:grayscale(1)_brightness(0.6)_contrast(1.15)]"
           style={{
             opacity: "var(--hero-bg-opacity)",

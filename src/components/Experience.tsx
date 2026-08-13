@@ -41,6 +41,8 @@ export function Experience() {
           src={experienceBg}
           alt=""
           aria-hidden="true"
+          loading="lazy"
+          decoding="async"
           className="h-full w-full object-cover [filter:grayscale(1)_brightness(0.5)_contrast(1.1)_blur(6px)]"
           style={{
             opacity: "var(--hero-bg-opacity)",

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import eternodiaSlide1 from "../assets/eternodia-slide-1.png";
-import eternodiaSlide2 from "../assets/eternodia-slide-2.png";
-import eternodiaSlide3 from "../assets/eternodia-slide-3.png";
-import eternodiaSlide4 from "../assets/eternodia-slide-4.png";
+import eternodiaSlide1 from "../assets/eternodia-slide-1.jpg";
+import eternodiaSlide2 from "../assets/eternodia-slide-2.jpg";
+import eternodiaSlide3 from "../assets/eternodia-slide-3.jpg";
+import eternodiaSlide4 from "../assets/eternodia-slide-4.jpg";
 import { featuredProject } from "../data/projects";
 
 // Novas telas: solte os arquivos em src/assets/ e adicione o import + a
@@ -39,6 +39,8 @@ export function FeaturedProject() {
               key={src}
               src={src}
               alt="Interface do Eterno Dia"
+              loading="lazy"
+              decoding="async"
               className="absolute inset-0 h-full w-full object-cover object-top transition-opacity duration-1000 ease-in-out"
               style={{ opacity: index === activeSlide ? 1 : 0 }}
             />
