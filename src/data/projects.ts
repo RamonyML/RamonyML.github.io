@@ -8,6 +8,10 @@ export type Project = {
   note?: string;
   stage: "producao" | "desenvolvimento" | "venda";
   tier?: "generico" | "premium";
+  /** Preço do arquivo do template (autoinstalável). Ajuste aqui pra mudar no site inteiro. */
+  price?: string;
+  /** Preço do serviço sob medida: aplicar a identidade do cliente e publicar. */
+  customPrice?: string;
 };
 
 export type FeaturedProjectStat = {
@@ -77,10 +81,12 @@ export const projects: Project[] = [
     description:
       "Landing page para salão de beleza, com hero animado, catálogo de serviços, galeria, planos e depoimentos. Construída como modelo de site institucional para negócios locais.",
     tags: ["HTML", "Tailwind CSS", "JavaScript"],
-    status: "Projeto de demonstração",
+    status: "Produto à venda · pronto",
     demoUrl: "/demos/landing-premium/index.html",
     stage: "venda",
     tier: "generico",
+    price: "R$ 897",
+    customPrice: "R$ 2.000",
   },
   {
     title: "Studio Nova",
@@ -91,6 +97,8 @@ export const projects: Project[] = [
     demoUrl: "/demos/studio-nova/index.html",
     stage: "venda",
     tier: "generico",
+    price: "R$ 897",
+    customPrice: "R$ 2.000",
   },
   {
     title: "Exata Contábil",
@@ -101,6 +109,8 @@ export const projects: Project[] = [
     demoUrl: "/demos/contabilidade/index.html",
     stage: "venda",
     tier: "generico",
+    price: "R$ 897",
+    customPrice: "R$ 2.000",
   },
   {
     title: "Obscura",
@@ -111,6 +121,8 @@ export const projects: Project[] = [
     demoUrl: "/demos/fotografia/index.html",
     stage: "venda",
     tier: "premium",
+    price: "R$ 1.800",
+    customPrice: "R$ 2.500",
   },
   {
     title: "Jogaê",
@@ -121,6 +133,8 @@ export const projects: Project[] = [
     demoUrl: "/demos/jogae/index.html",
     stage: "venda",
     tier: "premium",
+    price: "R$ 1.800",
+    customPrice: "R$ 2.500",
   },
   {
     title: "Apetite",
@@ -131,6 +145,8 @@ export const projects: Project[] = [
     demoUrl: "/demos/apetite/index.html",
     stage: "venda",
     tier: "premium",
+    price: "R$ 1.800",
+    customPrice: "R$ 2.500",
   },
   {
     title: "Vigor",
@@ -141,6 +157,8 @@ export const projects: Project[] = [
     demoUrl: "/demos/vigor/index.html",
     stage: "venda",
     tier: "premium",
+    price: "R$ 1.800",
+    customPrice: "R$ 2.500",
   },
   {
     title: "HT Glow Fit",

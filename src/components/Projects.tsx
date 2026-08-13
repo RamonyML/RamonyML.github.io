@@ -98,6 +98,31 @@ function ProjectCard({ project }: { project: Project }) {
           ))}
         </div>
 
+        {project.price && (
+          <div className="mt-6 rounded-xl border border-border bg-bg/40 p-4">
+            <p className="text-2xl font-medium text-ink">
+              {project.price}
+              <span className="ml-2 text-xs font-normal text-muted">
+                arquivo do template
+              </span>
+            </p>
+            {project.customPrice && (
+              <>
+                <p className="mt-2 text-lg font-medium text-primary">
+                  {project.customPrice}
+                  <span className="ml-2 text-xs font-normal text-muted">
+                    sob medida, instalado e publicado
+                  </span>
+                </p>
+                <p className="mt-2 text-xs leading-relaxed text-muted">
+                  No sob medida eu aplico sua identidade visual e coloco no
+                  ar. Logo, fotos e textos são enviados por você.
+                </p>
+              </>
+            )}
+          </div>
+        )}
+
         <div className="mt-6 flex-1 space-y-2">
           {project.demoUrl && (
             <a
@@ -201,8 +226,13 @@ export function Projects() {
         <div className="mt-16">
           <h3 className="mb-6 text-lg font-medium text-ink">À venda</h3>
 
-          <p className="mb-4 text-xs font-medium tracking-widest text-muted uppercase">
+          <p className="mb-2 text-xs font-medium tracking-widest text-primary uppercase">
             Genéricos
+          </p>
+          <p className="mb-6 max-w-2xl text-sm leading-relaxed text-muted">
+            Estrutura sólida e visual limpo, fáceis de adaptar a qualquer
+            nicho. Pra quem precisa de um site bonito no ar rápido, sem
+            complicação.
           </p>
           <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
             {vendaGenerico.map((project) => (
@@ -210,8 +240,14 @@ export function Projects() {
             ))}
           </div>
 
-          <p className="mt-10 mb-4 text-xs font-medium tracking-widest text-amber-400/80 uppercase">
+          <p className="mt-14 mb-2 text-xs font-medium tracking-widest text-amber-400/80 uppercase">
             Premium
+          </p>
+          <p className="mb-6 max-w-2xl text-sm leading-relaxed text-muted">
+            Identidade autoral e interações que a maioria dos templates não
+            tem: cursor customizado, scroll horizontal, animações
+            sob medida e efeitos sonoros. Pra quem quer um site que chama
+            atenção de verdade.
           </p>
           <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
             {vendaPremium.map((project) => (
