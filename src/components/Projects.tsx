@@ -5,6 +5,7 @@ import fotografiaScreenshot from "../assets/project-fotografia.png";
 import belaroidsScreenshot from "../assets/project-belaroids.png";
 import oslineImage from "../assets/OS-Line.png";
 import jogaeScreenshot from "../assets/project-jogae.png";
+import apetiteScreenshot from "../assets/project-apetite.png";
 import { TypewriterHeading } from "./TypewriterHeading";
 import { FeaturedProject } from "./FeaturedProject";
 import { projects } from "../data/projects";
@@ -17,6 +18,7 @@ const IMAGES: Record<string, string> = {
   Obscura: fotografiaScreenshot,
   OSLine: oslineImage,
   Jogaê: jogaeScreenshot,
+  Apetite: apetiteScreenshot,
 };
 
 const PLACEHOLDER_ICONS: Record<string, React.ReactNode> = {

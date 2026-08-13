@@ -107,4 +107,12 @@ export const projects: Project[] = [
     status: "Produto à venda · pronto",
     demoUrl: "/demos/jogae/index.html",
   },
+  {
+    title: "Apetite",
+    description:
+      "Landing page para restaurantes e delivery, com identidade editorial em carvão quente e terracota. Slider de pratos com arraste e indicadores, cardápio em abas no estilo de menu impresso, galeria de ambiente e pedido direto pelo WhatsApp.",
+    tags: ["HTML", "Tailwind CSS", "JavaScript"],
+    status: "Produto à venda · pronto",
+    demoUrl: "/demos/apetite/index.html",
+  },
 ];

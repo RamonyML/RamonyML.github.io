@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- ============================================================
+         SEO — EDITE os campos abaixo com as informações do restaurante
+         ============================================================ -->
+    <title>Apetite — Cozinha de Fogo Vivo</title>
+    <meta
+      name="description"
+      content="Apetite — cozinha de fogo vivo. Pratos grelhados lentamente na brasa, cardápio sazonal e pedidos direto pelo WhatsApp."
+    />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="Apetite — Cozinha de Fogo Vivo" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Favicon (SVG inline, chama estilizada) -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%23150f0b'/%3E%3Cpath d='M12 4c1 2.2-.6 3.4-1.6 4.6-1.2 1.4-1.9 2.7-1.4 4.4.3 1 .1 1.7-.5 2.3 -1.6-.7-2.5-2.3-2.3-4.2C6.5 8.6 8.8 7 9.6 4.8c.3 1 .1 2-.5 2.8 1-.5 1.9-1.8 1.9-3.3C11 3.7 11.5 3.7 12 4z' fill='%23d1602f'/%3E%3Cpath d='M15.4 9c.6 1.6-.3 2.5-1 3.4-.8 1-1.2 1.9-.8 3.1.5 1.6-.2 3.1-1.7 3.9 2.4.4 4.7-1 5.3-3.3.5-1.9-.2-3.2-1.1-4.5-.6-.9-.9-1.7-.7-2.6z' fill='%23e88a52'/%3E%3C/svg%3E"
+    />
+
+    <!-- Fontes: Fraunces (títulos, serifada expressiva) + Manrope (texto) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS via CDN — zero build -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Manrope", "sans-serif"],
+              display: ["Fraunces", "serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* ================================================================
+         TEMA — carvão quente + terracota/brasa. Troque aqui pra
+         recolorir o site inteiro.
+         ================================================================ */
+      :root {
+        --ink: #150f0b; /* fundo principal */
+        --paper: #f7efe3; /* texto principal (branco quente) */
+        --muted: #b7a996; /* texto secundário */
+        --accent: #d1602f; /* terracota/brasa: detalhes, links, CTA */
+        --accent-soft: #e88a52;
+        --surface: #1d1611; /* cartões/blocos sobre o preto */
+        --border: rgba(247, 239, 227, 0.12);
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Manrope", sans-serif;
+        color: var(--paper);
+        background-color: var(--ink);
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      .font-display {
+        font-family: "Fraunces", serif;
+      }
+
+      ::selection {
+        background: color-mix(in srgb, var(--accent) 35%, transparent);
+      }
+
+      .eyebrow {
+        font-family: "Fraunces", serif;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 1rem;
+      }
+
+      /* ===== Textura de grão sutil (evita cara "chapada" de template genérico) ===== */
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 80;
+        pointer-events: none;
+        opacity: 0.045;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      }
+
+      /* ===== Reveal ao rolar ===== */
+      .reveal {
+        opacity: 0;
+        transform: translateY(32px);
+        transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .reveal.is-visible {
+        opacity: 1;
+        transform: none;
+      }
+
+      /* Imagens: entram levemente ampliadas e "assentam" no tamanho normal */
+      .img-reveal {
+        overflow: hidden;
+      }
+      .img-reveal img {
+        transform: scale(1.15);
+        transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .img-reveal.is-visible img {
+        transform: scale(1);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .reveal,
+        .img-reveal img {
+          opacity: 1 !important;
+          transform: none !important;
+          transition: none !important;
+        }
+        html {
+          scroll-behavior: auto;
+        }
+      }
+
+      /* ===== Navbar ===== */
+      .nav-shell {
+        transition: background-color 0.4s ease, border-color 0.4s ease,
+          padding 0.4s ease;
+      }
+      .nav-scrolled {
+        background-color: rgba(21, 15, 11, 0.9);
+        backdrop-filter: blur(10px);
+        border-color: var(--border);
+      }
+
+      /* ===== Botões ===== */
+      .btn-accent {
+        background: var(--accent);
+        color: var(--ink);
+        transition: transform 0.3s ease, background 0.3s ease;
+      }
+      .btn-accent:hover {
+        background: var(--accent-soft);
+        transform: translateY(-2px);
+      }
+      .btn-outline {
+        border: 1px solid var(--border);
+        color: var(--paper);
+        transition: all 0.3s ease;
+      }
+      .btn-outline:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      /* ===== Fundos com foto + parallax ===== */
+      .photo-parallax {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+      }
+      .photo-parallax img {
+        width: 100%;
+        height: 130%;
+        object-fit: cover;
+        position: absolute;
+        top: -15%;
+        left: 0;
+        will-change: transform;
+      }
+
+      /* ===== Barra de progresso de leitura ===== */
+      #scroll-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 2px;
+        width: 0%;
+        background: var(--accent);
+        z-index: 90;
+        transition: width 0.1s linear;
+      }
+
+      /* ===== Slider de pratos ===== */
+      .dish-slider {
+        overflow: hidden;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+      }
+      @media (min-width: 1024px) {
+        .dish-slider {
+          padding-left: 2.5rem;
+          padding-right: 2.5rem;
+        }
+      }
+      .dish-slider-track {
+        display: flex;
+        gap: 1.5rem;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        cursor: grab;
+        padding-bottom: 0.5rem;
+      }
+      .dish-slider-track::-webkit-scrollbar {
+        display: none;
+      }
+      .dish-slider-track.is-dragging {
+        cursor: grabbing;
+        scroll-snap-type: none;
+      }
+      .dish-card {
+        scroll-snap-align: start;
+        flex: 0 0 82%;
+      }
+      @media (min-width: 640px) {
+        .dish-card {
+          flex-basis: 46%;
+        }
+      }
+      @media (min-width: 1024px) {
+        .dish-card {
+          flex-basis: 31%;
+        }
+      }
+      .dish-card-img {
+        aspect-ratio: 4 / 5;
+        overflow: hidden;
+      }
+      .dish-card-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+      }
+      .dish-card:hover .dish-card-img img {
+        transform: scale(1.06);
+      }
+      .slider-arrow {
+        width: 46px;
+        height: 46px;
+        border-radius: 9999px;
+        border: 1px solid var(--border);
+        display: grid;
+        place-items: center;
+        transition: all 0.3s ease;
+        color: var(--paper);
+      }
+      .slider-arrow:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 9999px;
+        background: var(--border);
+        transition: all 0.3s ease;
+      }
+      .dot.is-active {
+        background: var(--accent);
+        width: 22px;
+      }
+
+      /* ===== Abas do cardápio ===== */
+      .menu-tab {
+        color: var(--muted);
+        border-bottom: 2px solid transparent;
+        padding-bottom: 0.6rem;
+        transition: all 0.3s ease;
+      }
+      .menu-tab.is-active {
+        color: var(--paper);
+        border-color: var(--accent);
+      }
+    </style>
+  </head>
+
+  <body class="bg-ink">
+    <div id="scroll-progress"></div>
+
+    <!-- ===================== NAVBAR ===================== -->
+    <header id="navbar" class="nav-shell fixed top-0 inset-x-0 z-50 border-b border-transparent py-6">
+      <nav class="container mx-auto px-6 lg:px-10 flex items-center justify-between">
+        <a href="#topo" class="font-display text-2xl tracking-wide">Apetite</a>
+
+        <div class="hidden lg:flex items-center gap-10 text-[13px] tracking-widest uppercase text-muted">
+          <a href="#sobre" class="hover:text-paper transition-colors">Sobre</a>
+          <a href="#pratos" class="hover:text-paper transition-colors">Pratos</a>
+          <a href="#cardapio" class="hover:text-paper transition-colors">Cardápio</a>
+          <a href="#ambiente" class="hover:text-paper transition-colors">Ambiente</a>
+          <a href="#contato" class="hover:text-paper transition-colors">Contato</a>
+        </div>
+
+        <a
+          href="#"
+          data-whatsapp-order
+          target="_blank"
+          rel="noopener"
+          class="btn-accent hidden sm:inline-flex items-center rounded-full px-6 py-2.5 text-[13px] tracking-widest uppercase"
+        >
+          Peça agora
+        </a>
+
+        <button
+          id="menuToggle"
+          class="lg:hidden grid place-items-center w-11 h-11 rounded-full border border-border"
+          aria-label="Abrir menu"
+          aria-expanded="false"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" viewBox="0 0 24 24">
+            <path d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </nav>
+
+      <div id="mobileMenu" class="lg:hidden hidden mx-6 mt-4 rounded-2xl border border-border bg-ink/95 backdrop-blur">
+        <div class="flex flex-col p-3 text-sm uppercase tracking-widest text-muted">
+          <a href="#sobre" class="px-4 py-3 rounded-xl hover:text-paper">Sobre</a>
+          <a href="#pratos" class="px-4 py-3 rounded-xl hover:text-paper">Pratos</a>
+          <a href="#cardapio" class="px-4 py-3 rounded-xl hover:text-paper">Cardápio</a>
+          <a href="#ambiente" class="px-4 py-3 rounded-xl hover:text-paper">Ambiente</a>
+          <a href="#contato" class="px-4 py-3 rounded-xl hover:text-paper">Contato</a>
+          <a href="#" data-whatsapp-order target="_blank" rel="noopener" class="btn-accent text-center mt-2 rounded-full px-4 py-3 font-medium">Peça agora</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- ===================== HERO ===================== -->
+    <section id="topo" class="relative h-screen min-h-[640px] overflow-hidden">
+      <div class="photo-parallax" data-parallax data-speed="0.35">
+        <img
+          src="https://images.unsplash.com/photo-1701722952679-beffce26d77a?auto=format&fit=crop&w=1800&q=75"
+          alt=""
+        />
+      </div>
+      <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-ink/70"></div>
+
+      <div class="relative h-full flex flex-col items-center justify-center text-center px-6">
+        <p class="reveal eyebrow">Cozinha de fogo vivo</p>
+        <h1 class="reveal font-display text-5xl sm:text-6xl lg:text-7xl leading-[1.08] max-w-4xl">
+          A brasa é o tempero que a gente não coloca no <em class="italic text-accent">cardápio</em>
+        </h1>
+        <p class="reveal mt-8 max-w-lg text-muted text-lg" data-delay="1">
+          Pratos grelhados lentamente sobre carvão, ingredientes de produtores
+          locais e um cardápio que muda com a estação.
+        </p>
+        <div class="reveal mt-10 flex flex-wrap items-center justify-center gap-4" data-delay="2">
+          <a href="#cardapio" class="btn-accent rounded-full px-8 py-3.5 text-sm tracking-widest uppercase">
+            Ver cardápio
+          </a>
+          <a href="#" data-whatsapp-order target="_blank" rel="noopener" class="btn-outline rounded-full px-8 py-3.5 text-sm tracking-widest uppercase">
+            Peça pelo WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted text-[11px] tracking-widest uppercase">
+        <span>Role</span>
+        <span class="block w-px h-10 bg-gradient-to-b from-accent to-transparent"></span>
+      </div>
+    </section>
+
+    <!-- ===================== SOBRE ===================== -->
+    <section id="sobre" class="py-28 lg:py-40">
+      <div class="container mx-auto px-6 lg:px-10">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+          <div class="img-reveal reveal relative rounded-sm">
+            <img
+              src="https://images.unsplash.com/photo-1565895405227-31cffbe0cf86?auto=format&fit=crop&w=1000&q=75"
+              alt="Mesa posta com prato principal e taças de vinho"
+              class="w-full h-[560px] object-cover"
+              loading="lazy"
+            />
+            <div class="absolute -bottom-6 -right-6 hidden sm:block bg-ink border border-border px-7 py-6">
+              <p class="font-display text-4xl text-accent">8h</p>
+              <p class="text-xs tracking-widest uppercase text-muted mt-1">De brasa lenta<br />pra costela desmanchar</p>
+            </div>
+          </div>
+
+          <div>
+            <p class="reveal eyebrow">Como começou</p>
+            <h2 class="reveal font-display text-4xl lg:text-5xl leading-tight mb-7" data-delay="1">
+              Fogo direto, tempo longo, sem atalho
+            </h2>
+            <p class="reveal text-muted text-lg leading-relaxed mb-5" data-delay="2">
+              Começou numa churrasqueira de quintal, testando ponto de brasa
+              em pedaços de carne que sobravam do açougue do bairro. Hoje o
+              forno é maior, mas a lógica continua a mesma: fogo direto,
+              tempo longo, sal na medida certa e nada que precise de dez
+              ingredientes pra disfarçar um produto ruim.
+            </p>
+            <p class="reveal text-muted text-lg leading-relaxed mb-9" data-delay="2">
+              O cardápio muda a cada estação porque a brasa não perdoa
+              ingrediente fora de época: legumes murchos ficam duros, peixe
+              velho fica seco. Preferimos servir menos opções e todas boas.
+            </p>
+            <a href="#pratos" class="reveal inline-flex items-center gap-3 text-sm tracking-widest uppercase text-paper group" data-delay="3">
+              Ver pratos em destaque
+              <span class="w-8 h-px bg-accent transition-all duration-300 group-hover:w-12"></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== DESTAQUES (slider) ===================== -->
+    <section id="pratos" class="py-28 lg:py-36 border-y border-border">
+      <div class="container mx-auto px-6 lg:px-10">
+        <div class="flex flex-wrap items-end justify-between gap-6 mb-14">
+          <div>
+            <p class="reveal eyebrow">Direto da brasa</p>
+            <h2 class="reveal font-display text-4xl lg:text-5xl" data-delay="1">Pratos em destaque</h2>
+          </div>
+          <div class="reveal flex items-center gap-3" data-delay="2">
+            <button id="sliderPrev" class="slider-arrow" aria-label="Prato anterior">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m15 6-6 6 6 6"/></svg>
+            </button>
+            <button id="sliderNext" class="slider-arrow" aria-label="Próximo prato">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m9 6 6 6-6 6"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="dish-slider">
+        <div id="dishTrack" class="dish-slider-track">
+          <article class="dish-card">
+            <div class="dish-card-img img-reveal reveal">
+              <img src="https://images.unsplash.com/photo-1657053460900-3a12f32b592f?auto=format&fit=crop&w=1000&q=78" alt="Costela grelhada lentamente na brasa" loading="lazy" />
+            </div>
+            <div class="pt-5">
+              <div class="flex items-baseline justify-between gap-4">
+                <h3 class="font-display text-2xl">Costela de 8 Horas</h3>
+                <span class="text-accent font-display text-xl shrink-0">R$ 68</span>
+              </div>
+              <p class="text-muted text-sm mt-2 leading-relaxed">Costela bovina em brasa baixa por 8 horas, farofa de castanha e molho de cebola queimada.</p>
+            </div>
+          </article>
+
+          <article class="dish-card">
+            <div class="dish-card-img img-reveal reveal" data-delay="1">
+              <img src="https://images.unsplash.com/photo-1543992321-cefacfc2322e?auto=format&fit=crop&w=1000&q=78" alt="Pastéis de costela desfiada com salada" loading="lazy" />
+            </div>
+            <div class="pt-5">
+              <div class="flex items-baseline justify-between gap-4">
+                <h3 class="font-display text-2xl">Pastel de Costela</h3>
+                <span class="text-accent font-display text-xl shrink-0">R$ 34</span>
+              </div>
+              <p class="text-muted text-sm mt-2 leading-relaxed">Massa fina frita na hora, recheio de costela desfiada e salada de folhas com vinagrete cítrico.</p>
+            </div>
+          </article>
+
+          <article class="dish-card">
+            <div class="dish-card-img img-reveal reveal" data-delay="2">
+              <img src="https://images.unsplash.com/photo-1622115837997-90c89ae689f9?auto=format&fit=crop&w=1000&q=78" alt="Beterraba assada com avelãs e queijo de cabra" loading="lazy" />
+            </div>
+            <div class="pt-5">
+              <div class="flex items-baseline justify-between gap-4">
+                <h3 class="font-display text-2xl">Beterraba na Brasa</h3>
+                <span class="text-accent font-display text-xl shrink-0">R$ 42</span>
+              </div>
+              <p class="text-muted text-sm mt-2 leading-relaxed">Beterrabas assadas direto na brasa, queijo de cabra, avelãs tostadas e ervas frescas.</p>
+            </div>
+          </article>
+
+          <article class="dish-card">
+            <div class="dish-card-img img-reveal reveal" data-delay="3">
+              <img src="https://images.unsplash.com/photo-1625862692743-3f57873bb37c?auto=format&fit=crop&w=1000&q=78" alt="Salmão grelhado com pimentões e aspargos" loading="lazy" />
+            </div>
+            <div class="pt-5">
+              <div class="flex items-baseline justify-between gap-4">
+                <h3 class="font-display text-2xl">Salmão na Brasa</h3>
+                <span class="text-accent font-display text-xl shrink-0">R$ 74</span>
+              </div>
+              <p class="text-muted text-sm mt-2 leading-relaxed">Salmão selado na brasa, pimentões e aspargos grelhados, molho de ervas.</p>
+            </div>
+          </article>
+
+          <article class="dish-card">
+            <div class="dish-card-img img-reveal reveal">
+              <img src="https://images.unsplash.com/photo-1679993387260-38824cf1a93a?auto=format&fit=crop&w=1000&q=78" alt="Coquetel Apetite e prato de vegetais grelhados" loading="lazy" />
+            </div>
+            <div class="pt-5">
+              <div class="flex items-baseline justify-between gap-4">
+                <h3 class="font-display text-2xl">Coquetel Apetite</h3>
+                <span class="text-accent font-display text-xl shrink-0">R$ 36</span>
+              </div>
+              <p class="text-muted text-sm mt-2 leading-relaxed">Gin, laranja queimada na brasa e mel. Servido com legumes de estação grelhados.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="flex justify-center gap-2 mt-10" id="dishDots"></div>
+    </section>
+
+    <!-- ===================== CARDÁPIO COMPLETO ===================== -->
+    <section id="cardapio" class="py-28 lg:py-40">
+      <div class="container mx-auto px-6 lg:px-10 max-w-3xl">
+        <div class="text-center mb-14">
+          <p class="reveal eyebrow">O cardápio inteiro</p>
+          <h2 class="reveal font-display text-4xl lg:text-5xl" data-delay="1">Cardápio</h2>
+        </div>
+
+        <div class="reveal flex flex-wrap justify-center gap-8 mb-12 text-sm tracking-widest uppercase" data-delay="2">
+          <button class="menu-tab is-active" data-menu-tab="entradas">Entradas</button>
+          <button class="menu-tab" data-menu-tab="principais">Principais</button>
+          <button class="menu-tab" data-menu-tab="sobremesas">Sobremesas</button>
+          <button class="menu-tab" data-menu-tab="bebidas">Bebidas</button>
+        </div>
+
+        <ul data-menu-panel="entradas" class="reveal space-y-1" data-delay="3">
+          <li class="flex items-baseline gap-3 py-4 border-b border-border/60">
+            <span class="font-display text-lg">Pastel de Costela Desfiada</span>
+            <span class="flex-1 border-b border-dotted border-muted/40 -translate-y-1"></span>
+            <span class="font-display text-lg text-accent shrink-0">R$ 34</span>
+          </li>
+          <li class="flex items-baseline gap-3 py-4 border-b border-border/60">
+            <span class="font-display text-lg">Pão de Fermentação Natural</span>
+            <span class="flex-1 border-b border-dotted border-muted/40 -translate-y-1"></span>
+            <span class="font-display text-lg text-accent shrink-0">R$ 28</span>
+          </li>
+          <li class="flex items-baseline gap-3 py-4 border-b border-border/60">
+            <span class="font-display text-lg">Burrata com Tomates Confitados</span>
+            <span class="flex-1 border-b border-dotted border-muted/40 -translate-y-1"></span>
+            <span class="font-display text-lg text-accent shrink-0">R$ 46</span>
+          </li>
+          <li class="flex items-baseline gap-3 py-4">
+            <span class="font-display text-lg">Ceviche de Robalo, Leite de Tigre de Maracujá</span>
+            <span class="flex-1 border-b border-dotted border-muted/40 -translate-y-1"></span>
+            <span class="font-display text-lg text-accent shrink-0">R$ 52</span>
+          </li>
+        </ul>
+
+        <ul data-menu-panel="principais" class="reveal space-y-1 hidden">
+          <li class="flex items-baseline gap-3 py-4 border-b border-border/60">
+            <span class="font-display text-lg">Costela de 8 Horas</span>
+            <span class="flex-1 border-b border-dotted border-muted/40 -translate-y-1"></span>
+            <span class="font-display text-lg text-accent shrink-0">R$ 68</span>
+          </li>
+          <li class="flex items-baseline gap-3 py-4 border-b border-border/60">
+            <span class="font-display text-lg">Salmão na Brasa com Pimentões</span>
+            <span class="flex-1 border-b border-dotted border-muted/40 -translate-y-1"></span>
+            <span class="font-display text-lg text-accent shrink-0">R$ 74</span>
+          </li>
+          <li class="flex items-baseline gap-3 py-4 border-b border-border/60">
+            <span class="font-display text-lg">Risoto de Cogumelos Selvagens</span>
+            <span class="flex-1 border-b border-dotted border-muted/40 -translate-y-1"></span>
+            <span class="font-display text-lg text-accent shrink-0">R$ 58</span>
+          </li>
+          <li class="flex items-baseline gap-3 py-4">
+            <span class="font-display text-lg">Peixe do Dia com Legumes na Brasa</span>
+            <span class="flex-1 border-b border-dotted border-muted/40 -translate-y-1"></span>
+            <span class="font-display text-lg text-accent shrink-0">Conforme o dia</span>
+          </li>
+        </ul>
+
+        <ul data-menu-panel="sobremesas" class="reveal space-y-1 hidden">
+          <li class="flex items-baseline gap-3 py-4 border-b border-border/60">
+            <span class="font-display text-lg">Creme Queimado de Baunilha</span>
+            <span class="flex-1 border-b border-dotted border-muted/40 -translate-y-1"></span>
+            <span class="font-display text-lg text-accent shrink-0">R$ 28</span>
+          </li>
+          <li class="flex items-baseline gap-3 py-4 border-b border-border/60">
+            <span class="font-display text-lg">Bolo de Chocolate 70% com Sorvete de Café</span>
+            <span class="flex-1 border-b border-dotted border-muted/40 -translate-y-1"></span>
+            <span class="font-display text-lg text-accent shrink-0">R$ 32</span>
+          </li>
+          <li class="flex items-baseline gap-3 py-4">
+            <span class="font-display text-lg">Sorbet da Estação</span>
+            <span class="flex-1 border-b border-dotted border-muted/40 -translate-y-1"></span>
+            <span class="font-display text-lg text-accent shrink-0">R$ 24</span>
+          </li>
+        </ul>
+
+        <ul data-menu-panel="bebidas" class="reveal space-y-1 hidden">
+          <li class="flex items-baseline gap-3 py-4 border-b border-border/60">
+            <span class="font-display text-lg">Coquetel Apetite</span>
+            <span class="flex-1 border-b border-dotted border-muted/40 -translate-y-1"></span>
+            <span class="font-display text-lg text-accent shrink-0">R$ 36</span>
+          </li>
+          <li class="flex items-baseline gap-3 py-4 border-b border-border/60">
+            <span class="font-display text-lg">Vinho Tinto da Casa (taça)</span>
+            <span class="flex-1 border-b border-dotted border-muted/40 -translate-y-1"></span>
+            <span class="font-display text-lg text-accent shrink-0">R$ 32</span>
+          </li>
+          <li class="flex items-baseline gap-3 py-4 border-b border-border/60">
+            <span class="font-display text-lg">Limonada de Ervas Frescas</span>
+            <span class="flex-1 border-b border-dotted border-muted/40 -translate-y-1"></span>
+            <span class="font-display text-lg text-accent shrink-0">R$ 18</span>
+          </li>
+          <li class="flex items-baseline gap-3 py-4">
+            <span class="font-display text-lg">Água com Gás</span>
+            <span class="flex-1 border-b border-dotted border-muted/40 -translate-y-1"></span>
+            <span class="font-display text-lg text-accent shrink-0">R$ 9</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== AMBIENTE (galeria) ===================== -->
+    <section id="ambiente" class="py-28 lg:py-40 border-t border-border">
+      <div class="container mx-auto px-6 lg:px-10">
+        <div class="flex flex-wrap items-end justify-between gap-6 mb-14">
+          <div>
+            <p class="reveal eyebrow">Ambiente</p>
+            <h2 class="reveal font-display text-4xl lg:text-5xl" data-delay="1">Um lugar pra ficar</h2>
+          </div>
+          <p class="reveal text-muted max-w-sm" data-delay="2">
+            Mesas concorridas, luz baixa e o cheiro de brasa assim que a
+            porta abre.
+          </p>
+        </div>
+
+        <div class="columns-1 sm:columns-2 lg:columns-3 gap-5 [column-fill:balance]">
+          <div class="img-reveal reveal block w-full mb-5 break-inside-avoid overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1531973968078-9bb02785f13d?auto=format&fit=crop&w=900&q=75" alt="Salão do restaurante com estrutura em treliça dourada" class="w-full h-auto" loading="lazy" />
+          </div>
+          <div class="img-reveal reveal block w-full mb-5 break-inside-avoid overflow-hidden" data-delay="1">
+            <img src="https://images.unsplash.com/photo-1650490632010-e18cbb694dd1?auto=format&fit=crop&w=900&q=75" alt="Mesa reservada sob luminária de vime" class="w-full h-auto" loading="lazy" />
+          </div>
+          <div class="img-reveal reveal block w-full mb-5 break-inside-avoid overflow-hidden" data-delay="2">
+            <img src="https://images.unsplash.com/photo-1522336572468-97b06e8ef143?auto=format&fit=crop&w=900&q=75" alt="Salão com mesas compridas e luzes de varal" class="w-full h-auto" loading="lazy" />
+          </div>
+          <div class="img-reveal reveal block w-full mb-5 break-inside-avoid overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1552960226-639240203497?auto=format&fit=crop&w=900&q=75" alt="Terraço externo iluminado à noite" class="w-full h-auto" loading="lazy" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== DEPOIMENTOS ===================== -->
+    <section class="py-28 border-y border-border">
+      <div class="container mx-auto px-6 lg:px-10">
+        <div class="grid lg:grid-cols-3 gap-14">
+          <div class="reveal">
+            <p class="font-display text-6xl text-accent mb-4 leading-none">"</p>
+            <p class="font-display text-xl leading-relaxed mb-6">
+              A costela de 8 horas desmancha antes do garfo tocar. Fui pra
+              experimentar e virei cliente fixo às sextas.
+            </p>
+            <p class="text-sm uppercase tracking-widest text-muted">Marcelo T. — Cliente fixo</p>
+          </div>
+          <div class="reveal" data-delay="1">
+            <p class="font-display text-6xl text-accent mb-4 leading-none">"</p>
+            <p class="font-display text-xl leading-relaxed mb-6">
+              Pedimos pelo delivery numa terça qualquer e chegou tão bem
+              embalado quanto comer lá dentro. O pastel de costela sozinho já
+              vale o pedido.
+            </p>
+            <p class="text-sm uppercase tracking-widest text-muted">Fernanda A. — Pedido via delivery</p>
+          </div>
+          <div class="reveal" data-delay="2">
+            <p class="font-display text-6xl text-accent mb-4 leading-none">"</p>
+            <p class="font-display text-xl leading-relaxed mb-6">
+              Ambiente pequeno, mesas concorridas, e é exatamente por isso
+              que funciona: dá pra sentir o cheiro da brasa assim que a
+              porta abre.
+            </p>
+            <p class="text-sm uppercase tracking-widest text-muted">Diego M. — Jantar de sexta</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CONTATO (full-bleed com foto) ===================== -->
+    <section id="contato" class="relative py-28 lg:py-40 overflow-hidden">
+      <div class="photo-parallax" data-parallax data-speed="0.25">
+        <img
+          src="https://images.unsplash.com/photo-1552960226-639240203497?auto=format&fit=crop&w=1800&q=70"
+          alt=""
+        />
+      </div>
+      <div class="absolute inset-0 bg-ink/85"></div>
+
+      <div class="relative container mx-auto px-6 lg:px-10">
+        <div class="grid lg:grid-cols-2 gap-14 items-center">
+          <div class="reveal">
+            <p class="eyebrow">Reserva ou delivery</p>
+            <h2 class="font-display text-4xl lg:text-5xl leading-tight mb-7">
+              Chegou a hora de sentir o cheiro da brasa
+            </h2>
+            <p class="text-muted text-lg leading-relaxed mb-8 max-w-md">
+              Sem fila de espera pelo telefone: o pedido ou a reserva saem
+              direto pelo WhatsApp.
+            </p>
+            <div class="space-y-3 text-sm text-muted">
+              <!-- EDITAR: dados reais do restaurante -->
+              <p>Rua das Brasas, 123 — Vila Madalena, São Paulo, SP</p>
+              <p>Terça a domingo, 18h às 23h30</p>
+              <p>(11) 99999-9999</p>
+            </div>
+          </div>
+
+          <div class="reveal bg-ink/80 border border-border p-8 sm:p-10 flex flex-col" data-delay="1">
+            <h3 class="font-display text-2xl mb-3">Peça direto pelo WhatsApp</h3>
+            <p class="text-muted text-sm leading-relaxed mb-8">
+              Clique no botão, o WhatsApp abre com uma mensagem pronta pra
+              você só ajustar e enviar.
+            </p>
+            <a href="#" data-whatsapp-order target="_blank" rel="noopener" class="btn-accent text-center rounded-full px-6 py-3.5 text-sm tracking-widest uppercase">
+              Peça pelo WhatsApp
+            </a>
+            <a href="#" data-whatsapp-reserva target="_blank" rel="noopener" class="btn-outline text-center rounded-full px-6 py-3.5 text-sm tracking-widest uppercase mt-4">
+              Reservar mesa
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="py-14 border-t border-border">
+      <div class="container mx-auto px-6 lg:px-10">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
+          <a href="#topo" class="font-display text-2xl">Apetite</a>
+
+          <div class="flex items-center gap-6 text-xs uppercase tracking-widest text-muted">
+            <a href="#sobre" class="hover:text-paper transition-colors">Sobre</a>
+            <a href="#cardapio" class="hover:text-paper transition-colors">Cardápio</a>
+            <a href="#ambiente" class="hover:text-paper transition-colors">Ambiente</a>
+          </div>
+
+          <div class="flex items-center gap-4">
+            <!-- EDITAR: links reais -->
+            <a href="#" aria-label="Instagram" class="text-muted hover:text-accent transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.25.07 1.65.07 4.85s0 3.6-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.25.06-1.65.07-4.85.07s-3.6 0-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.85C2.42 3.93 3.94 2.4 7.16 2.25 8.4 2.2 8.8 2.2 12 2.2zm0 3.05a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5zm0 11.13a4.38 4.38 0 1 1 0-8.75 4.38 4.38 0 0 1 0 8.75zm7.02-11.4a1.58 1.58 0 1 1-3.16 0 1.58 1.58 0 0 1 3.16 0z"/></svg>
+            </a>
+            <a href="#" aria-label="WhatsApp" class="text-muted hover:text-accent transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.79.47 3.51 1.36 5.03L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.79 14.14c-.24.68-1.4 1.3-1.94 1.38-.5.08-1.13.11-1.82-.12-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.8-4.16-4.94-4.36-.14-.19-1.19-1.58-1.19-3.02 0-1.43.75-2.14 1.02-2.43.27-.29.58-.36.78-.36.19 0 .39 0 .56.01.18.01.42-.07.65.5.24.58.81 2.01.88 2.16.07.15.12.32.02.51-.1.19-.15.31-.3.48-.14.17-.31.37-.44.5-.15.14-.3.3-.13.58.17.29.75 1.24 1.61 2 1.11.99 2.04 1.3 2.33 1.44.29.15.46.13.63-.05.17-.19.72-.84.91-1.13.19-.29.38-.24.63-.14.26.1 1.65.78 1.94.92.28.14.47.21.53.33.07.12.07.68-.17 1.36z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="mt-10 pt-8 border-t border-border text-center text-xs text-muted space-y-3">
+          <p>© 2026 Apetite. Todos os direitos reservados.</p>
+          <p class="max-w-2xl mx-auto leading-relaxed opacity-70 text-[11px]">
+            A cópia ou reprodução do conteúdo dessa página em outros domínios sem os créditos ou referências ao autor pode ser considerada plágio, um crime, conforme prevê a Lei Nº 9.610/98, que protege os direitos morais do autor.
+            <br />Autor: Ramony Lima
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // ===== Pedido pelo WhatsApp =====
+      const WHATSAPP_NUMBER = "5511999999999"; // EDITAR
+      const orderMessage = encodeURIComponent(
+        "Olá! Vim pelo site e quero fazer um pedido no Apetite."
+      );
+      const reservaMessage = encodeURIComponent(
+        "Olá! Vim pelo site e gostaria de reservar uma mesa no Apetite."
+      );
+      document.querySelectorAll("[data-whatsapp-order]").forEach((el) => {
+        el.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${orderMessage}`;
+      });
+      document.querySelectorAll("[data-whatsapp-reserva]").forEach((el) => {
+        el.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${reservaMessage}`;
+      });
+
+      // ===== Menu mobile =====
+      const menuToggle = document.getElementById("menuToggle");
+      const mobileMenu = document.getElementById("mobileMenu");
+      menuToggle.addEventListener("click", () => {
+        const isOpen = !mobileMenu.classList.contains("hidden");
+        mobileMenu.classList.toggle("hidden");
+        menuToggle.setAttribute("aria-expanded", String(!isOpen));
+      });
+      mobileMenu.querySelectorAll("a").forEach((link) =>
+        link.addEventListener("click", () => mobileMenu.classList.add("hidden"))
+      );
+
+      // ===== Navbar com fundo ao rolar =====
+      const navbar = document.getElementById("navbar");
+      function updateNavbar() {
+        navbar.classList.toggle("nav-scrolled", window.scrollY > 20);
+      }
+
+      // ===== Barra de progresso de leitura =====
+      const progressBar = document.getElementById("scroll-progress");
+      function updateProgress() {
+        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+        const pct = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+        progressBar.style.width = pct + "%";
+      }
+
+      // ===== Revelar ao rolar =====
+      // Os cartões de prato ficam dentro de um carrossel com overflow-x:
+      // auto, então boa parte deles nasce fora da área horizontal visível
+      // da janela. Um IntersectionObserver por elemento nunca dispararia
+      // pra quem está fora da tela nesse eixo — por isso eles são tratados
+      // à parte, revelados todos juntos quando a seção inteira entra em
+      // vista, em vez de depender da posição horizontal do scroll interno.
+      const revealEls = document.querySelectorAll(".reveal:not(.dish-card-img), .img-reveal:not(.dish-card-img)");
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -60px 0px" }
+      );
+      revealEls.forEach((el) => revealObserver.observe(el));
+
+      const dishRevealTargets = document.querySelectorAll("#pratos .dish-card-img");
+      const dishSectionObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              dishRevealTargets.forEach((el) => el.classList.add("is-visible"));
+              dishSectionObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.15 }
+      );
+      dishSectionObserver.observe(document.getElementById("pratos"));
+
+      // ===== Parallax nos fundos com foto =====
+      const parallaxEls = document.querySelectorAll("[data-parallax]");
+      function updateParallax() {
+        parallaxEls.forEach((el) => {
+          const speed = parseFloat(el.dataset.speed || "0.3");
+          const rect = el.getBoundingClientRect();
+          const offset = rect.top * speed;
+          const img = el.querySelector("img");
+          if (img) img.style.transform = `translateY(${offset}px)`;
+        });
+      }
+
+      // ===== Loop único de scroll (rAF-throttled) =====
+      let ticking = false;
+      function onScrollOrResize() {
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            updateNavbar();
+            updateProgress();
+            updateParallax();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }
+      window.addEventListener("scroll", onScrollOrResize, { passive: true });
+      window.addEventListener("resize", onScrollOrResize);
+      onScrollOrResize();
+
+      // ===== Abas do cardápio =====
+      const menuTabs = document.querySelectorAll("[data-menu-tab]");
+      const menuPanels = document.querySelectorAll("[data-menu-panel]");
+      menuTabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          menuTabs.forEach((t) => t.classList.remove("is-active"));
+          tab.classList.add("is-active");
+          const target = tab.dataset.menuTab;
+          menuPanels.forEach((panel) => {
+            panel.classList.toggle("hidden", panel.dataset.menuPanel !== target);
+          });
+        });
+      });
+
+      // ===== Slider de pratos (setas + arraste + pontos) =====
+      const dishTrack = document.getElementById("dishTrack");
+      const dishCards = Array.from(dishTrack.children);
+      const dishDots = document.getElementById("dishDots");
+
+      dishCards.forEach((_, index) => {
+        const dot = document.createElement("button");
+        dot.className = "dot";
+        dot.setAttribute("aria-label", `Ir para o prato ${index + 1}`);
+        dot.addEventListener("click", () => {
+          dishCards[index].scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
+        });
+        dishDots.appendChild(dot);
+      });
+      const dots = Array.from(dishDots.children);
+      if (dots[0]) dots[0].classList.add("is-active");
+
+      const dishObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
+              const idx = dishCards.indexOf(entry.target);
+              dots.forEach((d) => d.classList.remove("is-active"));
+              if (dots[idx]) dots[idx].classList.add("is-active");
+            }
+          });
+        },
+        { root: dishTrack, threshold: [0.6] }
+      );
+      dishCards.forEach((card) => dishObserver.observe(card));
+
+      function scrollByCard(direction) {
+        const cardWidth = dishCards[0].getBoundingClientRect().width;
+        dishTrack.scrollBy({ left: direction * (cardWidth + 24), behavior: "smooth" });
+      }
+      document.getElementById("sliderNext").addEventListener("click", () => scrollByCard(1));
+      document.getElementById("sliderPrev").addEventListener("click", () => scrollByCard(-1));
+
+      // Arraste com o mouse (desktop)
+      let isDragging = false;
+      let dragStartX = 0;
+      let dragStartScroll = 0;
+      dishTrack.addEventListener("mousedown", (e) => {
+        isDragging = true;
+        dishTrack.classList.add("is-dragging");
+        dragStartX = e.pageX;
+        dragStartScroll = dishTrack.scrollLeft;
+      });
+      window.addEventListener("mouseup", () => {
+        isDragging = false;
+        dishTrack.classList.remove("is-dragging");
+      });
+      window.addEventListener("mousemove", (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        dishTrack.scrollLeft = dragStartScroll - (e.pageX - dragStartX);
+      });
+
+      // ===== Bloqueio de clique direito =====
+      document.addEventListener("contextmenu", (e) => e.preventDefault());
+    </script>
+  </body>
+</html>
