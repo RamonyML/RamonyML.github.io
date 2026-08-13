@@ -123,4 +123,13 @@ export const projects: Project[] = [
     status: "Produto à venda · pronto",
     demoUrl: "/demos/vigor/index.html",
   },
+  {
+    title: "HT Glow Fit",
+    description:
+      "Landing page proposta para uma marca real de moda fitness feminina, 100% online. Identidade em marfim quente com glow em rosé e dourado, peças reais do catálogo com preço e tamanho, e pedido por WhatsApp já com mensagem pronta por produto — sem checkout, como a cliente está começando agora.",
+    tags: ["HTML", "Tailwind CSS", "JavaScript"],
+    status: "Proposta comercial · Cliente real",
+    demoUrl: "/demos/glowfit/index.html",
+    note: "Protótipo de prospecção para negociação com a cliente — não é um template genérico à venda.",
+  },
 ];
