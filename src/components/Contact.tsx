@@ -40,7 +40,7 @@ export function Contact() {
               WhatsApp
             </a>
             <a
-              href="https://t.me/ramonyml"
+              href="https://t.me/ramonyml_bot"
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-2 rounded-full border border-border px-7 py-3 text-sm font-medium text-ink transition-colors hover:border-primary hover:text-primary"
