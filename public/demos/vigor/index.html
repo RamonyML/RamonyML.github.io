@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- ============================================================
+         SEO — EDITE os campos abaixo com as informações da academia
+         ============================================================ -->
+    <title>Vigor — Treino de Força de Verdade</title>
+    <meta
+      name="description"
+      content="Vigor — musculação, treino funcional e acompanhamento real, com carga registrada toda sessão e plano ajustado toda semana."
+    />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="Vigor — Treino de Força de Verdade" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Favicon (SVG inline, halteres estilizados) -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%230c0c0d'/%3E%3Crect x='2.5' y='9.5' width='3' height='5' rx='0.6' fill='%23e5383b'/%3E%3Crect x='18.5' y='9.5' width='3' height='5' rx='0.6' fill='%23e5383b'/%3E%3Crect x='5.5' y='11' width='13' height='2' fill='%23f5f5f0'/%3E%3C/svg%3E"
+    />
+
+    <!-- Fontes: Bebas Neue (títulos/números, condensada e forte) + Inter (texto) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS via CDN — zero build -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+              display: ["Bebas Neue", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* ================================================================
+         TEMA — preto fosco + vermelho intenso. Troque aqui pra
+         recolorir o site inteiro.
+         ================================================================ */
+      :root {
+        --ink: #0c0c0d; /* fundo principal */
+        --paper: #f5f5f0; /* texto principal (branco quente) */
+        --muted: #9d9d97; /* texto secundário */
+        --accent: #e5383b; /* vermelho: detalhes, links, CTA */
+        --accent-soft: #ff5a5f;
+        --surface: #151516; /* cartões/blocos sobre o preto */
+        --border: rgba(245, 245, 240, 0.12);
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        color: var(--paper);
+        background-color: var(--ink);
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+
+      .font-display {
+        font-family: "Bebas Neue", sans-serif;
+        letter-spacing: 0.01em;
+      }
+
+      ::selection {
+        background: color-mix(in srgb, var(--accent) 35%, transparent);
+      }
+
+      .eyebrow {
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 1rem;
+      }
+
+      /* ===== Reveal ao rolar ===== */
+      .reveal {
+        opacity: 0;
+        transform: translateY(32px);
+        transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .reveal.is-visible {
+        opacity: 1;
+        transform: none;
+      }
+
+      /* Imagens: entram levemente ampliadas e "assentam" no tamanho normal */
+      .img-reveal {
+        overflow: hidden;
+      }
+      .img-reveal img {
+        transform: scale(1.15);
+        transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .img-reveal.is-visible img {
+        transform: scale(1);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .reveal,
+        .img-reveal img {
+          opacity: 1 !important;
+          transform: none !important;
+          transition: none !important;
+        }
+        html {
+          scroll-behavior: auto;
+        }
+      }
+
+      /* ===== Navbar ===== */
+      .nav-shell {
+        transition: background-color 0.4s ease, border-color 0.4s ease,
+          padding 0.4s ease;
+      }
+      .nav-scrolled {
+        background-color: rgba(12, 12, 13, 0.92);
+        backdrop-filter: blur(10px);
+        border-color: var(--border);
+      }
+
+      /* ===== Botões ===== */
+      .btn-accent {
+        background: var(--accent);
+        color: var(--paper);
+        transition: transform 0.3s ease, background 0.3s ease;
+      }
+      .btn-accent:hover {
+        background: var(--accent-soft);
+        transform: translateY(-2px);
+      }
+      .btn-outline {
+        border: 1px solid var(--border);
+        color: var(--paper);
+        transition: all 0.3s ease;
+      }
+      .btn-outline:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      /* ===== Fundos com foto + parallax ===== */
+      .photo-parallax {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+      }
+      .photo-parallax img {
+        width: 100%;
+        height: 130%;
+        object-fit: cover;
+        position: absolute;
+        top: -15%;
+        left: 0;
+        will-change: transform;
+      }
+
+      /* ===== Barra de progresso de leitura ===== */
+      #scroll-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 2px;
+        width: 0%;
+        background: var(--accent);
+        z-index: 90;
+        transition: width 0.1s linear;
+      }
+
+      /* ===== Números animados ===== */
+      .stat-value {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: clamp(3rem, 7vw, 5.5rem);
+        line-height: 1;
+        color: var(--accent);
+      }
+
+      /* ===== Planos ===== */
+      .plan-card {
+        transition: border-color 0.3s ease, transform 0.3s ease;
+      }
+      .plan-card.is-popular {
+        border-color: var(--accent) !important;
+      }
+    </style>
+  </head>
+
+  <body class="bg-ink">
+    <div id="scroll-progress"></div>
+
+    <!-- ===================== NAVBAR ===================== -->
+    <header id="navbar" class="nav-shell fixed top-0 inset-x-0 z-50 border-b border-transparent py-6">
+      <nav class="container mx-auto px-6 lg:px-10 flex items-center justify-between">
+        <a href="#topo" class="font-display text-3xl tracking-wide">VIGOR</a>
+
+        <div class="hidden lg:flex items-center gap-10 text-[13px] tracking-widest uppercase text-muted">
+          <a href="#sobre" class="hover:text-paper transition-colors">Sobre</a>
+          <a href="#resultados" class="hover:text-paper transition-colors">Resultados</a>
+          <a href="#estrutura" class="hover:text-paper transition-colors">Estrutura</a>
+          <a href="#planos" class="hover:text-paper transition-colors">Planos</a>
+          <a href="#contato" class="hover:text-paper transition-colors">Contato</a>
+        </div>
+
+        <a
+          href="#"
+          data-whatsapp-cta
+          target="_blank"
+          rel="noopener"
+          class="btn-accent hidden sm:inline-flex items-center rounded-full px-6 py-2.5 text-[13px] tracking-widest uppercase font-medium"
+        >
+          Aula experimental
+        </a>
+
+        <button
+          id="menuToggle"
+          class="lg:hidden grid place-items-center w-11 h-11 rounded-full border border-border"
+          aria-label="Abrir menu"
+          aria-expanded="false"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" viewBox="0 0 24 24">
+            <path d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </nav>
+
+      <div id="mobileMenu" class="lg:hidden hidden mx-6 mt-4 rounded-2xl border border-border bg-ink/95 backdrop-blur">
+        <div class="flex flex-col p-3 text-sm uppercase tracking-widest text-muted">
+          <a href="#sobre" class="px-4 py-3 rounded-xl hover:text-paper">Sobre</a>
+          <a href="#resultados" class="px-4 py-3 rounded-xl hover:text-paper">Resultados</a>
+          <a href="#estrutura" class="px-4 py-3 rounded-xl hover:text-paper">Estrutura</a>
+          <a href="#planos" class="px-4 py-3 rounded-xl hover:text-paper">Planos</a>
+          <a href="#contato" class="px-4 py-3 rounded-xl hover:text-paper">Contato</a>
+          <a href="#" data-whatsapp-cta target="_blank" rel="noopener" class="btn-accent text-center mt-2 rounded-full px-4 py-3 font-medium">Aula experimental</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- ===================== HERO ===================== -->
+    <section id="topo" class="relative h-screen min-h-[640px] overflow-hidden">
+      <div class="photo-parallax" data-parallax data-speed="0.35">
+        <img
+          src="https://images.unsplash.com/photo-1637430308606-86576d8fef3c?auto=format&fit=crop&w=1800&q=75"
+          alt=""
+        />
+      </div>
+      <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/50 to-ink/70"></div>
+
+      <div class="relative h-full flex flex-col items-center justify-center text-center px-6">
+        <p class="reveal eyebrow">Treino de força, de verdade</p>
+        <h1 class="reveal font-display text-6xl sm:text-7xl lg:text-8xl leading-[0.95] max-w-4xl">
+          A ACADEMIA NÃO TE TRANSFORMA. <span class="text-accent">O PLANO, SIM.</span>
+        </h1>
+        <p class="reveal mt-8 max-w-lg text-muted text-lg" data-delay="1">
+          Musculação, funcional e acompanhamento real: carga registrada toda
+          sessão, plano ajustado toda semana.
+        </p>
+        <div class="reveal mt-10 flex flex-wrap items-center justify-center gap-4" data-delay="2">
+          <a href="#planos" class="btn-accent rounded-full px-8 py-3.5 text-sm tracking-widest uppercase font-medium">
+            Ver planos
+          </a>
+          <a href="#" data-whatsapp-cta target="_blank" rel="noopener" class="btn-outline rounded-full px-8 py-3.5 text-sm tracking-widest uppercase font-medium">
+            Marcar aula experimental
+          </a>
+        </div>
+      </div>
+
+      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted text-[11px] tracking-widest uppercase">
+        <span>Role</span>
+        <span class="block w-px h-10 bg-gradient-to-b from-accent to-transparent"></span>
+      </div>
+    </section>
+
+    <!-- ===================== SOBRE ===================== -->
+    <section id="sobre" class="py-28 lg:py-40">
+      <div class="container mx-auto px-6 lg:px-10">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+          <div class="img-reveal reveal relative rounded-sm">
+            <img
+              src="https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?auto=format&fit=crop&w=1000&q=75"
+              alt="Aluno fazendo barra fixa"
+              class="w-full h-[560px] object-cover grayscale"
+              loading="lazy"
+            />
+            <div class="absolute -bottom-6 -right-6 hidden sm:block bg-ink border border-border px-7 py-6">
+              <p class="font-display text-5xl text-accent">7</p>
+              <p class="text-xs tracking-widest uppercase text-muted mt-1">Dias por semana<br />com professor</p>
+            </div>
+          </div>
+
+          <div>
+            <p class="reveal eyebrow">Como funciona</p>
+            <h2 class="reveal font-display text-4xl lg:text-5xl leading-tight mb-7" data-delay="1">
+              Sobrecarga progressiva, aplicada de verdade
+            </h2>
+            <p class="reveal text-muted text-lg leading-relaxed mb-5" data-delay="2">
+              Todo mundo treina pesado na primeira semana. O problema aparece
+              na quinta, quando o corpo já se acostumou e o treino continua
+              igual. A gente registra carga, repetição e percepção de esforço
+              de cada aluno, sessão por sessão, e ajusta o plano toda semana,
+              não todo mês.
+            </p>
+            <p class="reveal text-muted text-lg leading-relaxed mb-9" data-delay="2">
+              Professor por perto o tempo inteiro, turma pequena de verdade.
+              Se o exercício dói errado, alguém corrige na hora, não na
+              próxima consulta.
+            </p>
+            <a href="#resultados" class="reveal inline-flex items-center gap-3 text-sm tracking-widest uppercase text-paper group" data-delay="3">
+              Ver resultados
+              <span class="w-8 h-px bg-accent transition-all duration-300 group-hover:w-12"></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== RESULTADOS (números animados) ===================== -->
+    <section id="resultados" class="py-24 border-y border-border">
+      <div class="container mx-auto px-6 lg:px-10">
+        <div class="text-center max-w-xl mx-auto mb-16">
+          <p class="reveal eyebrow">Números</p>
+          <h2 class="reveal font-display text-4xl lg:text-5xl" data-delay="1">Não é papo, é planilha</h2>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 text-center">
+          <div class="reveal">
+            <p class="stat-value"><span data-counter data-target="9">0</span></p>
+            <p class="text-xs tracking-widest uppercase text-muted mt-3">Anos de casa</p>
+          </div>
+          <div class="reveal" data-delay="1">
+            <p class="stat-value"><span data-counter data-target="540" data-suffix="+">0</span></p>
+            <p class="text-xs tracking-widest uppercase text-muted mt-3">Alunos ativos</p>
+          </div>
+          <div class="reveal" data-delay="2">
+            <p class="stat-value"><span data-counter data-target="6200" data-suffix="">0</span></p>
+            <p class="text-xs tracking-widest uppercase text-muted mt-3">Treinos registrados/mês</p>
+          </div>
+          <div class="reveal" data-delay="3">
+            <p class="stat-value"><span data-counter data-target="94" data-suffix="%">0</span></p>
+            <p class="text-xs tracking-widest uppercase text-muted mt-3">Renovação de plano</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== ESTRUTURA (grid + galeria) ===================== -->
+    <section id="estrutura" class="py-28 lg:py-40">
+      <div class="container mx-auto px-6 lg:px-10">
+        <div class="text-center max-w-xl mx-auto mb-16">
+          <p class="reveal eyebrow">Estrutura</p>
+          <h2 class="reveal font-display text-4xl lg:text-5xl" data-delay="1">O que tem pra usar</h2>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-border mb-20">
+          <div class="reveal px-0 sm:px-8 py-8 sm:py-0 first:pl-0">
+            <p class="font-display text-4xl text-accent mb-3">01</p>
+            <h3 class="text-lg font-semibold mb-2">Musculação</h3>
+            <p class="text-muted text-sm leading-relaxed">Carga livre e guiada, sem fila pra usar barra.</p>
+          </div>
+          <div class="reveal px-0 sm:px-8 py-8 sm:py-0" data-delay="1">
+            <p class="font-display text-4xl text-accent mb-3">02</p>
+            <h3 class="text-lg font-semibold mb-2">Funcional</h3>
+            <p class="text-muted text-sm leading-relaxed">Circuito, cordas, kettlebell e trabalho de mobilidade.</p>
+          </div>
+          <div class="reveal px-0 sm:px-8 py-8 sm:py-0" data-delay="2">
+            <p class="font-display text-4xl text-accent mb-3">03</p>
+            <h3 class="text-lg font-semibold mb-2">Acompanhamento</h3>
+            <p class="text-muted text-sm leading-relaxed">Carga e execução registradas toda sessão.</p>
+          </div>
+          <div class="reveal px-0 sm:px-8 py-8 sm:py-0" data-delay="3">
+            <p class="font-display text-4xl text-accent mb-3">04</p>
+            <h3 class="text-lg font-semibold mb-2">Recuperação</h3>
+            <p class="text-muted text-sm leading-relaxed">Área de alongamento e liberação miofascial.</p>
+          </div>
+        </div>
+
+        <div class="columns-1 sm:columns-2 lg:columns-3 gap-5 [column-fill:balance]">
+          <div class="img-reveal reveal block w-full mb-5 break-inside-avoid overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1674834727206-4bc272bfd8da?auto=format&fit=crop&w=900&q=75" alt="Sala de musculação com janelas amplas" class="w-full h-auto" loading="lazy" />
+          </div>
+          <div class="img-reveal reveal block w-full mb-5 break-inside-avoid overflow-hidden" data-delay="1">
+            <img src="https://images.unsplash.com/photo-1722925541321-f52d45b29c17?auto=format&fit=crop&w=900&q=75" alt="Rack de anilhas em detalhe" class="w-full h-auto" loading="lazy" />
+          </div>
+          <div class="img-reveal reveal block w-full mb-5 break-inside-avoid overflow-hidden" data-delay="2">
+            <img src="https://images.unsplash.com/photo-1534258936925-c58bed479fcb?auto=format&fit=crop&w=900&q=75" alt="Área de treino funcional com cordas" class="w-full h-auto" loading="lazy" />
+          </div>
+          <div class="img-reveal reveal block w-full mb-5 break-inside-avoid overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&w=900&q=75" alt="Aluna treinando com corda naval" class="w-full h-auto" loading="lazy" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PLANOS ===================== -->
+    <section id="planos" class="py-28 lg:py-40 border-y border-border">
+      <div class="container mx-auto px-6 lg:px-10">
+        <div class="text-center max-w-xl mx-auto mb-16">
+          <p class="reveal eyebrow">Investimento</p>
+          <h2 class="reveal font-display text-4xl lg:text-5xl" data-delay="1">Planos</h2>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="plan-card reveal p-10 flex flex-col rounded-2xl border border-border bg-surface">
+            <h3 class="text-xl font-semibold mb-2">Mensal</h3>
+            <p class="text-muted text-sm mb-8">Sem fidelidade</p>
+            <p class="font-display text-5xl mb-1">R$ 189</p>
+            <p class="text-muted text-xs mb-8">por mês</p>
+            <ul class="space-y-3 text-sm text-muted mb-10 flex-1">
+              <li>Acesso liberado à musculação e funcional</li>
+              <li>Avaliação inicial</li>
+              <li>1 ajuste de plano por mês</li>
+            </ul>
+            <a href="#" data-whatsapp-plano="Mensal" target="_blank" rel="noopener" class="btn-outline text-center rounded-full px-6 py-3 text-sm tracking-widest uppercase">Escolher</a>
+          </div>
+
+          <div class="plan-card is-popular reveal p-10 flex flex-col relative rounded-2xl border-2 border-border bg-surface" data-delay="1">
+            <span class="absolute top-6 right-8 text-[11px] tracking-widest uppercase text-accent font-semibold">Popular</span>
+            <h3 class="text-xl font-semibold mb-2">Trimestral</h3>
+            <p class="text-muted text-sm mb-8">Cobrança a cada 3 meses</p>
+            <p class="font-display text-5xl mb-1">R$ 169</p>
+            <p class="text-muted text-xs mb-8">por mês</p>
+            <ul class="space-y-3 text-sm text-muted mb-10 flex-1">
+              <li>Tudo do plano Mensal</li>
+              <li>Ajuste de carga toda semana</li>
+              <li>1 aula de funcional/semana inclusa</li>
+            </ul>
+            <a href="#" data-whatsapp-plano="Trimestral" target="_blank" rel="noopener" class="btn-accent text-center rounded-full px-6 py-3 text-sm tracking-widest uppercase">Escolher</a>
+          </div>
+
+          <div class="plan-card reveal p-10 flex flex-col rounded-2xl border border-border bg-surface" data-delay="2">
+            <h3 class="text-xl font-semibold mb-2">Anual</h3>
+            <p class="text-muted text-sm mb-8">Cobrança anual</p>
+            <p class="font-display text-5xl mb-1">R$ 149</p>
+            <p class="text-muted text-xs mb-8">por mês</p>
+            <ul class="space-y-3 text-sm text-muted mb-10 flex-1">
+              <li>Tudo do plano Trimestral</li>
+              <li>Acompanhamento nutricional básico</li>
+              <li>2 aulas de funcional/semana inclusas</li>
+            </ul>
+            <a href="#" data-whatsapp-plano="Anual" target="_blank" rel="noopener" class="btn-outline text-center rounded-full px-6 py-3 text-sm tracking-widest uppercase">Escolher</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== DEPOIMENTOS ===================== -->
+    <section class="py-28 border-b border-border">
+      <div class="container mx-auto px-6 lg:px-10">
+        <div class="grid lg:grid-cols-3 gap-14">
+          <div class="reveal">
+            <p class="font-display text-6xl text-accent mb-4 leading-none">"</p>
+            <p class="text-xl leading-relaxed mb-6">
+              Troquei de academia três vezes achando que o problema era o
+              equipamento. Era o plano parado. Aqui mudou toda semana e em
+              dois meses subi carga que não subia há um ano.
+            </p>
+            <p class="text-sm uppercase tracking-widest text-muted">Bianca R. — Aluna há 8 meses</p>
+          </div>
+          <div class="reveal" data-delay="1">
+            <p class="font-display text-6xl text-accent mb-4 leading-none">"</p>
+            <p class="text-xl leading-relaxed mb-6">
+              Não é a academia mais bonita que já treinei, é a que mais me
+              fez evoluir. Ninguém fica te enrolando com treino genérico de
+              internet.
+            </p>
+            <p class="text-sm uppercase tracking-widest text-muted">Rafael M. — Aluno há 1 ano</p>
+          </div>
+          <div class="reveal" data-delay="2">
+            <p class="font-display text-6xl text-accent mb-4 leading-none">"</p>
+            <p class="text-xl leading-relaxed mb-6">
+              Professor corrigiu minha postura no agachamento na segunda
+              semana. Em três academias antes, ninguém tinha nem olhado.
+            </p>
+            <p class="text-sm uppercase tracking-widest text-muted">Camila S. — Aluna há 4 meses</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CONTATO (full-bleed com foto) ===================== -->
+    <section id="contato" class="relative py-28 lg:py-40 overflow-hidden">
+      <div class="photo-parallax" data-parallax data-speed="0.25">
+        <img
+          src="https://images.unsplash.com/photo-1605296867724-fa87a8ef53fd?auto=format&fit=crop&w=1800&q=70"
+          alt=""
+        />
+      </div>
+      <div class="absolute inset-0 bg-ink/85"></div>
+
+      <div class="relative container mx-auto px-6 lg:px-10">
+        <div class="grid lg:grid-cols-2 gap-14 items-center">
+          <div class="reveal">
+            <p class="eyebrow">Primeiro passo</p>
+            <h2 class="font-display text-4xl lg:text-5xl leading-tight mb-7">
+              Marque uma aula experimental
+            </h2>
+            <p class="text-muted text-lg leading-relaxed mb-8 max-w-md">
+              Sem compromisso. Você treina um dia com a gente, vê como
+              funciona o acompanhamento e decide depois.
+            </p>
+            <div class="space-y-3 text-sm text-muted">
+              <!-- EDITAR: dados reais da academia -->
+              <p>Rua do Treino, 456 — Vila Madalena, São Paulo, SP</p>
+              <p>Segunda a sexta, 6h às 22h · Sábado, 8h às 14h</p>
+              <p>(11) 99999-9999</p>
+            </div>
+          </div>
+
+          <div class="reveal bg-ink/80 border border-border p-8 sm:p-10 flex flex-col" data-delay="1">
+            <h3 class="text-xl font-semibold mb-3">Fale direto pelo WhatsApp</h3>
+            <p class="text-muted text-sm leading-relaxed mb-8">
+              Clique no botão, o WhatsApp abre com uma mensagem pronta pra
+              você só ajustar e enviar.
+            </p>
+            <a href="#" data-whatsapp-cta target="_blank" rel="noopener" class="btn-accent text-center rounded-full px-6 py-3.5 text-sm tracking-widest uppercase font-medium">
+              Marcar aula experimental
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="py-14">
+      <div class="container mx-auto px-6 lg:px-10">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
+          <a href="#topo" class="font-display text-3xl">VIGOR</a>
+
+          <div class="flex items-center gap-6 text-xs uppercase tracking-widest text-muted">
+            <a href="#sobre" class="hover:text-paper transition-colors">Sobre</a>
+            <a href="#planos" class="hover:text-paper transition-colors">Planos</a>
+            <a href="#estrutura" class="hover:text-paper transition-colors">Estrutura</a>
+          </div>
+
+          <div class="flex items-center gap-4">
+            <!-- EDITAR: links reais -->
+            <a href="#" aria-label="Instagram" class="text-muted hover:text-accent transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.25.07 1.65.07 4.85s0 3.6-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.25.06-1.65.07-4.85.07s-3.6 0-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.85C2.42 3.93 3.94 2.4 7.16 2.25 8.4 2.2 8.8 2.2 12 2.2zm0 3.05a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5zm0 11.13a4.38 4.38 0 1 1 0-8.75 4.38 4.38 0 0 1 0 8.75zm7.02-11.4a1.58 1.58 0 1 1-3.16 0 1.58 1.58 0 0 1 3.16 0z"/></svg>
+            </a>
+            <a href="#" aria-label="WhatsApp" class="text-muted hover:text-accent transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.79.47 3.51 1.36 5.03L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.79 14.14c-.24.68-1.4 1.3-1.94 1.38-.5.08-1.13.11-1.82-.12-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.8-4.16-4.94-4.36-.14-.19-1.19-1.58-1.19-3.02 0-1.43.75-2.14 1.02-2.43.27-.29.58-.36.78-.36.19 0 .39 0 .56.01.18.01.42-.07.65.5.24.58.81 2.01.88 2.16.07.15.12.32.02.51-.1.19-.15.31-.3.48-.14.17-.31.37-.44.5-.15.14-.3.3-.13.58.17.29.75 1.24 1.61 2 1.11.99 2.04 1.3 2.33 1.44.29.15.46.13.63-.05.17-.19.72-.84.91-1.13.19-.29.38-.24.63-.14.26.1 1.65.78 1.94.92.28.14.47.21.53.33.07.12.07.68-.17 1.36z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="mt-10 pt-8 border-t border-border text-center text-xs text-muted space-y-3">
+          <p>© 2026 Vigor. Todos os direitos reservados.</p>
+          <p class="max-w-2xl mx-auto leading-relaxed opacity-70 text-[11px]">
+            A cópia ou reprodução do conteúdo dessa página em outros domínios sem os créditos ou referências ao autor pode ser considerada plágio, um crime, conforme prevê a Lei Nº 9.610/98, que protege os direitos morais do autor.
+            <br />Autor: Ramony Lima
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // ===== Pedido/contato pelo WhatsApp =====
+      const WHATSAPP_NUMBER = "5511999999999"; // EDITAR
+      const defaultMessage = encodeURIComponent(
+        "Olá! Vim pelo site e quero marcar uma aula experimental na Vigor."
+      );
+      document.querySelectorAll("[data-whatsapp-cta]").forEach((el) => {
+        el.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${defaultMessage}`;
+      });
+      document.querySelectorAll("[data-whatsapp-plano]").forEach((el) => {
+        const plano = el.dataset.whatsappPlano;
+        const msg = encodeURIComponent(
+          `Olá! Vim pelo site e tenho interesse no plano ${plano} da Vigor.`
+        );
+        el.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
+      });
+
+      // ===== Menu mobile =====
+      const menuToggle = document.getElementById("menuToggle");
+      const mobileMenu = document.getElementById("mobileMenu");
+      menuToggle.addEventListener("click", () => {
+        const isOpen = !mobileMenu.classList.contains("hidden");
+        mobileMenu.classList.toggle("hidden");
+        menuToggle.setAttribute("aria-expanded", String(!isOpen));
+      });
+      mobileMenu.querySelectorAll("a").forEach((link) =>
+        link.addEventListener("click", () => mobileMenu.classList.add("hidden"))
+      );
+
+      // ===== Navbar com fundo ao rolar =====
+      const navbar = document.getElementById("navbar");
+      function updateNavbar() {
+        navbar.classList.toggle("nav-scrolled", window.scrollY > 20);
+      }
+
+      // ===== Barra de progresso de leitura =====
+      const progressBar = document.getElementById("scroll-progress");
+      function updateProgress() {
+        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+        const pct = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+        progressBar.style.width = pct + "%";
+      }
+
+      // ===== Revelar ao rolar =====
+      const revealEls = document.querySelectorAll(".reveal, .img-reveal");
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -60px 0px" }
+      );
+      revealEls.forEach((el) => revealObserver.observe(el));
+
+      // ===== Parallax nos fundos com foto =====
+      const parallaxEls = document.querySelectorAll("[data-parallax]");
+      function updateParallax() {
+        parallaxEls.forEach((el) => {
+          const speed = parseFloat(el.dataset.speed || "0.3");
+          const rect = el.getBoundingClientRect();
+          const offset = rect.top * speed;
+          const img = el.querySelector("img");
+          if (img) img.style.transform = `translateY(${offset}px)`;
+        });
+      }
+
+      // ===== Loop único de scroll (rAF-throttled) =====
+      let ticking = false;
+      function onScrollOrResize() {
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            updateNavbar();
+            updateProgress();
+            updateParallax();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }
+      window.addEventListener("scroll", onScrollOrResize, { passive: true });
+      window.addEventListener("resize", onScrollOrResize);
+      onScrollOrResize();
+
+      // ===== Contador animado (seção Resultados) =====
+      // Dispara quando a seção inteira entra em vista, não por número
+      // individual — assim todos sobem juntos mesmo que um esteja mais
+      // à direita/esquerda na grade.
+      function animateCounter(el) {
+        const target = parseFloat(el.dataset.target || "0");
+        const suffix = el.dataset.suffix || "";
+        const duration = 1600;
+        const start = performance.now();
+        function tick(now) {
+          const elapsed = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - elapsed, 3);
+          const value = Math.round(target * eased);
+          el.textContent = value.toLocaleString("pt-BR") + suffix;
+          if (elapsed < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      }
+
+      const countersSection = document.getElementById("resultados");
+      const counterEls = document.querySelectorAll("[data-counter]");
+      const countersObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              counterEls.forEach((el) => animateCounter(el));
+              countersObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.4 }
+      );
+      countersObserver.observe(countersSection);
+
+      // ===== Bloqueio de clique direito =====
+      document.addEventListener("contextmenu", (e) => e.preventDefault());
+    </script>
+  </body>
+</html>

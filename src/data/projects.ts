@@ -115,4 +115,12 @@ export const projects: Project[] = [
     status: "Produto à venda · pronto",
     demoUrl: "/demos/apetite/index.html",
   },
+  {
+    title: "Vigor",
+    description:
+      "Landing page para academias e personal trainers, com identidade em preto fosco e vermelho intenso. Contador de resultados animado, cardápio de planos com destaque, galeria de estrutura e agendamento de aula experimental pelo WhatsApp.",
+    tags: ["HTML", "Tailwind CSS", "JavaScript"],
+    status: "Produto à venda · pronto",
+    demoUrl: "/demos/vigor/index.html",
+  },
 ];
