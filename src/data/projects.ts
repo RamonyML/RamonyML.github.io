@@ -163,10 +163,20 @@ export const projects: Project[] = [
   {
     title: "HT Glow Fit",
     description:
-      "Landing page para uma marca real de moda fitness feminina, 100% online. Identidade em marfim quente com glow em rosé e dourado, peças reais do catálogo com preço e tamanho, e pedido por WhatsApp já com mensagem pronta por produto. Projeto fechado e no ar.",
-    tags: ["HTML", "Tailwind CSS", "JavaScript"],
+      "Site completo para uma marca real de moda fitness feminina, 100% online, com domínio próprio. Identidade em preto e branco definida junto à cliente, catálogo alimentado por Firestore e painel administrativo em rota oculta, onde ela cadastra produtos e sobe fotos sozinha. Pedido por WhatsApp com mensagem pronta por produto.",
+    tags: ["Next.js", "React 19", "TypeScript", "Tailwind CSS 4", "Firebase"],
     status: "Em produção · Cliente real",
-    demoUrl: "https://glowfit-ht.vercel.app",
+    demoUrl: "https://htglowfit.com",
+    stage: "producao",
+  },
+  {
+    title: "Escala de Louvor",
+    description:
+      "Sistema para igrejas organizarem a escala do ministério de louvor. A escala pública sincroniza em tempo real via Firestore, então o que o admin edita aparece na hora pra quem está com a página aberta, sem refresh. Geração automática de cultos por domingo do mês, exportação da escala como imagem em dois formatos e componentes de interface construídos do zero, sem biblioteca pronta.",
+    tags: ["React 19", "TypeScript", "Vite", "Firestore", "html2canvas"],
+    status: "Em produção",
+    demoUrl: "https://memorial-louvor.web.app",
+    repoUrl: "https://github.com/RamonyML/memorial-louvor",
     stage: "producao",
   },
 ];

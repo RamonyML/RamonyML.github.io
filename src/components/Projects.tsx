@@ -8,6 +8,7 @@ import jogaeScreenshot from "../assets/project-jogae.jpg";
 import apetiteScreenshot from "../assets/project-apetite.jpg";
 import vigorScreenshot from "../assets/project-vigor.jpg";
 import glowfitScreenshot from "../assets/project-glowfit.jpg";
+import escalaLouvorScreenshot from "../assets/project-escala-louvor.jpg";
 import { TypewriterHeading } from "./TypewriterHeading";
 import { FeaturedProject } from "./FeaturedProject";
 import { projects, type Project } from "../data/projects";
@@ -23,6 +24,7 @@ const IMAGES: Record<string, string> = {
   Apetite: apetiteScreenshot,
   Vigor: vigorScreenshot,
   "HT Glow Fit": glowfitScreenshot,
+  "Escala de Louvor": escalaLouvorScreenshot,
 };
 
 const PLACEHOLDER_ICONS: Record<string, React.ReactNode> = {
