@@ -163,8 +163,15 @@ export const projects: Project[] = [
   {
     title: "HT Glow Fit",
     description:
-      "Site completo para uma marca real de moda fitness feminina, 100% online, com domínio próprio. Identidade em preto e branco definida junto à cliente, catálogo alimentado por Firestore e painel administrativo em rota oculta, onde ela cadastra produtos e sobe fotos sozinha. Pedido por WhatsApp com mensagem pronta por produto.",
-    tags: ["Next.js", "React 19", "TypeScript", "Tailwind CSS 4", "Firebase"],
+      "Loja completa para uma marca real de moda fitness feminina, com domínio próprio. Carrinho com reserva de estoque server-side (transação no Firestore evita vender a mesma peça duas vezes), checkout convidado com pagamento PIX pela Asaas e frete calculado por CEP na SuperFrete. Pedido pago dispara e-mail para a loja via Resend. Login de cliente (e-mail/senha e Google) e painel administrativo em rota oculta, com dashboard de vendas, controle de estoque e gestão de pedidos.",
+    tags: [
+      "Next.js",
+      "TypeScript",
+      "Firebase",
+      "Asaas (PIX)",
+      "SuperFrete",
+      "Vercel",
+    ],
     status: "Em produção · Cliente real",
     demoUrl: "https://htglowfit.com",
     stage: "producao",
