@@ -30,22 +30,49 @@ export type FeaturedProjectData = {
   note?: string;
 };
 
-export const featuredProject: FeaturedProjectData = {
-  title: "Eterno Dia",
-  description:
-    "SaaS que reúne, em tempo real, as fotos e vídeos que os convidados de um evento registram, num álbum colaborativo acessado por link ou QR Code, sem precisar instalar nada. Checkout com Stripe e Asaas, crop de imagem direto no navegador, download do álbum completo em ZIP e um painel de moderação para o organizador.",
-  quote:
-    "Foi o primeiro produto que tirei do zero sozinho, cobrando de verdade: modelei o banco, integrei os pagamentos, pensei em cada detalhe sabendo que ia rodar no dia mais importante da vida de alguém. É o projeto que mais me orgulho.",
-  stats: [
-    { label: "Planos", value: "3" },
-    { label: "Pagamentos", value: "Stripe + Asaas" },
-    { label: "Álbum", value: "Tempo real" },
-  ],
-  tags: ["React 19", "Vite", "Tailwind CSS 4", "Firebase", "Stripe", "Asaas"],
-  status: "SaaS próprio · Em produção",
-  demoUrl: "https://eternodia.com",
-  note: "Produto proprietário, código-fonte não disponível publicamente.",
-};
+export const featuredProjects: FeaturedProjectData[] = [
+  {
+    title: "Eterno Dia",
+    description:
+      "SaaS que reúne, em tempo real, as fotos e vídeos que os convidados de um evento registram, num álbum colaborativo acessado por link ou QR Code, sem precisar instalar nada. Checkout com Stripe e Asaas, crop de imagem direto no navegador, download do álbum completo em ZIP e um painel de moderação para o organizador.",
+    quote:
+      "Foi o primeiro produto que tirei do zero sozinho, cobrando de verdade: modelei o banco, integrei os pagamentos, pensei em cada detalhe sabendo que ia rodar no dia mais importante da vida de alguém. É o projeto que mais me orgulho.",
+    stats: [
+      { label: "Planos", value: "3" },
+      { label: "Pagamentos", value: "Stripe + Asaas" },
+      { label: "Álbum", value: "Tempo real" },
+    ],
+    tags: ["React 19", "Vite", "Tailwind CSS 4", "Firebase", "Stripe", "Asaas"],
+    status: "SaaS próprio · Em produção",
+    demoUrl: "https://eternodia.com",
+    note: "Produto proprietário, código-fonte não disponível publicamente.",
+  },
+  {
+    title: "HT Glow Fit",
+    description:
+      "Loja completa, do zero, para uma marca real de moda fitness feminina, com domínio próprio. Carrinho com reserva de estoque server-side (transação no Firestore não deixa vender a mesma peça duas vezes), checkout com pagamento PIX pela Asaas e frete calculado por CEP na SuperFrete. Pedido pago avisa a loja por e-mail via Resend. A cliente tem conta com foto de perfil recortada no navegador, agenda de endereços, histórico de compras com status e avaliação das peças por estrelas para quem já recebeu. Painel administrativo em rota oculta, com dashboard de vendas, controle de estoque e gestão de pedidos.",
+    quote:
+      "Peguei um projeto de cliente de ponta a ponta: modelei o banco, cuidei do pagamento e do frete, pensei em cada detalhe da experiência de quem compra e de quem administra. Ver a loja dela no ar, vendendo de verdade, é o tipo de coisa que me move.",
+    stats: [
+      { label: "Pagamento", value: "PIX · Asaas" },
+      { label: "Frete", value: "SuperFrete" },
+      { label: "Estoque", value: "Tempo real" },
+    ],
+    tags: [
+      "Next.js 16",
+      "React 19",
+      "TypeScript",
+      "Firebase",
+      "Asaas (PIX)",
+      "SuperFrete",
+      "Resend",
+      "Vercel",
+    ],
+    status: "Cliente real · Em produção",
+    demoUrl: "https://htglowfit.com",
+    note: "Projeto de cliente, código-fonte não disponível publicamente.",
+  },
+];
 
 export const projects: Project[] = [
   {
@@ -159,22 +186,6 @@ export const projects: Project[] = [
     tier: "premium",
     price: "R$ 1.800",
     customPrice: "R$ 2.500",
-  },
-  {
-    title: "HT Glow Fit",
-    description:
-      "Loja completa para uma marca real de moda fitness feminina, com domínio próprio. Carrinho com reserva de estoque server-side (transação no Firestore evita vender a mesma peça duas vezes), checkout convidado com pagamento PIX pela Asaas e frete calculado por CEP na SuperFrete. Pedido pago dispara e-mail para a loja via Resend. Login de cliente (e-mail/senha e Google) e painel administrativo em rota oculta, com dashboard de vendas, controle de estoque e gestão de pedidos.",
-    tags: [
-      "Next.js",
-      "TypeScript",
-      "Firebase",
-      "Asaas (PIX)",
-      "SuperFrete",
-      "Vercel",
-    ],
-    status: "Em produção · Cliente real",
-    demoUrl: "https://htglowfit.com",
-    stage: "producao",
   },
   {
     title: "Escala de Louvor",

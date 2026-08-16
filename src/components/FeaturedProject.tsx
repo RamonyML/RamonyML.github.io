@@ -3,24 +3,47 @@ import eternodiaSlide1 from "../assets/eternodia-slide-1.jpg";
 import eternodiaSlide2 from "../assets/eternodia-slide-2.jpg";
 import eternodiaSlide3 from "../assets/eternodia-slide-3.jpg";
 import eternodiaSlide4 from "../assets/eternodia-slide-4.jpg";
-import { featuredProject } from "../data/projects";
+import glowfitSlide1 from "../assets/glowfit-slide1.jpg";
+import glowfitSlide2 from "../assets/glowfit-slide2.jpg";
+import glowfitSlide3 from "../assets/glowfit-slide3.jpg";
+import glowfitSlide4 from "../assets/glowfit-slide4.jpg";
+import glowfitSlide5 from "../assets/glowfit-slide5.jpg";
+import glowfitSlide6 from "../assets/glowfit-slide6.jpg";
+import { featuredProjects, type FeaturedProjectData } from "../data/projects";
 
-// Novas telas: solte os arquivos em src/assets/ e adicione o import + a
-// entrada aqui. O crossfade já roda sozinho com quantas imagens houver.
-const SLIDES = [eternodiaSlide1, eternodiaSlide2, eternodiaSlide3, eternodiaSlide4];
+// Telas de cada destaque, na ordem do crossfade. Pra trocar/adicionar, é só
+// mexer no import e nesta lista — o slideshow roda sozinho com quantas houver.
+const SLIDES_BY_TITLE: Record<string, string[]> = {
+  "Eterno Dia": [eternodiaSlide1, eternodiaSlide2, eternodiaSlide3, eternodiaSlide4],
+  "HT Glow Fit": [
+    glowfitSlide1,
+    glowfitSlide2,
+    glowfitSlide3,
+    glowfitSlide4,
+    glowfitSlide5,
+    glowfitSlide6,
+  ],
+};
 
 const SLIDE_INTERVAL_MS = 4500;
 
-export function FeaturedProject() {
+/** "https://htglowfit.com" -> "htglowfit.com", pra barra do navegador falso. */
+function rotuloDoUrl(url?: string): string {
+  if (!url) return "";
+  return url.replace(/^https?:\/\//, "").replace(/\/$/, "");
+}
+
+function FeaturedCard({ data }: { data: FeaturedProjectData }) {
+  const slides = SLIDES_BY_TITLE[data.title] ?? [];
   const [activeSlide, setActiveSlide] = useState(0);
 
   useEffect(() => {
-    if (SLIDES.length < 2) return;
+    if (slides.length < 2) return;
     const id = setInterval(() => {
-      setActiveSlide((current) => (current + 1) % SLIDES.length);
+      setActiveSlide((current) => (current + 1) % slides.length);
     }, SLIDE_INTERVAL_MS);
     return () => clearInterval(id);
-  }, []);
+  }, [slides.length]);
 
   return (
     <div className="mb-10 overflow-hidden rounded-2xl border border-border bg-surface md:mb-12">
@@ -30,15 +53,15 @@ export function FeaturedProject() {
           <span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]" />
           <span className="h-2.5 w-2.5 rounded-full bg-[#27c93f]" />
           <span className="ml-3 max-w-56 flex-1 truncate rounded-full bg-surface px-3 py-1 text-center text-[11px] text-muted">
-            eternodia.com
+            {rotuloDoUrl(data.demoUrl)}
           </span>
         </div>
         <div className="relative aspect-video w-full overflow-hidden border-b border-border">
-          {SLIDES.map((src, index) => (
+          {slides.map((src, index) => (
             <img
               key={src}
               src={src}
-              alt="Interface do Eterno Dia"
+              alt={`Interface do ${data.title}`}
               loading="lazy"
               decoding="async"
               className="absolute inset-0 h-full w-full object-cover object-top transition-opacity duration-1000 ease-in-out"
@@ -55,24 +78,24 @@ export function FeaturedProject() {
           </span>
 
           <h3 className="text-2xl font-medium text-ink sm:text-3xl">
-            {featuredProject.title}
+            {data.title}
           </h3>
           <span className="mt-2.5 inline-block w-fit rounded-full border border-border px-2.5 py-1 text-[11px] font-medium text-primary">
-            {featuredProject.status}
+            {data.status}
           </span>
 
           <p className="mt-4 text-sm leading-relaxed text-muted">
-            {featuredProject.description}
+            {data.description}
           </p>
 
           <blockquote className="mt-5 border-l-2 border-primary/50 pl-4 text-sm leading-relaxed text-ink/90 italic">
-            “{featuredProject.quote}”
+            “{data.quote}”
           </blockquote>
         </div>
 
         <div className="flex flex-col md:justify-center">
           <div className="grid grid-cols-3 gap-3">
-            {featuredProject.stats.map((stat) => (
+            {data.stats.map((stat) => (
               <div
                 key={stat.label}
                 className="rounded-xl border border-border px-3 py-2.5"
@@ -84,7 +107,7 @@ export function FeaturedProject() {
           </div>
 
           <div className="mt-6 flex flex-wrap gap-2">
-            {featuredProject.tags.map((tag) => (
+            {data.tags.map((tag) => (
               <span
                 key={tag}
                 className="rounded-full border border-border px-3 py-1 text-xs text-muted"
@@ -95,9 +118,9 @@ export function FeaturedProject() {
           </div>
 
           <div className="mt-6 space-y-2">
-            {featuredProject.demoUrl && (
+            {data.demoUrl && (
               <a
-                href={featuredProject.demoUrl}
+                href={data.demoUrl}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:text-primary-soft"
@@ -116,14 +139,22 @@ export function FeaturedProject() {
                 </svg>
               </a>
             )}
-            {featuredProject.note && (
-              <p className="text-xs text-muted italic">
-                {featuredProject.note}
-              </p>
+            {data.note && (
+              <p className="text-xs text-muted italic">{data.note}</p>
             )}
           </div>
         </div>
       </div>
     </div>
+  );
+}
+
+export function FeaturedProject() {
+  return (
+    <>
+      {featuredProjects.map((project) => (
+        <FeaturedCard key={project.title} data={project} />
+      ))}
+    </>
   );
 }

@@ -7,7 +7,6 @@ import oslineImage from "../assets/OS-Line.jpg";
 import jogaeScreenshot from "../assets/project-jogae.jpg";
 import apetiteScreenshot from "../assets/project-apetite.jpg";
 import vigorScreenshot from "../assets/project-vigor.jpg";
-import glowfitScreenshot from "../assets/project-glowfit.jpg";
 import escalaLouvorScreenshot from "../assets/project-escala-louvor.jpg";
 import { TypewriterHeading } from "./TypewriterHeading";
 import { FeaturedProject } from "./FeaturedProject";
@@ -23,7 +22,6 @@ const IMAGES: Record<string, string> = {
   Jogaê: jogaeScreenshot,
   Apetite: apetiteScreenshot,
   Vigor: vigorScreenshot,
-  "HT Glow Fit": glowfitScreenshot,
   "Escala de Louvor": escalaLouvorScreenshot,
 };
 
