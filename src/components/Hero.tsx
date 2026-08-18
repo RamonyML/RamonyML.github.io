@@ -1,178 +1,141 @@
 import { useState } from "react";
-import heroBg from "../assets/fundo01.jpeg";
 import photo from "../assets/ramonyml.jpg";
-import { useParallax } from "../hooks/useParallax";
-import { useTypewriter } from "../hooks/useTypewriter";
+import { Typewriter } from "./Typewriter";
 
-const HERO_DESCRIPTION =
+const HERO_COPY =
   "Construo produtos web de ponta a ponta, de SaaS com pagamentos a plataformas operacionais com integrações complexas, usando React, TypeScript, Node.js e Firebase.";
 
+/** Coordenadas reais de Uberlândia — dado como ornamento, à la guia. */
+const COORDS = [
+  "LAT 18°55' S",
+  "LONG 48°17' W",
+  "",
+  "SYS. / 001",
+  "NODE / ACTIVE",
+  "BASE / UDI · MG",
+  "GRID / 12 COL",
+];
+
+const STRIP = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10"];
+
 export function Hero() {
-  const { ref: bgRef, offset } = useParallax(0.15);
-  const [pinned, setPinned] = useState(false);
-  const { output, done } = useTypewriter(HERO_DESCRIPTION, 34, 500);
+  // Clique trava a foto revelada (colorida, sem véu); outro clique desfaz.
+  const [fotoFixada, setFotoFixada] = useState(false);
 
   return (
     <section
       id="topo"
-      className="relative flex min-h-screen items-center overflow-hidden pt-20"
+      className="relative flex min-h-screen flex-col bg-black px-5 pt-28 pb-8 sm:px-8"
     >
-      {/* Imagem de fundo — duotone (preto + verde) via grayscale + camada
-          de cor com mix-blend-mode, parallax sutil ao rolar, e um degradê
-          no final que funde com o fundo sólido bem em cima da borda que já
-          separa do "Sobre". */}
-      <div ref={bgRef} className="pointer-events-none absolute inset-0">
-        <img
-          src={heroBg}
-          alt=""
-          aria-hidden="true"
-          className="h-full w-full object-cover object-[50%_25%] [filter:grayscale(1)_brightness(0.6)_contrast(1.15)]"
-          style={{
-            opacity: "var(--hero-bg-opacity)",
-            transform: `scale(1.25) translateY(${offset}px)`,
-          }}
-        />
-        <div
-          className="absolute inset-0 bg-primary mix-blend-color"
-          style={{ opacity: "var(--hero-bg-tint)" }}
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to bottom, transparent 0%, transparent 35%, var(--color-bg) 92%)",
-          }}
-        />
-      </div>
-
-      <div className="relative mx-auto flex w-full max-w-6xl flex-col-reverse items-center gap-14 px-5 lg:flex-row lg:justify-between">
-        <div className="text-center lg:flex-1 lg:text-left">
-          <p className="mb-4 text-sm font-medium tracking-widest text-primary uppercase">
-            Desenvolvedor Full-Stack
-          </p>
-
-          <h1 className="text-5xl font-medium tracking-tight text-ink sm:text-6xl lg:text-7xl">
-            Ramony <span className="text-primary">Lima</span>
-          </h1>
-
-          <div className="relative mx-auto mt-6 max-w-xl lg:mx-0">
-            {/* Reserva a altura final do texto (invisível) pra digitação
-                não empurrar o resto do layout enquanto "escreve". */}
-            <p aria-hidden="true" className="invisible text-lg leading-relaxed">
-              {HERO_DESCRIPTION}
-            </p>
-            <p className="absolute inset-0 text-lg leading-relaxed text-muted">
-              <span className="sr-only">{HERO_DESCRIPTION}</span>
-              <span aria-hidden="true">
-                {output}
-                <span
-                  className={`ml-0.5 inline-block h-[1.1em] w-[2px] -mb-[0.15em] bg-primary ${
-                    done ? "opacity-0 transition-opacity duration-500" : "animate-pulse"
-                  }`}
-                />
-              </span>
-            </p>
-          </div>
-
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4 lg:justify-start">
-            <a
-              href="#projetos"
-              className="rounded-full bg-primary px-7 py-3 text-sm font-medium text-black transition-transform hover:-translate-y-0.5 hover:bg-primary-soft"
-            >
-              Ver projetos
-            </a>
-            <a
-              href="#contato"
-              className="rounded-full border border-border px-7 py-3 text-sm font-medium text-ink transition-colors hover:border-primary hover:text-primary"
-            >
-              Vamos conversar
-            </a>
-          </div>
-
-          <div className="mt-14 flex items-center justify-center gap-5 text-muted lg:justify-start">
-            <a
-              href="https://github.com/RamonyML"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="GitHub"
-              className="transition-colors hover:text-primary"
-            >
-              <svg
-                className="h-5 w-5"
-                fill="currentColor"
-                viewBox="0 0 16 16"
-              >
-                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
-              </svg>
-            </a>
-            <a
-              href="https://www.linkedin.com/in/ramonyml"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="LinkedIn"
-              className="transition-colors hover:text-primary"
-            >
-              <svg
-                className="h-5 w-5"
-                fill="currentColor"
-                viewBox="0 0 16 16"
-              >
-                <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z" />
-              </svg>
-            </a>
-            <a
-              href="mailto:ramonyml@gmail.com"
-              aria-label="E-mail"
-              className="transition-colors hover:text-primary"
-            >
-              <svg
-                className="h-5 w-5"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                viewBox="0 0 24 24"
-              >
-                <rect width="20" height="16" x="2" y="4" rx="2" />
-                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-              </svg>
-            </a>
-          </div>
+      <div className="mx-auto flex w-full max-w-[1500px] flex-1 flex-col">
+        {/* régua de números do guia, canto superior direito */}
+        <div className="mono-label hidden justify-end gap-4 pb-10 text-[10px] text-gray/60 sm:flex">
+          {STRIP.map((n) => (
+            <span key={n}>{n}</span>
+          ))}
         </div>
 
-        {/* Foto — em tons de cinza por padrão (ecoa o duotone do fundo) e
-            revela cor + leve zoom no hover, com um glow verde suave em
-            vez de um contorno grosso fixo. Um clique fixa esse estado
-            revelado (útil pra quem usa toque, sem hover); clicar de
-            novo solta e volta ao padrão. */}
-        <div
-          className="group relative shrink-0 cursor-pointer"
-          data-pinned={pinned}
-          role="button"
-          tabIndex={0}
-          aria-pressed={pinned}
-          aria-label={
-            pinned ? "Voltar foto ao padrão" : "Fixar foto em destaque"
-          }
-          onClick={() => setPinned((v) => !v)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault();
-              setPinned((v) => !v);
-            }
-          }}
-        >
-          <div className="absolute -inset-4 rounded-full bg-primary opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-25 group-data-[pinned=true]:opacity-25" />
-          <div className="relative h-56 w-56 overflow-hidden rounded-full border border-border sm:h-72 sm:w-72 lg:h-80 lg:w-80 xl:h-96 xl:w-96">
-            <img
-              src={photo}
-              alt="Foto de Ramony Lima"
-              fetchPriority="high"
-              className="h-full w-full scale-100 object-cover object-[50%_15%] grayscale transition-all duration-500 ease-out group-hover:scale-110 group-hover:grayscale-0 group-data-[pinned=true]:scale-110 group-data-[pinned=true]:grayscale-0"
-            />
+        <div className="grid flex-1 items-center gap-10 lg:grid-cols-[190px_1fr_340px] lg:gap-14 xl:grid-cols-[190px_1fr_430px]">
+          {/* coluna de dados */}
+          <div className="mono-label hidden leading-[2.1] text-gray lg:block lg:self-start lg:border-r lg:border-line lg:pt-2 lg:pr-6">
+            {COORDS.map((linha, i) =>
+              linha === "" ? (
+                <br key={i} />
+              ) : (
+                <div key={i} className={linha.includes("ACTIVE") ? "cursor" : undefined}>
+                  {linha}
+                </div>
+              ),
+            )}
           </div>
-          <div className="hero-photo-mask pointer-events-none absolute inset-0 rounded-full" />
+
+          {/* bloco principal */}
+          <div>
+            <span className="tag reveal text-chalk">Desenvolvedor Full-Stack</span>
+
+            <h1 className="headline reveal mt-8 text-[clamp(4rem,12vw,11.5rem)] text-chalk" data-delay="1">
+              Ramony
+              <br />
+              Lima.
+            </h1>
+
+            <p className="mono-label reveal mt-7 text-gray" data-delay="2">
+              Interfaces / Código / Pagamentos / Sistemas
+            </p>
+
+            {/* Sem .reveal aqui: a própria digitação já é a revelação —
+                combinar os dois criaria uma corrida entre observers. */}
+            <Typewriter
+              text={HERO_COPY}
+              className="serif mt-6 max-w-md text-lg leading-relaxed text-gray"
+            />
+
+            <div className="reveal mt-10 flex flex-wrap items-center gap-4" data-delay="3">
+              <a
+                href="#projetos"
+                className="mono-label bg-chalk px-7 py-4 text-black transition-colors hover:bg-white"
+              >
+                Ver projetos →
+              </a>
+              <a
+                href="#contato"
+                className="mono-label border border-line px-7 py-4 text-chalk transition-colors hover:border-chalk"
+              >
+                Contato
+              </a>
+            </div>
+
+            <div className="mono-label reveal mt-9 flex gap-7 text-gray" data-delay="3">
+              <a
+                href="https://github.com/RamonyML"
+                target="_blank"
+                rel="noreferrer"
+                className="transition-colors hover:text-chalk"
+              >
+                GitHub ↗
+              </a>
+              <a
+                href="https://www.linkedin.com/in/ramonyml"
+                target="_blank"
+                rel="noreferrer"
+                className="transition-colors hover:text-chalk"
+              >
+                LinkedIn ↗
+              </a>
+              <a href="mailto:ramonyml@gmail.com" className="transition-colors hover:text-chalk">
+                E-mail ↗
+              </a>
+            </div>
+          </div>
+
+          {/* retrato tratado como registro técnico: véu que recolhe no
+              hover; clique trava o revelado */}
+          <figure className="reveal hidden lg:block" data-delay="2">
+            {/* o padding precisa caber a foto ampliada (scale) + a moldura
+                afastada, senão o estado de hover invade a legenda */}
+            <div className="p-7">
+              <img
+                src={photo}
+                alt="Foto de Ramony Lima"
+                className={`retrato ${fotoFixada ? "fixada" : ""}`}
+                onClick={() => setFotoFixada((f) => !f)}
+                title={fotoFixada ? "Clique pra voltar ao P&B" : "Clique pra fixar em cores"}
+              />
+            </div>
+            <figcaption className="mono-label flex justify-between px-7 text-[10px] text-gray">
+              <span>DEVELOPER / RML</span>
+              <span className={fotoFixada ? "text-chalk" : undefined}>
+                {fotoFixada ? "SINAL / COR_" : "UBERLÂNDIA · MG"}
+              </span>
+            </figcaption>
+          </figure>
+        </div>
+
+        {/* régua de rodapé do hero */}
+        <div className="mono-label mt-14 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-4 text-[10px] text-gray">
+          <span>PORTFOLIO / 2026</span>
+          <span className="hidden sm:inline">REACT · TYPESCRIPT · FIREBASE · NODE</span>
+          <span className="cursor">SCROLL ↓</span>
         </div>
       </div>
     </section>

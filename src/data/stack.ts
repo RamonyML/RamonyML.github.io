@@ -15,6 +15,7 @@ export const stack: Record<string, string[]> = {
     "Firebase Auth",
     "Firebase Admin SDK",
     "Cloud Functions",
+    "Supabase",
     "Node.js 20",
     "Firestore",
     "Cloud Storage",

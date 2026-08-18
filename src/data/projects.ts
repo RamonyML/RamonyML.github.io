@@ -149,7 +149,7 @@ export const projects: Project[] = [
     stage: "venda",
     tier: "premium",
     price: "R$ 1.800",
-    customPrice: "R$ 2.500",
+    customPrice: "R$ 3.500",
   },
   {
     title: "Jogaê",
@@ -161,7 +161,7 @@ export const projects: Project[] = [
     stage: "venda",
     tier: "premium",
     price: "R$ 1.800",
-    customPrice: "R$ 2.500",
+    customPrice: "R$ 3.500",
   },
   {
     title: "Apetite",
@@ -173,7 +173,7 @@ export const projects: Project[] = [
     stage: "venda",
     tier: "premium",
     price: "R$ 1.800",
-    customPrice: "R$ 2.500",
+    customPrice: "R$ 3.500",
   },
   {
     title: "Vigor",
@@ -185,7 +185,7 @@ export const projects: Project[] = [
     stage: "venda",
     tier: "premium",
     price: "R$ 1.800",
-    customPrice: "R$ 2.500",
+    customPrice: "R$ 3.500",
   },
   {
     title: "Escala de Louvor",

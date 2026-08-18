@@ -1,64 +1,33 @@
-import servicesBg from "../assets/fundo002.jpeg";
-import { TypewriterHeading } from "./TypewriterHeading";
 import { services } from "../data/services";
-import { useParallax } from "../hooks/useParallax";
 
+/**
+ * Serviços como linhas numeradas de um índice. O hover inverte a linha
+ * inteira (preto → branco): a microinteração com propósito do guia.
+ */
 export function Services() {
-  const { ref: bgRef, offset } = useParallax(0.15);
-
   return (
-    <section
-      id="servicos"
-      className="relative overflow-hidden border-t border-border py-24"
-    >
-      {/* Mesmo tratamento duotone (preto + verde) do fundo do Hero, com
-          fade nas bordas pra fundir com o sólido acima e abaixo, e o mesmo
-          parallax sutil ao rolar. */}
-      <div ref={bgRef} className="pointer-events-none absolute inset-0">
-        <img
-          src={servicesBg}
-          alt=""
-          aria-hidden="true"
-          loading="lazy"
-          decoding="async"
-          className="h-full w-full object-cover [filter:grayscale(1)_brightness(0.6)_contrast(1.15)]"
-          style={{
-            opacity: "var(--hero-bg-opacity)",
-            transform: `scale(1.25) translateY(${offset}px)`,
-          }}
-        />
-        <div
-          className="absolute inset-0 bg-primary mix-blend-color"
-          style={{ opacity: "var(--hero-bg-tint)" }}
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to bottom, var(--color-bg) 0%, transparent 18%, transparent 82%, var(--color-bg) 100%)",
-          }}
-        />
-      </div>
+    <section id="servicos" className="bg-black py-24 text-chalk lg:py-32">
+      <div className="mx-auto max-w-[1500px] px-5 sm:px-8">
+        <div className="mb-14 grid gap-6 lg:grid-cols-[90px_1fr_1fr] lg:gap-10">
+          <span className="mono-label pt-3 text-gray">05 / 06</span>
+          <h2 className="headline reveal text-[clamp(3rem,6.5vw,5.5rem)]">Serviços.</h2>
+          <p className="serif reveal max-w-md text-lg leading-relaxed text-gray lg:justify-self-end" data-delay="1">
+            O que eu construo, do primeiro rascunho ao deploy.
+          </p>
+        </div>
 
-      <div className="relative mx-auto max-w-6xl px-5">
-        <p className="mb-3 text-sm font-medium tracking-widest text-primary uppercase">
-          Serviços
-        </p>
-        <TypewriterHeading
-          text="Como posso ajudar no seu projeto"
-          className="mb-14 max-w-2xl text-3xl font-medium tracking-tight text-ink sm:text-4xl"
-        />
-
-        <div className="grid gap-5 sm:grid-cols-2">
-          {services.map((service) => (
+        <div className="border-b border-line">
+          {services.map((service, i) => (
             <div
               key={service.title}
-              className="rounded-2xl border border-border bg-surface p-7 transition-colors hover:border-primary/50"
+              className="reveal group grid cursor-default gap-3 border-t border-line px-2 py-9 transition-colors duration-300 hover:bg-chalk hover:text-black sm:px-4 lg:grid-cols-[90px_1fr_1.2fr] lg:gap-8"
+              data-delay={String(Math.min(i, 2))}
             >
-              <h3 className="text-lg font-medium text-ink">
-                {service.title}
-              </h3>
-              <p className="mt-2.5 text-sm leading-relaxed text-muted">
+              <span className="font-mono text-[12px] text-gray transition-colors group-hover:text-black/60">
+                {String(i + 1).padStart(2, "0")} —
+              </span>
+              <h3 className="headline text-[clamp(1.6rem,3.2vw,2.6rem)]">{service.title}</h3>
+              <p className="serif max-w-xl text-[15px] leading-relaxed text-gray transition-colors group-hover:text-black/70 lg:justify-self-end lg:self-center">
                 {service.description}
               </p>
             </div>

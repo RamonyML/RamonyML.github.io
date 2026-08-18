@@ -1,91 +1,62 @@
-import experienceBg from "../assets/fundo003.jpeg";
-import { TypewriterHeading } from "./TypewriterHeading";
 import { education, experience } from "../data/experience";
-import { useParallax } from "../hooks/useParallax";
 
-function Timeline({
-  items,
-}: {
-  items: { period: string; title: string; place: string; description: string }[];
-}) {
-  return (
-    <ol className="space-y-10 border-l border-border pl-8">
-      {items.map((item) => (
-        <li key={item.title + item.period} className="relative">
-          <span className="absolute top-1.5 -left-[calc(2rem+5px)] h-2.5 w-2.5 rounded-full bg-primary" />
-          <p className="text-sm text-muted">{item.period}</p>
-          <h4 className="mt-1 text-lg font-medium text-ink">{item.title}</h4>
-          <p className="text-sm text-primary">{item.place}</p>
-          <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted">
-            {item.description}
-          </p>
-        </li>
-      ))}
-    </ol>
-  );
-}
-
+/**
+ * Experiência tratada como log de sistema: registros cronológicos em
+ * linhas com régua, período em mono, cargo em display e descrição em
+ * serif. A formação entra como um segundo bloco de arquivo.
+ */
 export function Experience() {
-  const { ref: bgRef, offset } = useParallax(0.15);
-
   return (
-    <section
-      id="experiencia"
-      className="relative overflow-hidden border-t border-border py-24"
-    >
-      {/* Mesmo duotone + parallax das outras seções. Aqui tem bastante
-          texto pra ler, então soma um blur e uma camada escura extra pra
-          garantir contraste. */}
-      <div ref={bgRef} className="pointer-events-none absolute inset-0">
-        <img
-          src={experienceBg}
-          alt=""
-          aria-hidden="true"
-          loading="lazy"
-          decoding="async"
-          className="h-full w-full object-cover [filter:grayscale(1)_brightness(0.5)_contrast(1.1)_blur(6px)]"
-          style={{
-            opacity: "var(--hero-bg-opacity)",
-            transform: `scale(1.25) translateY(${offset}px)`,
-          }}
-        />
-        <div
-          className="absolute inset-0 bg-primary mix-blend-color"
-          style={{ opacity: "var(--hero-bg-tint)" }}
-        />
-        <div className="absolute inset-0 bg-bg/60" />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to bottom, var(--color-bg) 0%, transparent 18%, transparent 82%, var(--color-bg) 100%)",
-          }}
-        />
-      </div>
-
-      <div className="relative mx-auto max-w-6xl px-5">
-        <p className="mb-3 text-sm font-medium tracking-widest text-primary uppercase">
-          Trajetória
-        </p>
-        <TypewriterHeading
-          text="Experiência e formação"
-          className="mb-14 max-w-2xl text-3xl font-medium tracking-tight text-ink sm:text-4xl"
-        />
-
-        <div className="grid gap-16 lg:grid-cols-2">
-          <div>
-            <h3 className="mb-8 text-sm font-medium tracking-widest text-muted uppercase">
-              Experiência
-            </h3>
-            <Timeline items={experience} />
-          </div>
-          <div>
-            <h3 className="mb-8 text-sm font-medium tracking-widest text-muted uppercase">
-              Formação
-            </h3>
-            <Timeline items={education} />
-          </div>
+    <section id="experiencia" className="bg-black py-24 text-chalk lg:py-32">
+      <div className="mx-auto max-w-[1500px] px-5 sm:px-8">
+        <div className="mb-14 grid gap-6 lg:grid-cols-[90px_1fr_1fr] lg:gap-10">
+          <span className="mono-label pt-3 text-gray">03 / 06</span>
+          <h2 className="headline reveal text-[clamp(3rem,6.5vw,5.5rem)]">
+            Log de
+            <br />
+            operação.
+          </h2>
+          <p className="serif reveal max-w-md text-lg leading-relaxed text-gray lg:justify-self-end" data-delay="1">
+            Registro cronológico: onde operei, o que construí e o que ficou
+            rodando depois de mim.
+          </p>
         </div>
+
+        <div className="mono-label mb-3 text-[10px] text-gray">REG / EXPERIÊNCIA</div>
+        {experience.map((item, i) => (
+          <article
+            key={item.period}
+            className="reveal grid gap-3 border-t border-line py-8 transition-colors hover:bg-panel lg:grid-cols-[210px_1.1fr_1.3fr] lg:gap-8"
+            data-delay={String(Math.min(i, 2))}
+          >
+            <span className="font-mono text-[12px] tracking-wide text-gray">{item.period}</span>
+            <div>
+              <h3 className="font-display text-xl leading-tight font-bold tracking-tight uppercase">
+                {item.title}
+              </h3>
+              <p className="mono-label mt-2 text-[10px] text-gray">{item.place}</p>
+            </div>
+            <p className="serif text-[15px] leading-relaxed text-gray">{item.description}</p>
+          </article>
+        ))}
+
+        <div className="mono-label mt-16 mb-3 text-[10px] text-gray">ARQ / FORMAÇÃO</div>
+        {education.map((item) => (
+          <article
+            key={item.period}
+            className="reveal grid gap-3 border-t border-line py-8 transition-colors hover:bg-panel lg:grid-cols-[210px_1.1fr_1.3fr] lg:gap-8"
+          >
+            <span className="font-mono text-[12px] tracking-wide text-gray">{item.period}</span>
+            <div>
+              <h3 className="font-display text-xl leading-tight font-bold tracking-tight uppercase">
+                {item.title}
+              </h3>
+              <p className="mono-label mt-2 text-[10px] text-gray">{item.place}</p>
+            </div>
+            <p className="serif text-[15px] leading-relaxed text-gray">{item.description}</p>
+          </article>
+        ))}
+        <div className="border-t border-line" />
       </div>
     </section>
   );

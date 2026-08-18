@@ -1,103 +1,73 @@
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
-const NAV_LINKS = [
-  { href: "#sobre", label: "Sobre" },
-  { href: "#experiencia", label: "Experiência" },
-  { href: "#projetos", label: "Projetos" },
-  { href: "#servicos", label: "Serviços" },
-  { href: "#contato", label: "Contato" },
+const LINKS = [
+  { href: "#sobre", label: "Sobre", num: "02" },
+  { href: "#experiencia", label: "Log", num: "03" },
+  { href: "#projetos", label: "Projetos", num: "04" },
+  { href: "#servicos", label: "Serviços", num: "05" },
+  { href: "#contato", label: "Contato", num: "06" },
 ];
 
-type Indicator = { left: number; width: number };
-
+/**
+ * Barra de sistema: identificação à esquerda, índice de seções à direita.
+ * Tudo mono, tudo caps — a navegação é parte da linguagem técnica.
+ */
 export function Header() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const navRef = useRef<HTMLUListElement>(null);
-  const [indicator, setIndicator] = useState<Indicator | null>(null);
+  const [open, setOpen] = useState(false);
 
-  function handleLinkHover(e: React.MouseEvent<HTMLAnchorElement>) {
-    const nav = navRef.current;
-    if (!nav) return;
-    const linkRect = e.currentTarget.getBoundingClientRect();
-    const navRect = nav.getBoundingClientRect();
-    setIndicator({ left: linkRect.left - navRect.left, width: linkRect.width });
-  }
+  // Trava o scroll do fundo enquanto o menu mobile está aberto.
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-bg/80 backdrop-blur">
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
-        <a href="#topo" className="text-lg font-medium tracking-tight">
-          Ramony<span className="text-primary">ML</span>
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-line bg-black/92 backdrop-blur-sm">
+      <div className="mx-auto flex max-w-[1500px] items-center justify-between px-5 py-4 sm:px-8">
+        <a href="#topo" className="mono-label text-chalk">
+          RML — SYS.001
         </a>
 
-        <ul
-          ref={navRef}
-          onMouseLeave={() => setIndicator(null)}
-          className="relative hidden items-center gap-8 text-sm text-muted md:flex"
-        >
-          {NAV_LINKS.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                onMouseEnter={handleLinkHover}
-                className="transition-colors hover:text-ink"
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute -bottom-1.5 h-0.5 rounded-full bg-primary transition-[left,width,opacity] duration-300 ease-out"
-            style={{
-              left: indicator?.left ?? 0,
-              width: indicator?.width ?? 0,
-              opacity: indicator ? 1 : 0,
-            }}
-          />
-        </ul>
-
-        <div className="flex items-center gap-3">
-          <button
-            type="button"
-            className="grid h-10 w-10 place-items-center rounded-full border border-border text-ink md:hidden"
-            aria-label="Abrir menu"
-            aria-expanded={menuOpen}
-            onClick={() => setMenuOpen((open) => !open)}
-          >
-            <svg
-              className="h-5 w-5"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              viewBox="0 0 24 24"
+        <nav className="hidden items-center gap-7 md:flex">
+          {LINKS.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="mono-label text-gray transition-colors hover:text-chalk"
             >
-              {menuOpen ? (
-                <path d="M18 6 6 18M6 6l12 12" />
-              ) : (
-                <path d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
-          </button>
-        </div>
-      </nav>
-
-      {menuOpen && (
-        <ul className="flex flex-col gap-1 border-t border-border bg-bg px-5 py-3 text-sm text-muted md:hidden">
-          {NAV_LINKS.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                onClick={() => setMenuOpen(false)}
-                className="block rounded-lg px-2 py-2.5 transition-colors hover:bg-surface hover:text-primary"
-              >
-                {link.label}
-              </a>
-            </li>
+              <span className="mr-1.5 opacity-50">{link.num}</span>
+              {link.label}
+            </a>
           ))}
-        </ul>
+        </nav>
+
+        <button
+          type="button"
+          onClick={() => setOpen((o) => !o)}
+          aria-expanded={open}
+          aria-label={open ? "Fechar menu" : "Abrir menu"}
+          className="mono-label text-chalk md:hidden"
+        >
+          {open ? "FECHAR ×" : "MENU +"}
+        </button>
+      </div>
+
+      {open && (
+        <nav className="border-t border-line bg-black md:hidden">
+          {LINKS.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              onClick={() => setOpen(false)}
+              className="flex items-baseline gap-4 border-b border-line px-5 py-5"
+            >
+              <span className="mono-label text-gray">{link.num}</span>
+              <span className="headline text-2xl text-chalk">{link.label}</span>
+            </a>
+          ))}
+        </nav>
       )}
     </header>
   );
