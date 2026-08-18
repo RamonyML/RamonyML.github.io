@@ -245,6 +245,88 @@
         will-change: transform;
       }
     </style>
+      <style>
+      /* Faixa legal persistente — Tech Editorial: preto, mono, sem botão de
+         fechar. JS mede a própria altura e empurra header + conteúdo. */
+      #legal-bar {
+        position: fixed;
+        inset-block-start: 0;
+        inset-inline: 0;
+        z-index: 2147483647;
+        background: #0a0a0c;
+        border-bottom: 1px solid rgba(244, 244, 240, 0.14);
+        padding: 9px 16px;
+      }
+      #legal-bar .legal-bar__inner {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 6px 18px;
+        max-width: 1200px;
+        margin-inline: auto;
+      }
+      #legal-bar p {
+        margin: 0;
+        flex: 1 1 460px;
+        text-align: center;
+        font-family:
+          ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+        font-size: 10.5px;
+        line-height: 1.55;
+        letter-spacing: 0.02em;
+        color: #c7c7c2;
+      }
+      #legal-bar .legal-tag {
+        display: inline-block;
+        margin-right: 8px;
+        padding: 1px 6px;
+        border: 1px solid rgba(244, 244, 240, 0.35);
+        color: #f4f4f0;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 9px;
+        vertical-align: 1px;
+      }
+      #legal-bar strong {
+        color: #f4f4f0;
+        font-weight: 700;
+      }
+      #legal-bar .legal-bar__cta {
+        flex: 0 0 auto;
+        display: inline-block;
+        padding: 6px 14px;
+        background: #f4f4f0;
+        color: #0a0a0c;
+        font-family:
+          ui-monospace, "SF Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        text-decoration: none;
+        border: 1px solid #f4f4f0;
+        white-space: nowrap;
+        transition:
+          background-color 0.2s ease,
+          color 0.2s ease;
+      }
+      #legal-bar .legal-bar__cta:hover {
+        background: transparent;
+        color: #f4f4f0;
+      }
+      @media (max-width: 640px) {
+        #legal-bar p {
+          font-size: 9.5px;
+        }
+        #legal-bar .legal-tag {
+          display: block;
+          width: fit-content;
+          margin: 0 auto 4px;
+        }
+      }
+    </style>
   </head>
 
   <body class="bg-ink">
@@ -887,6 +969,37 @@
           "_blank"
         );
       });
+    </script>
+      <div id="legal-bar" role="note">
+      <div class="legal-bar__inner">
+        <p>
+          <span class="legal-tag">Aviso legal</span>
+          A cópia ou reprodução do conteúdo dessa página em outros domínios sem os créditos ou referências ao autor pode ser considerada plágio, um crime, conforme prevê a Lei Nº 9.610/98, que protege os direitos morais do autor.
+          <strong>Autor: Ramony Lima</strong>
+        </p>
+        <a
+          href="https://ramonyml.github.io/"
+          class="legal-bar__cta"
+          target="_blank"
+          rel="noopener"
+        >
+          ← Voltar ao portfólio
+        </a>
+      </div>
+    </div>
+    <script>
+      (function () {
+        var faixa = document.getElementById("legal-bar");
+        var cabecalho = document.getElementById("navbar");
+        function ajustar() {
+          var altura = faixa.offsetHeight;
+          document.body.style.paddingTop = altura + "px";
+          if (cabecalho) cabecalho.style.top = altura + "px";
+        }
+        ajustar();
+        window.addEventListener("resize", ajustar);
+        window.addEventListener("load", ajustar);
+      })();
     </script>
   </body>
 </html>
