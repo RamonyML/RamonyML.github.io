@@ -33,6 +33,32 @@ export function Services() {
             </div>
           ))}
         </div>
+
+        {/* Convite pro mostruário de estilos: o passo que vem antes de
+            qualquer serviço da lista acima. Mesmo idioma de hover-inversão
+            das linhas de serviço. */}
+        <a
+          href="https://ramonyml.github.io/mostruario-estilos/"
+          target="_blank"
+          rel="noreferrer"
+          className="reveal group mt-16 grid gap-4 border border-line px-5 py-10 transition-colors duration-300 hover:bg-chalk hover:text-black sm:px-8 lg:grid-cols-[90px_1fr_auto] lg:items-center lg:gap-8"
+        >
+          <span className="mono-label text-signal">Comece aqui</span>
+          <div>
+            <h3 className="headline text-[clamp(1.6rem,3.2vw,2.6rem)]">
+              Qual é a cara do seu site?
+            </h3>
+            <p className="serif mt-3 max-w-2xl text-[15px] leading-relaxed text-gray transition-colors group-hover:text-black/70">
+              Antes de pedir orçamento, explore o mostruário: 26 direções
+              visuais interativas, de landing page a painel de ERP. Escolha a
+              que conversa com o seu negócio, ou misture duas, e me mande o
+              número.
+            </p>
+          </div>
+          <span className="mono-label underline underline-offset-4 transition-opacity group-hover:opacity-70">
+            Explorar o mostruário ↗
+          </span>
+        </a>
       </div>
     </section>
   );
