@@ -94,6 +94,15 @@ export const projects: Project[] = [
     stage: "desenvolvimento",
   },
   {
+    title: "Studio Jê Cunha",
+    description:
+      "Landing page editorial para um studio real de estética e micropigmentação em Marituba, PA, campeão nacional de micropigmentação em 2025. Identidade construída a partir da marca da cliente: tipografia serifada editorial, paleta porcelana com salmão e dourado, scroll suave com Lenis, galeria de resultados com arraste, vídeos que só tocam em vista e preview de imagem que segue o cursor na lista de serviços.",
+    tags: ["HTML", "CSS", "JavaScript", "Lenis"],
+    status: "Cliente real · Em desenvolvimento",
+    note: "Site em fase final de aprovação antes da publicação.",
+    stage: "desenvolvimento",
+  },
+  {
     title: "Belaroids",
     description:
       "Landing page para a Belaroids, marca de fotografia instantânea com câmera Instax. Estética de álbum de memórias artesanal: textura de papel, doodles kawaii desenhados à mão, polaroids com rotação aleatória, scroll reveal e parallax de mouse nos elementos decorativos.",
