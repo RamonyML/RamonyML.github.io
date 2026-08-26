@@ -99,7 +99,8 @@ export const projects: Project[] = [
       "Landing page editorial para um studio real de estética e micropigmentação em Marituba, PA, campeão nacional de micropigmentação em 2025. Identidade construída a partir da marca da cliente: tipografia serifada editorial, paleta porcelana com salmão e dourado, scroll suave com Lenis, galeria de resultados com arraste, vídeos que só tocam em vista e preview de imagem que segue o cursor na lista de serviços.",
     tags: ["HTML", "CSS", "JavaScript", "Lenis"],
     status: "Cliente real · Em desenvolvimento",
-    note: "Site em fase final de aprovação antes da publicação.",
+    demoUrl: "https://jecunha.vercel.app",
+    note: "Site no ar, em fase final de aprovação com a cliente.",
     stage: "desenvolvimento",
   },
   {
