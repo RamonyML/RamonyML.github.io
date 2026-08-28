@@ -106,7 +106,7 @@ export const projects: Project[] = [
   {
     title: "Ludi",
     description:
-      "Site de exposição do arquivo pessoal de uma cosplayer real, com nove personagens e 31 fotos curadas do perfil dela. A interface é uma ficha de personagem impressa, com réguas de marcação, molduras de canto e numeração à mostra, e a seção de elenco reinterpreta a tela de seleção de campeão do League of Legends. O tema claro e o escuro usam a mesma dupla de cores com os papéis trocados, e a troca abre em círculo a partir do próprio botão. Sem framework nem etapa de build: 770 KB na carga inicial e LCP de 252 ms no celular.",
+      "Site de exposição do arquivo pessoal de uma cosplayer real, com dez personagens e 34 fotos curadas do perfil dela. A interface é uma ficha de personagem impressa, com réguas de marcação, molduras de canto e numeração à mostra, e a seção de elenco reinterpreta a tela de seleção de campeão do League of Legends. O tema claro e o escuro usam a mesma dupla de cores com os papéis trocados, e a troca abre em círculo a partir do próprio botão. Sem framework nem etapa de build: 770 KB na carga inicial e LCP de 252 ms no celular.",
     tags: ["HTML", "CSS", "JavaScript", "View Transitions", "Vercel"],
     status: "Em produção",
     demoUrl: "https://sailorlu.vercel.app",
