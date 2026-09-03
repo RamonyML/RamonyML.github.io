@@ -360,6 +360,123 @@
   footer .contatos a:hover { text-decoration-color: var(--gold-lift); }
   footer .contatos a:focus-visible { outline: 2px solid var(--gold-lift); outline-offset: 3px; }
 
+  /* ───────── modal de validade ───────── */
+
+  .pz-back {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    display: grid;
+    place-items: center;
+    padding: 1.25rem;
+    background: rgba(10,10,11,0.74);
+    -webkit-backdrop-filter: blur(10px) saturate(120%);
+    backdrop-filter: blur(10px) saturate(120%);
+    animation: pz-fade .32s ease both;
+  }
+  .pz-back[hidden] { display: none; }
+
+  .pz-card {
+    width: 100%;
+    max-width: 30rem;
+    background: var(--ink);
+    border: 1px solid rgba(224,206,138,0.4);
+    padding: 2.1rem 1.7rem 1.8rem;
+    color: #fff;
+    text-align: left;
+    animation: pz-rise .42s cubic-bezier(.2,.7,.3,1) both;
+    max-height: calc(100dvh - 2.5rem);
+    overflow-y: auto;
+  }
+  .pz-card .eyebrow { display: block; color: var(--gold-lift); margin-bottom: 0.8rem; }
+  .pz-card h2 {
+    color: #fff;
+    font-size: 1.55rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+    margin: 0 0 1.3rem;
+  }
+
+  .pz-conta {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.4rem;
+    margin-bottom: 1.4rem;
+  }
+  .pz-conta[hidden], .pz-datas[hidden] { display: none; }
+  .pz-conta div {
+    border: 1px solid rgba(224,206,138,0.22);
+    padding: 0.75rem 0.2rem 0.6rem;
+    text-align: center;
+  }
+  .pz-conta b {
+    display: block;
+    font-size: clamp(1.5rem, 7vw, 2rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    color: transparent;
+    background: linear-gradient(96deg, var(--gold-lift), var(--gold) 62%, var(--gold-deep));
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+  .pz-conta span {
+    display: block;
+    margin-top: 0.34rem;
+    font-size: 0.56rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .pz-msg {
+    margin: 0 0 1.4rem;
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.78);
+    max-width: none;
+  }
+
+  .pz-datas { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 0 0 1.6rem; }
+  .pz-datas div { border-top: 1px solid rgba(224,206,138,0.28); padding-top: 0.6rem; }
+  .pz-datas dt {
+    font-size: 0.58rem; font-weight: 600; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 0.25rem;
+  }
+  .pz-datas dd { margin: 0; font-size: 0.92rem; font-weight: 500; color: #fff; }
+
+  .pz-ok {
+    display: block;
+    width: 100%;
+    padding: 0.95rem 1.2rem;
+    background: var(--gold);
+    color: var(--ink);
+    border: 0;
+    font-family: inherit;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background .18s ease;
+  }
+  .pz-ok:hover { background: var(--gold-lift); }
+  .pz-ok:focus-visible { outline: 2px solid var(--gold-lift); outline-offset: 3px; }
+
+  @keyframes pz-fade { from { opacity: 0 } to { opacity: 1 } }
+  @keyframes pz-rise { from { opacity: 0; transform: translateY(14px) } to { opacity: 1; transform: none } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pz-back, .pz-card { animation: none; }
+  }
+
+  @media print {
+    .pz-back { display: none !important; }
+    html, body { overflow: visible !important; }
+  }
+
   /* ───────── celular ───────── */
 
   @media (max-width: 40rem) {
@@ -432,6 +549,29 @@
 </style>
 </head>
 <body>
+<div class="pz-back" id="pzBack" role="dialog" aria-modal="true" aria-labelledby="pzTitulo">
+  <div class="pz-card">
+    <span class="eyebrow">Validade da proposta</span>
+    <h2 id="pzTitulo">Esta proposta expira em</h2>
+
+    <div class="pz-conta" id="pzConta" role="timer" aria-label="Tempo restante para aceitar a proposta">
+      <div><b data-u="d">--</b><span>dias</span></div>
+      <div><b data-u="h">--</b><span>horas</span></div>
+      <div><b data-u="m">--</b><span>min</span></div>
+      <div><b data-u="s">--</b><span>seg</span></div>
+    </div>
+
+    <p class="pz-msg" id="pzMsg" hidden></p>
+
+    <dl class="pz-datas">
+      <div><dt>Enviada em</dt><dd>25 de agosto de 2026</dd></div>
+      <div><dt>Válida até</dt><dd>9 de setembro de 2026</dd></div>
+    </dl>
+
+    <button type="button" class="pz-ok" id="pzOk">Ver a proposta</button>
+  </div>
+</div>
+
 <div class="cover">
   <div class="tag">
     <div class="tag-top">
@@ -714,5 +854,59 @@
     <p class="fine" style="margin:0">Proposta emitida em 25 de agosto de 2026.<br>Válida por 15 dias.</p>
   </div>
 </footer>
+
+<script>
+(function () {
+  var FIM   = new Date('2026-09-09T23:59:59-03:00').getTime();
+  var back  = document.getElementById('pzBack');
+  var conta = document.getElementById('pzConta');
+  var msg   = document.getElementById('pzMsg');
+  var tit   = document.getElementById('pzTitulo');
+  var ok    = document.getElementById('pzOk');
+  var cel   = {};
+  var timer;
+
+  Array.prototype.forEach.call(conta.querySelectorAll('b'), function (b) { cel[b.dataset.u] = b; });
+
+  function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+  function tick() {
+    var resta = FIM - Date.now();
+
+    if (resta <= 0) {
+      clearInterval(timer);
+      conta.hidden = true;
+      tit.textContent = 'O prazo desta proposta venceu';
+      msg.textContent = 'Os valores e o escopo continuam valendo como referência. Se ainda fizer sentido para vocês, me chama que eu reviso as datas e reenvio sem burocracia.';
+      msg.hidden = false;
+      ok.textContent = 'Ver a proposta mesmo assim';
+      return;
+    }
+
+    var s = Math.floor(resta / 1000);
+    cel.d.textContent = pad(Math.floor(s / 86400));
+    cel.h.textContent = pad(Math.floor(s % 86400 / 3600));
+    cel.m.textContent = pad(Math.floor(s % 3600 / 60));
+    cel.s.textContent = pad(s % 60);
+  }
+
+  function fechar() {
+    back.hidden = true;
+    clearInterval(timer);
+    document.documentElement.style.overflow = '';
+    document.removeEventListener('keydown', onKey);
+  }
+
+  function onKey(e) { if (e.key === 'Escape') fechar(); }
+
+  tick();
+  timer = setInterval(tick, 1000);
+  document.documentElement.style.overflow = 'hidden';
+  document.addEventListener('keydown', onKey);
+  back.addEventListener('click', function (e) { if (e.target === back) fechar(); });
+  ok.addEventListener('click', fechar);
+  try { ok.focus({ preventScroll: true }); } catch (err) { ok.focus(); }
+})();
+</script>
 </body>
 </html>
