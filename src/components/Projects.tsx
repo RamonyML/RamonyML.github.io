@@ -10,6 +10,7 @@ import vigorScreenshot from "../assets/project-vigor.jpg";
 import escalaLouvorScreenshot from "../assets/project-escala-louvor.jpg";
 import jecunhaScreenshot from "../assets/project-jecunha.jpg";
 import sailorluScreenshot from "../assets/project-sailorlu.jpg";
+import samyraScreenshot from "../assets/project-samyra.jpg";
 import { FeaturedProject } from "./FeaturedProject";
 import { Typewriter } from "./Typewriter";
 import { projects, type Project } from "../data/projects";
@@ -30,6 +31,7 @@ const IMAGES: Record<string, string> = {
   "Escala de Louvor": escalaLouvorScreenshot,
   "Studio Jê Cunha": jecunhaScreenshot,
   Ludi: sailorluScreenshot,
+  "Samyra Priscila": samyraScreenshot,
 };
 
 /**

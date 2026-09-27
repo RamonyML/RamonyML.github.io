@@ -104,6 +104,16 @@ export const projects: Project[] = [
     stage: "desenvolvimento",
   },
   {
+    title: "Samyra Priscila",
+    description:
+      "Página de apresentação e hub de links para uma criadora de conteúdo de beleza real, com 1,4 milhão de seguidores somados no Instagram, TikTok e YouTube. Identidade construída do zero a partir do próprio conteúdo dela: Bodoni Moda com tamanho óptico travado, paleta porcelana com cacau e caramelo, fotos e clipes curados e otimizados do perfil (incluindo o mídia kit), galeria arrastável com vídeos que só tocam em vista, preview de imagem que segue o cursor e texto todo em primeira pessoa, como se ela mesma falasse.",
+    tags: ["HTML", "CSS", "JavaScript", "Lenis", "Vercel"],
+    status: "Cliente real · Em desenvolvimento",
+    demoUrl: "https://samyrapriscila.vercel.app",
+    note: "Site no ar, em fase de aprovação com a cliente. Repositório privado; fotos pertencem à criadora.",
+    stage: "desenvolvimento",
+  },
+  {
     title: "Ludi",
     description:
       "Site de exposição do arquivo pessoal de uma cosplayer real, com dez personagens e 34 fotos curadas do perfil dela. A interface é uma ficha de personagem impressa, com réguas de marcação, molduras de canto e numeração à mostra, e a seção de elenco reinterpreta a tela de seleção de campeão do League of Legends. O tema claro e o escuro usam a mesma dupla de cores com os papéis trocados, e a troca abre em círculo a partir do próprio botão. Sem framework nem etapa de build: 770 KB na carga inicial e LCP de 252 ms no celular.",
