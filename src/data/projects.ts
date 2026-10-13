@@ -85,6 +85,16 @@ export const projects: Project[] = [
     stage: "producao",
   },
   {
+    title: "Elegancy NR Nails",
+    description:
+      "Site e agenda online para uma nail designer real em Uberlândia, que atende a domicílio e em espaço de atendimento, com domínio próprio. A cliente escolhe o cuidado (unhas, cabelo ou sobrancelha), o local e um horário livre, calculado com o tempo de deslocamento entre um atendimento e outro. A reserva passa por uma função no servidor, sem login, e uma restrição de exclusão no Postgres impede dois atendimentos no mesmo horário. Confirmação e lembretes por e-mail via Resend, notificações push no celular da profissional e um painel PWA pensado para o celular, com agenda do dia e do mês, retornos, bloqueios, valores com reajuste programado e a galeria do site editável, com publicação. Identidade nova da marca e um traço contínuo que se desenha com a rolagem e termina num coração.",
+    tags: ["HTML", "CSS", "JavaScript", "Supabase", "PostgreSQL", "Edge Functions", "Resend", "Web Push", "Vercel"],
+    status: "Cliente real · Em produção",
+    demoUrl: "https://elegancynrnails.com.br",
+    note: "Projeto de cliente, código-fonte não disponível publicamente.",
+    stage: "producao",
+  },
+  {
     title: "OSLine",
     description:
       "Produto SaaS white-label para provedores regionais de internet, generalizando os conceitos operacionais do Gerador de O.S. (chamados, escala, chat interno) para atender múltiplos provedores-clientes. Arquitetura multi-tenant no Firestore, com isolamento de dados por tenant em ~24 coleções e permissões por setor e hierarquia.",
