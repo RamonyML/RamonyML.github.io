@@ -124,6 +124,16 @@ export const projects: Project[] = [
     stage: "desenvolvimento",
   },
   {
+    title: "Sapiens Contabilidade",
+    description:
+      "Landing page para um escritório de contabilidade real em Joinville, SC, focado em micro e pequenas empresas, com destaque para oficinas mecânicas. Tipografia editorial com Cormorant Garamond e Jost, predominância branca com o marinho e o turquesa da marca, e uma abertura em que a logo surge e a cortina sobe revelando o site. Tem um seletor de logo para a cliente comparar a identidade oficial com duas propostas, trocando a marca na página inteira. A seção de oficinas fica em fundo escuro, com um carrossel em fade que passa pelos outros segmentos atendidos. Também tem WhatsApp com mensagem pronta por contexto, formulário de proposta com consentimento LGPD, prévia de link para o WhatsApp e SEO com dados estruturados.",
+    tags: ["HTML", "CSS", "JavaScript", "Lucide", "Vercel"],
+    status: "Cliente real · Em desenvolvimento",
+    demoUrl: "https://sapiens-contabilidade.vercel.app",
+    note: "Site no ar, em fase de aprovação com a cliente. Repositório privado.",
+    stage: "desenvolvimento",
+  },
+  {
     title: "Ludi",
     description:
       "Site de exposição do arquivo pessoal de uma cosplayer real, com dez personagens e 34 fotos curadas do perfil dela. A interface é uma ficha de personagem impressa, com réguas de marcação, molduras de canto e numeração à mostra, e a seção de elenco reinterpreta a tela de seleção de campeão do League of Legends. O tema claro e o escuro usam a mesma dupla de cores com os papéis trocados, e a troca abre em círculo a partir do próprio botão. Sem framework nem etapa de build: 770 KB na carga inicial e LCP de 252 ms no celular.",

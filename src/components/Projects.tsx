@@ -11,6 +11,7 @@ import escalaLouvorScreenshot from "../assets/project-escala-louvor.jpg";
 import jecunhaScreenshot from "../assets/project-jecunha.jpg";
 import sailorluScreenshot from "../assets/project-sailorlu.jpg";
 import samyraScreenshot from "../assets/project-samyra.jpg";
+import sapiensScreenshot from "../assets/project-sapiens.jpg";
 import elegancyScreenshot from "../assets/project-elegancy.jpg";
 import { FeaturedProject } from "./FeaturedProject";
 import { Typewriter } from "./Typewriter";
@@ -33,6 +34,7 @@ const IMAGES: Record<string, string> = {
   "Studio Jê Cunha": jecunhaScreenshot,
   Ludi: sailorluScreenshot,
   "Samyra Priscila": samyraScreenshot,
+  "Sapiens Contabilidade": sapiensScreenshot,
   "Elegancy NR Nails": elegancyScreenshot,
 };
 
