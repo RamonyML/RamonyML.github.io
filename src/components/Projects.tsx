@@ -13,6 +13,7 @@ import sailorluScreenshot from "../assets/project-sailorlu.jpg";
 import samyraScreenshot from "../assets/project-samyra.jpg";
 import sapiensScreenshot from "../assets/project-sapiens.jpg";
 import elegancyScreenshot from "../assets/project-elegancy.jpg";
+import lorranaScreenshot from "../assets/project-lorrana.jpg";
 import { FeaturedProject } from "./FeaturedProject";
 import { Typewriter } from "./Typewriter";
 import { projects, type Project } from "../data/projects";
@@ -36,6 +37,7 @@ const IMAGES: Record<string, string> = {
   "Samyra Priscila": samyraScreenshot,
   "Sapiens Contabilidade": sapiensScreenshot,
   "Elegancy NR Nails": elegancyScreenshot,
+  "Lorrana Pinto": lorranaScreenshot,
 };
 
 /**

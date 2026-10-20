@@ -114,6 +114,16 @@ export const projects: Project[] = [
     stage: "desenvolvimento",
   },
   {
+    title: "Lorrana Pinto",
+    description:
+      "Site com agendamento próprio para uma psicóloga real que atende online e presencialmente no Pará. A direção visual parte da logo dela, uma peça de quebra-cabeça com coração: paleta creme, amarelo e terracota, grão de impressão antiga, o retrato que chega em quatro peças e se encaixa, um quebra-cabeça que o visitante monta e revela um recado, e dúvidas em que cada pergunta é uma peça que encaixa ao abrir. Texto inteiro na voz dela. O motor de agenda, em TypeScript puro com testes, reserva horário sem cadastro e sem senha e respeita o Código de Ética do CFP e a LGPD desde o desenho.",
+    tags: ["HTML", "CSS", "JavaScript", "Next.js 16", "TypeScript", "Firebase", "Vercel"],
+    status: "Cliente real · Em desenvolvimento",
+    demoUrl: "https://lorranapintopsicologa.vercel.app",
+    note: "Prévia no ar, em aprovação com a cliente. Repositório privado.",
+    stage: "desenvolvimento",
+  },
+  {
     title: "Samyra Priscila",
     description:
       "Página de apresentação e hub de links para uma criadora de conteúdo de beleza real, com 1,4 milhão de seguidores somados no Instagram, TikTok e YouTube. Identidade construída do zero a partir do próprio conteúdo dela: Bodoni Moda com tamanho óptico travado, paleta porcelana com cacau e caramelo, fotos e clipes curados e otimizados do perfil (incluindo o mídia kit), galeria arrastável com vídeos que só tocam em vista, preview de imagem que segue o cursor e texto todo em primeira pessoa, como se ela mesma falasse.",
