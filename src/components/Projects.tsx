@@ -19,7 +19,7 @@ import { Typewriter } from "./Typewriter";
 import { projects, type Project } from "../data/projects";
 
 const PROJETOS_COPY =
-  "Dois cases em destaque, o índice do que está em produção e os produtos à venda.";
+  "Meus 3 principais projetos em destaque, o índice do que está em produção e os produtos à venda.";
 
 const IMAGES: Record<string, string> = {
   Belaroids: belaroidsScreenshot,
