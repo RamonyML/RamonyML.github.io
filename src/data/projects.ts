@@ -48,6 +48,32 @@ export const featuredProjects: FeaturedProjectData[] = [
     note: "Produto proprietário, código-fonte não disponível publicamente.",
   },
   {
+    title: "JUBATRIM",
+    description:
+      "Site oficial e loja online da Juventude Batista do Triângulo Mineiro: projetos missionários e congressos, cada um com tema visual próprio (o Turma de Minas virou HQ), agenda, galeria e página de links da bio. A loja tem galeria com zoom em alta resolução, checkout com PIX pela Asaas e webhook que confirma e estorna sozinho, retirada no evento ou Correios via SuperFrete, conta do cliente com Google ou e-mail e senha, avaliações só de quem comprou e acompanhamento de pedido por código. E-mails com domínio próprio via Resend, suporte direto pelo site e um painel para a equipe atualizar tudo, fotos inclusas, sem saber programar.",
+    quote:
+      "É um dos maiores projetos que já fiz: site institucional, loja com pagamento de verdade e um painel para uma equipe que não programa. Cuidei de cada detalhe, do webhook do PIX ao mascote que comemora quando alguém compra.",
+    stats: [
+      { label: "Pagamento", value: "PIX · Asaas" },
+      { label: "E-mails", value: "Resend" },
+      { label: "Painel", value: "Sem código" },
+    ],
+    tags: [
+      "Next.js 16",
+      "React 19",
+      "TypeScript",
+      "Tailwind CSS 4",
+      "Firebase",
+      "Asaas (PIX)",
+      "Resend",
+      "Vercel Blob",
+      "Vercel",
+    ],
+    status: "Site e loja · Em produção",
+    demoUrl: "https://jubatrim.com.br",
+    note: "Projeto de cliente, código-fonte não disponível publicamente.",
+  },
+  {
     title: "HT Glow Fit",
     description:
       "Loja completa, do zero, para uma marca real de moda fitness feminina, com domínio próprio. Carrinho com reserva de estoque server-side (transação no Firestore não deixa vender a mesma peça duas vezes), checkout com pagamento PIX pela Asaas e frete calculado por CEP na SuperFrete. Pedido pago avisa a loja por e-mail via Resend. A cliente tem conta com foto de perfil recortada no navegador, agenda de endereços, histórico de compras com status e avaliação das peças por estrelas para quem já recebeu. Painel administrativo em rota oculta, com dashboard de vendas, controle de estoque e gestão de pedidos.",

@@ -3,6 +3,10 @@ import eternodiaSlide1 from "../assets/eternodia-slide-1.jpg";
 import eternodiaSlide2 from "../assets/eternodia-slide-2.jpg";
 import eternodiaSlide3 from "../assets/eternodia-slide-3.jpg";
 import eternodiaSlide4 from "../assets/eternodia-slide-4.jpg";
+import jubatrimSlide1 from "../assets/jubatrim-slide-1.jpg";
+import jubatrimSlide2 from "../assets/jubatrim-slide-2.jpg";
+import jubatrimSlide3 from "../assets/jubatrim-slide-3.jpg";
+import jubatrimSlide4 from "../assets/jubatrim-slide-4.jpg";
 import glowfitSlide1 from "../assets/glowfit-slide1.jpg";
 import glowfitSlide2 from "../assets/glowfit-slide2.jpg";
 import glowfitSlide3 from "../assets/glowfit-slide3.jpg";
@@ -14,6 +18,7 @@ import { featuredProjects, type FeaturedProjectData } from "../data/projects";
 // Telas de cada case, na ordem do crossfade.
 const SLIDES_BY_TITLE: Record<string, string[]> = {
   "Eterno Dia": [eternodiaSlide1, eternodiaSlide2, eternodiaSlide3, eternodiaSlide4],
+  JUBATRIM: [jubatrimSlide1, jubatrimSlide2, jubatrimSlide3, jubatrimSlide4],
   "HT Glow Fit": [
     glowfitSlide1,
     glowfitSlide2,
