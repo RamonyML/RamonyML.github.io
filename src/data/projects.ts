@@ -104,9 +104,9 @@ export const projects: Project[] = [
   {
     title: "Gerador de O.S.",
     description:
-      "Software de minha autoria para gestão de Ordens de Serviço em provedores de internet, criado e mantido por mim desde dezembro de 2023, em infraestrutura própria. Reúne 37 formulários e 170 variantes de O.S. e se integra ao ERP MK Solutions por 8 endpoints REST: autenticação, busca de cliente por CPF/CNPJ, abertura de protocolo e criação de O.S. Foi usado diariamente pelo suporte técnico de um provedor de fibra óptica, onde reduziu o tempo de atendimento de 10–15 minutos para menos de 2.",
-    tags: ["React 19", "TypeScript", "Firebase", "Cloud Functions", "REST API"],
-    status: "Software autoral · Desde dez. 2023 · v4.0.1",
+      "CRM operacional de minha autoria para provedores de internet, criado e mantido por mim desde dezembro de 2023, em infraestrutura própria. Vai muito além de gerar Ordens de Serviço: hub de demandas do suporte, chamados internos no estilo GLPI, escala de turnos, agenda de visitas técnicas, base de condomínios, registro de upgrades e comissões, comunicados e gestão de usuários. O acesso é controlado em três camadas (guards de rota, regras do Firestore e Cloud Functions) por setor, hierarquia e papéis. O núcleo é a integração com o ERP MK Solutions: uma Cloud Function orquestra o atendimento de ponta a ponta (abre o protocolo, insere os comentários em sequência e cria a O.S.) por 8 endpoints REST, com as credenciais isoladas no Secret Manager. São 37 formulários, 170 variantes de O.S. e cerca de 70 mil linhas de TypeScript, com testes em Vitest. Foi usado diariamente pelo suporte técnico de um provedor de fibra óptica, onde reduziu o atendimento de 10–15 minutos para menos de 2.",
+    tags: ["React 19", "TypeScript", "Vite", "Material UI", "Firebase", "Cloud Functions", "Secret Manager", "REST API", "Vitest"],
+    status: "CRM autoral · Desde dez. 2023 · v4.0.1",
     note: "Software autoral. Código-fonte e infraestrutura de minha titularidade, em repositório privado; sem prints para preservar dados e marcas de terceiros.",
     stage: "producao",
   },
