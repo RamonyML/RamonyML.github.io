@@ -76,7 +76,7 @@ function ProjectCard({ project }: { project: Project }) {
           >
             <span className="font-mono text-[11px] tracking-[0.15em]">CASE PRIVADO</span>
             <span className="font-mono text-[10px] tracking-[0.15em] opacity-60">
-              ERP / OPERAÇÃO INTERNA
+              SOFTWARE AUTORAL
             </span>
           </div>
         )}

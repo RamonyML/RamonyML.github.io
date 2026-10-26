@@ -104,10 +104,10 @@ export const projects: Project[] = [
   {
     title: "Gerador de O.S.",
     description:
-      "Plataforma operacional com 37 formulários e 170 variantes de Ordem de Serviço, usada diariamente pela equipe de suporte técnico da MZ NET. Integração completa com o ERP MK Solutions via 8 endpoints REST, incluindo autenticação, busca de cliente por CPF/CNPJ, criação de protocolo e de O.S. Reduziu o tempo de atendimento de 10–15 minutos para menos de 2 minutos.",
+      "Software de minha autoria para gestão de Ordens de Serviço em provedores de internet, criado e mantido por mim desde dezembro de 2023, em infraestrutura própria. Reúne 37 formulários e 170 variantes de O.S. e se integra ao ERP MK Solutions por 8 endpoints REST: autenticação, busca de cliente por CPF/CNPJ, abertura de protocolo e criação de O.S. Foi usado diariamente pelo suporte técnico de um provedor de fibra óptica, onde reduziu o tempo de atendimento de 10–15 minutos para menos de 2.",
     tags: ["React 19", "TypeScript", "Firebase", "Cloud Functions", "REST API"],
-    status: "Em produção desde dez. 2023 · v4.0.1",
-    note: "Sistema interno da empresa, repositório privado, código-fonte não disponível publicamente.",
+    status: "Software autoral · Desde dez. 2023 · v4.0.1",
+    note: "Software autoral. Código-fonte e infraestrutura de minha titularidade, em repositório privado; sem prints para preservar dados e marcas de terceiros.",
     stage: "producao",
   },
   {
