@@ -7,7 +7,7 @@ import oslineImage from "../assets/OS-Line.jpg";
 import jogaeScreenshot from "../assets/project-jogae.jpg";
 import apetiteScreenshot from "../assets/project-apetite.jpg";
 import vigorScreenshot from "../assets/project-vigor.jpg";
-import escalaLouvorScreenshot from "../assets/project-escala-louvor.jpg";
+import escalaMemorialScreenshot from "../assets/project-escala-memorial.jpg";
 import jecunhaScreenshot from "../assets/project-jecunha.jpg";
 import sailorluScreenshot from "../assets/project-sailorlu.jpg";
 import samyraScreenshot from "../assets/project-samyra.jpg";
@@ -31,7 +31,7 @@ const IMAGES: Record<string, string> = {
   Jogaê: jogaeScreenshot,
   Apetite: apetiteScreenshot,
   Vigor: vigorScreenshot,
-  "Escala de Louvor": escalaLouvorScreenshot,
+  "Escala Memorial": escalaMemorialScreenshot,
   "Studio Jê Cunha": jecunhaScreenshot,
   Ludi: sailorluScreenshot,
   "Samyra Priscila": samyraScreenshot,

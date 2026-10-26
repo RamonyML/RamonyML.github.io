@@ -274,13 +274,13 @@ export const projects: Project[] = [
     customPrice: "R$ 3.500",
   },
   {
-    title: "Escala de Louvor",
+    title: "Escala Memorial",
     description:
-      "Sistema para igrejas organizarem a escala do ministério de louvor. A escala pública sincroniza em tempo real via Firestore, então o que o admin edita aparece na hora pra quem está com a página aberta, sem refresh. Geração automática de cultos por domingo do mês, exportação da escala como imagem em dois formatos e componentes de interface construídos do zero, sem biblioteca pronta.",
-    tags: ["React 19", "TypeScript", "Vite", "Firestore", "html2canvas"],
+      "App do grupo de louvor e da equipe de mídia de uma igreja batista: o líder cadastra os cultos e monta a escala, e cada membro marca em quais dias pode servir e vê onde foi escalado, tudo pensado primeiro para o celular. Permissões por papel direto no Postgres (RLS), convites e contas em Edge Functions, lembretes diários agendados com pg_cron e enviados uma vez só por e-mail, playlist do culto com arrastar e soltar e card da escala desenhado em canvas e compartilhado direto no WhatsApp.",
+    tags: ["React 19", "TypeScript", "Vite", "Tailwind CSS 4", "shadcn/ui", "TanStack Query", "Supabase", "pg_cron", "Resend"],
     status: "Em produção",
-    demoUrl: "https://memorial-louvor.web.app",
-    repoUrl: "https://github.com/RamonyML/memorial-louvor",
+    demoUrl: "https://memorial-escala.vercel.app",
+    note: "Repositório privado.",
     stage: "producao",
   },
 ];
