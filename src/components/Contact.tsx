@@ -10,6 +10,7 @@ const CONTACT_COPY =
 const CANAIS = [
   { label: "Telegram", href: "https://t.me/ramonyml_bot", external: true },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/ramonyml", external: true },
+  { label: "Instagram", href: "https://www.instagram.com/ramony.dev/", external: true },
   { label: "E-mail", href: "mailto:ramonyml@gmail.com", external: false },
 ];
 

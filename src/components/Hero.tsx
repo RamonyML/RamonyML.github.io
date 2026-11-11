@@ -110,10 +110,15 @@ export function Hero() {
 
           {/* retrato tratado como registro técnico: véu que recolhe no
               hover; clique trava o revelado */}
-          <figure className="reveal hidden lg:block" data-delay="2">
+          {/* no mobile a foto abre o hero, menor e acima do título; a partir
+              de lg volta pra coluna da direita */}
+          <figure
+            className="reveal order-first w-[min(58vw,250px)] lg:order-none lg:w-auto"
+            data-delay="2"
+          >
             {/* o padding precisa caber a foto ampliada (scale) + a moldura
                 afastada, senão o estado de hover invade a legenda */}
-            <div className="p-7">
+            <div className="p-4 lg:p-7">
               <img
                 src={photo}
                 alt="Foto de Ramony Lima"
@@ -122,7 +127,7 @@ export function Hero() {
                 title={fotoFixada ? "Clique pra voltar ao P&B" : "Clique pra fixar em cores"}
               />
             </div>
-            <figcaption className="mono-label flex justify-between px-7 text-[10px] text-gray">
+            <figcaption className="mono-label flex justify-between gap-3 px-4 text-[10px] whitespace-nowrap text-gray lg:px-7">
               <span>DEVELOPER / RML</span>
               <span className={fotoFixada ? "text-chalk" : undefined}>
                 {fotoFixada ? "SINAL / COR_" : "UBERLÂNDIA · MG"}
